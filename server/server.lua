@@ -54,30 +54,24 @@ end)
 
 RegisterServerEvent('vorp_stores:buy')
 AddEventHandler('vorp_stores:buy', function(label, name, price, type)
+    print(label, name, price, type)
     local _source = source
     local Character = VORPcore.getUser(_source).getUsedCharacter
     local ItemName = name
     local ItemPrice = price
-    local ItemCount = VORPinv.getItemItemCount(_source, ItemName)
     local ItemLabel = label
     local currencyType = type
     local buyPrice
 
-    if ItemCount == 0 then
-        TriggerClientEvent("vorp:TipRight", _source, _U("you_broke"), 3000) --dont have
-        return
-    end
-    if ItemCount >= 1 then
 
-        VORPinv.addItem(_source, ItemName, ItemCount)
+    if currencyType == "cash" then
 
-        buyPrice = ItemPrice * ItemCount
-
-        Character.removeCurrency(0, buyPrice)
+        VORPinv.addItem(_source, ItemName)
+        Character.removeCurrency(0, ItemPrice)
 
         TriggerClientEvent('vorp:ShowAdvancedRightNotification', ItemLabel, "inventory_items", "clothing_generic_boots", "COLOR_PURE_WHITE", 4000)
 
-    elseif ItemCount >= 1 and currencyType == "gold" then
+    elseif currencyType == "gold" then
 
 
         VORPinv.addItem(_source, ItemName, ItemCount)

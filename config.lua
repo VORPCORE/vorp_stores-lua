@@ -53,7 +53,7 @@ Config.Stores = {
         distanceOpenStore = 3.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
-        JobAllowed = true,
+        JobAllowed = false,
         Jobs = { "polic", "polic" } -- -- jobs allowed
 
     },
