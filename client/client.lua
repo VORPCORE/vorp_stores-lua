@@ -198,7 +198,6 @@ function OpenSellMenu(Value)
     local elements = {}
     local player = PlayerPedId()
 
-
     for k, v in pairs(Config.SellItems[Value]) do
         elements[k] = {
             label = v.itemLabel,
@@ -226,7 +225,8 @@ function OpenSellMenu(Value)
             local currencyType = data.current.info.currencyType
             local ItemPrice = data.current.info.price
             local ItemDesc = data.current.info.desc
-            TriggerServerEvent("vorp_stores:sell", ItemName, ItemLabel, currencyType, ItemPrice, ItemDesc)
+
+            TriggerServerEvent("vorp_stores:sell", ItemLabel, ItemName, currencyType, ItemPrice, ItemDesc)
 
         end,
 
@@ -269,11 +269,9 @@ function OpenBuyMenu(Value)
             local ItemLabel = data.current.info.itemLabel
             local currencyType = data.current.info.currencyType
             local ItemPrice = data.current.info.price
-            local ItemDesc = data.current.info.desc
 
-            print(ItemName, ItemLabel, currencyType, ItemPrice, ItemDesc)
 
-            TriggerServerEvent("vorp_stores:buy", ItemName, ItemLabel, currencyType, ItemPrice, ItemDesc)
+            TriggerServerEvent("vorp_stores:buy", ItemLabel, ItemName, currencyType, ItemPrice)
 
         end,
 

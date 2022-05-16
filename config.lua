@@ -7,6 +7,7 @@ Config = {}
 -- NPC ANIMATION
 -- TYPE SELL OR BUY
 -- show only inventory items for sell if exist
+-- jobrank
 
 
 --- MENU POSITION ---
@@ -71,8 +72,8 @@ Config.SellItems = {
 
     },
     Rhodes = {
-        { itemLabel = "Golden Ring", itemName = "golden_ring", currencyType = "cash", price = 50, desc = " sell get cash" },
-        { itemLabel = "Water", itemName = "water", currencyType = "gold", price = 1, desc = " sell to get gold" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", price = 50, desc = " sell get cash" },
+        { itemLabel = "Water", itemName = "water", currencyType = "gold", price = 10, desc = " sell to get gold" },
 
     }
 }
@@ -89,8 +90,8 @@ Config.BuyItems = {
     },
 
     Rhodes = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", price = 50, desc = "Golden Ring" },
-        { itemLabel = "Water", itemName = "water", price = 1, currencyType = "gold", desc = "buy water with gold" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", price = 50, desc = "apple desc cash" },
+        { itemLabel = "Water", itemName = "water", currencyType = "gold", price = 1, desc = "buy water with gold" },
 
     }
 }
