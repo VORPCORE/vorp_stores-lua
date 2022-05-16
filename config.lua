@@ -7,7 +7,6 @@ Config = {}
 -- NPC ANIMATION
 -- TYPE SELL OR BUY
 -- show only inventory items for sell if exist
--- job lock
 
 
 --- MENU POSITION ---
@@ -19,50 +18,50 @@ Config.Align = "center"
 Config.defaultlang = "en_lang"
 
 -- open stores
-Config.Key = 0x39336A4F
+Config.Key = 0x39336A4F --Space
 
 
 
 --- STORES ---
 Config.Stores = {
     Val = {
-        BlipName = 'valentine',
-        storeName = 'valentine store',
+        blipAllowed = true,
+        BlipName = 'valentine store',
+        storeName = 'valentine ',
         --  StoreType = "sell",
-        StoreTypeDesc = " sell items", -- or buy
+        StoreTypeDesc = "sell items", -- or buy
         PromptName = " general store",
         sprite = 90287351,
         x = -380.723, y = 825.3263, z = 116.00, h = 100.00, --blip/ prompt and npc positions
-        blipAllowed = true,
         distanceOpenStore = 3.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
-        JobAllowed = false, 
-        Jobs = { "police", "sheriff" }
+        JobAllowed = false, -- if true edit above the jobs allwoed to use the store
+        Jobs = { "poli", "sheriff" } -- jobs allowed
 
     },
 
     Rhodes = {
-        BlipName = 'Rhodes store',
-        storeName = 'Rhodes shop',
+        blipAllowed = true,
+        BlipName = 'Rhodes Store',
+        storeName = 'Rhodes',
         -- StoreType = "sell", -- or buy
         StoreTypeDesc = " sell items",
         PromptName = " general sell store",
         sprite = 90287351,
         x = -345.014, y = 840.3168, z = 116.63, h = 100.00,
-        blipAllowed = true,
         distanceOpenStore = 3.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         JobAllowed = true,
-        Jobs = { "police", "sheriff" } -- player job
+        Jobs = { "polic", "polic" } -- -- jobs allowed
 
     },
 }
 
 
 ----------------------------------------------- STORE ITEMS --------------------------------------------------------------
--- curency type "cash" or "gold"
+-- curencytype "cash" or "gold"
 
 ---- SELL ITEMS -----------
 Config.SellItems = {

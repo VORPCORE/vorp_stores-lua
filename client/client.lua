@@ -54,7 +54,7 @@ function LoadModel(model)
     end
 end
 
-function InsertNpcs()
+function InsertNpcs(npc)
     for k, v in pairs(Config.Stores) do
         LoadModel(v.NpcModel)
         if v.NpcAllowed then
@@ -83,7 +83,7 @@ end
 ------- STORES START ----------
 Citizen.CreateThread(function()
     PromptSetUp()
-    InsertNpcs()
+    InsertNpcs(npc)
     while true do
         Citizen.Wait(15)
         local player = PlayerPedId()
@@ -94,8 +94,25 @@ Citizen.CreateThread(function()
         if isInMenu == false and not dead then
 
             for k, v in pairs(Config.Stores) do
+
                 --## run this before distance check here no need to run a code that is no meant for the client ## --
-                if v.JobAllowed then
+                if v.JobAllowed == false then --everyone can use
+
+                    local distance = Vdist2(coords.x, coords.y, coords.z, v.x, v.y, v.z, true)
+
+                    if (distance < v.distanceOpenStore) then --check distance
+                        sleep = false
+                        local label = CreateVarString(10, 'LITERAL_STRING', v.PromptName)
+
+                        PromptSetActiveGroupThisFrame(PromptGroup, label)
+                        if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
+                            OpenSubMenu(k)
+                            TaskStandStill(player, -1)
+                            
+                        end
+                    end
+
+                else -- job only
 
                     TriggerServerEvent("vorp_stores:getPlayerJob") -- get players job
 
@@ -113,20 +130,8 @@ Citizen.CreateThread(function()
                                 TaskStandStill(player, -1)
                             end
                         end
-                    end
 
-                else
-                    local distance = Vdist2(coords.x, coords.y, coords.z, v.x, v.y, v.z, true)
 
-                    if (distance < v.distanceOpenStore) then --check distance
-                        sleep = false
-                        local label = CreateVarString(10, 'LITERAL_STRING', v.PromptName)
-
-                        PromptSetActiveGroupThisFrame(PromptGroup, label)
-                        if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
-                            OpenSubMenu(k)
-                            TaskStandStill(player, -1)
-                        end
                     end
 
                 end
@@ -180,10 +185,10 @@ function OpenSellMenu(Value)
         end,
 
         function(data, menu)
-        menu.close()
-        ClearPedTasksImmediately(player)
-        isInMenu = false
-    end)
+            menu.close()
+            ClearPedTasksImmediately(player)
+            isInMenu = false
+        end)
 
 end
 
@@ -225,10 +230,10 @@ function OpenBuyMenu(Value)
         end,
 
         function(data, menu)
-        menu.close()
-        ClearPedTasksImmediately(PlayerPedId())
-        isInMenu = false
-    end)
+            menu.close()
+            ClearPedTasksImmediately(PlayerPedId())
+            isInMenu = false
+        end)
 
 end
 
@@ -265,9 +270,9 @@ function OpenSubMenu(Value)
         end,
 
         function(data, menu)
-        menu.close()
-        isInMenu = false
-    end)
+            menu.close()
+            isInMenu = false
+        end)
 
 end
 
