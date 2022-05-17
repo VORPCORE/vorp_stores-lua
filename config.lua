@@ -34,7 +34,7 @@ Config.Stores = {
         PromptName = "General Store",
         sprite = 1475879922,
         x = -324.134, y = 803.567, z = 116.8816, h = 283.007, --blip/ prompt and npc positions
-        distanceOpenStore = 3.0,
+        distanceOpenStore = 5.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         JobAllowed = false, -- if true edit above the jobs allwoed to use the store
@@ -51,7 +51,7 @@ Config.Stores = {
         PromptName = "General Store",
         sprite = 1475879922,
         x = 1329.900, y = -1294.152, z = 76.021, h = 67.742,
-        distanceOpenStore = 3.0,
+        distanceOpenStore = 5.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         JobAllowed = false,
@@ -68,7 +68,7 @@ Config.Stores = {
         PromptName = "General Store",
         sprite = 1475879922,
         x = -1789.906, y = -388.316, z = 159.328, h = 52.30, --blip/ prompt and npc positions
-        distanceOpenStore = 3.0,
+        distanceOpenStore = 5.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         JobAllowed = false, -- if true edit above the jobs allwoed to use the store
@@ -85,7 +85,7 @@ Config.Stores = {
         PromptName = "General Store",
         sprite = 1475879922,
         x = -784.220, y = -1322.134, z = 42.884, h = 173.266, --blip/ prompt and npc positions
-        distanceOpenStore = 3.0,
+        distanceOpenStore = 5.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         JobAllowed = false, -- if true edit above the jobs allwoed to use the store
@@ -102,7 +102,7 @@ Config.Stores = {
         PromptName = "General Store",
         sprite = 1475879922,
         x = -3687.265, y = -2623.203, z = -14.431, h = 267.522, --blip/ prompt and npc positions
-        distanceOpenStore = 3.0,
+        distanceOpenStore = 5.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         JobAllowed = false, -- if true edit above the jobs allwoed to use the store
@@ -119,7 +119,7 @@ Config.Stores = {
         PromptName = "General Store",
         sprite = 1475879922,
         x = -5485.910, y = -2938.069,z =  -1.399, h = 127.656, --blip/ prompt and npc positions
-        distanceOpenStore = 3.0,
+        distanceOpenStore = 5.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         JobAllowed = false, -- if true edit above the jobs allwoed to use the store
