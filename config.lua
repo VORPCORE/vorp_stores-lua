@@ -6,7 +6,6 @@ Config = {}
 -- CINEMATIC
 -- NPC ANIMATION
 -- TYPE SELL OR BUY
--- show only inventory items for sell if exist
 -- jobrank
 
 
@@ -29,14 +28,14 @@ Config.Stores = {
         blipAllowed = true,
         BlipName = 'valentine store',
         storeName = 'valentine ',
-        PromptName = " general store",
+        PromptName = "general store",
+        Actions = { sell = true, buy = false },
         sprite = 90287351,
         x = -380.723, y = 825.3263, z = 116.00, h = 100.00, --blip/ prompt and npc positions
         distanceOpenStore = 3.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
-        JobAllowed = false, -- if true edit above the jobs allwoed to use the store
-        Jobs = { "police", "sheriff" } -- jobs allowed
+        AllowedJobs = {} -- empty everyone can use
 
     },
 
@@ -44,14 +43,14 @@ Config.Stores = {
         blipAllowed = true,
         BlipName = 'Rhodes Store',
         storeName = 'Rhodes',
+        Actions = { "sell" },
         PromptName = " general sell store",
         sprite = 90287351,
         x = -345.014, y = 840.3168, z = 116.63, h = 100.00,
         distanceOpenStore = 3.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
-        JobAllowed = false,
-        Jobs = { "police", "sheriff" } -- -- jobs allowed
+        AllowedJobs = { "police", "sheriff" } -- -- jobs allowed
 
     },
 }

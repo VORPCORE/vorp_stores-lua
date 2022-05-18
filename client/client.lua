@@ -96,20 +96,20 @@ Citizen.CreateThread(function()
 
         if isInMenu == false and not dead then
 
-            for k, v in pairs(Config.Stores) do
+            for storeKey, storeConfig in pairs(Config.Stores) do
 
                 --## run this before distance check  no need to run a code that is no meant for the client ## --
-                if v.JobAllowed == false then --everyone can use
+                if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
 
-                    local distance = Vdist2(coords.x, coords.y, coords.z, v.x, v.y, v.z, true)
+                    local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y, storeConfig.z, true)
 
-                    if (distance < v.distanceOpenStore) then --check distance
+                    if (distance < storeConfig.distanceOpenStore) then --check distance
                         sleep = false
-                        local label = CreateVarString(10, 'LITERAL_STRING', v.PromptName)
+                        local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
 
                         PromptSetActiveGroupThisFrame(PromptGroup, label)
                         if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
-                            OpenCategory(k)
+                            OpenCategory(storeKey)
                             TaskStandStill(player, -1)
                         end
                     end
@@ -118,21 +118,20 @@ Citizen.CreateThread(function()
 
                     TriggerServerEvent("vorp_stores:getPlayerJob") -- get players job
 
-                    if CheckJob(v.Jobs, PlayerJob) then
+                    if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
 
-                        local distance = Vdist2(coords.x, coords.y, coords.z, v.x, v.y, v.z, true)
+                        local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y, storeConfig.z, true)
 
-                        if (distance < v.distanceOpenStore) then --check distance
+                        if (distance < storeConfig.distanceOpenStore) then --check distance
                             sleep = false
-                            local label = CreateVarString(10, 'LITERAL_STRING', v.PromptName)
+                            local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
 
                             PromptSetActiveGroupThisFrame(PromptGroup, label)
-                            if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
-                                OpenCategory(k)
+                            if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- if all pass open menu
+                                OpenCategory(storeKey)
                                 TaskStandStill(player, -1)
                             end
                         end
-
 
                     end
 
@@ -145,25 +144,21 @@ Citizen.CreateThread(function()
     end
 end)
 
-
-
 ---- items category ------
-function OpenCategory(Value)
+function OpenCategory(storeKey) -- CreateBaseMenu(StoreKey)
     MenuData.CloseAll()
     isInMenu = true
 
     local elements = {
 
-        { label = "Food", value = 'food', desc = " Get some food" },
-        { label = "Tools", value = 'tools', desc = "Get some tools " },
-        { label = "Meds", value = 'meds', desc = "Get some medicine" },
+        { label = "Food", value = "food", desc = " Get some food" },
+        { label = "Tools", value = "tools", desc = "Get some tools " },
+        { label = "Meds", value = "meds", desc = "Get some medicine" },
 
     }
 
-
-
-    MenuData.Open('default', GetCurrentResourceName(), 'category' .. Value, {
-        title    = Config.Stores[Value].storeName,
+    MenuData.Open('default', GetCurrentResourceName(), 'category' .. storeKey, {
+        title    = Config.Stores[storeKey].storeName,
         subtext  = _U("SubMenu"),
         align    = Config.Align,
         elements = elements,
@@ -171,21 +166,7 @@ function OpenCategory(Value)
 
     },
         function(data, menu)
-            if (data.current.value == 'food') then
-                -- TEST
-                OpenSellMenu(Value)
-
-            end
-
-            if (data.current.value == 'tools') then
-
-                --OpenSellMenu2(Value)
-            end
-
-            if (data.current.value == 'meds') then
-                --OpenMeds(Value)
-
-            end
+            OpenSellMenu(storeKey, data.current.value)
         end,
 
         function(data, menu)
@@ -216,8 +197,7 @@ function OpenSubMenuSell(Value)
     },
         function(data, menu)
             if (data.current.value == 'sell') then
-                --OpenSellMenu(Value)
-                --OpenCategory(Value)
+
             end
 
 
@@ -263,35 +243,36 @@ function OpenSubMenuBuy(Value)
 end
 
 --sell
-function OpenSellMenu(Value)
+function OpenSellMenu(storeKey, category) -- ConfigureSellMenu
     MenuData.CloseAll()
     isInMenu = true
-    local elements = {}
+    local menuElements = {}
     local player = PlayerPedId()
+    local storeConfig = Config.Stores[storeKey];
 
-    for k, v in pairs(Config.SellItems[Value]) do
+    local elementIndex = 1;
 
-        if v.category == "food" then --get category
-            --display only items with category food
-            elements[k] = {
-                label = v.itemLabel,
-                value = "sell" .. k,
-                desc = v.desc .. "<br><br><br>" .. "PRICE" .. " = <span style=color:Yellow;>" .. v.price .. " $" .. "",
-                info = v
+    for index, storeItem in ipairs(Config.SellItems[storeKey]) do
+        if storeItem.category == category then
 
-
+            menuElements[elementIndex] = {
+                label = storeItem.itemLabel,
+                value = "sell" .. tostring(elementIndex),
+                desc = storeItem.desc .. "<br><br><br>" .. "PRICE" .. ' = <span style="color:Yellow;">' .. storeItem.price .. " $" .. "",
+                info = storeItem
             }
+
+            elementIndex = elementIndex + 1;
 
         end
 
     end
 
-
-    MenuData.Open('default', GetCurrentResourceName(), 'sellstore' .. Value, {
-        title    = Config.Stores[Value].storeName,
+    MenuData.Open('default', GetCurrentResourceName(), 'sellstore' .. storeKey .. category, {
+        title    = storeConfig.storeName,
         subtext  = _U("SubMenu"),
         align    = Config.Align,
-        elements = elements,
+        elements = menuElements,
 
 
     },
