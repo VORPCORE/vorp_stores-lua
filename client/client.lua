@@ -3,7 +3,6 @@
 local key = Config.Key
 local OpenStores
 local PlayerJob
-local PlayerMoney
 local PromptGroup = GetRandomIntInRange(0, 0xffffff)
 local isInMenu = false
 local blips = {}
@@ -55,9 +54,7 @@ function LoadModel(model)
     end
 end
 
-local npc = {}
-
-function InsertNpcs(npc)
+function InsertNpcs()
     for k, v in pairs(Config.Stores) do
         LoadModel(v.NpcModel)
         if v.NpcAllowed then
@@ -87,7 +84,7 @@ end
 ------- STORES START ----------
 Citizen.CreateThread(function()
     PromptSetUp()
-    InsertNpcs(npc)
+    InsertNpcs()
 
     while true do
         Citizen.Wait(15)
@@ -101,7 +98,7 @@ Citizen.CreateThread(function()
 
             for k, v in pairs(Config.Stores) do
 
-                --## run this before distance check here no need to run a code that is no meant for the client ## --
+                --## run this before distance check  no need to run a code that is no meant for the client ## --
                 if v.JobAllowed == false then --everyone can use
 
                     local distance = Vdist2(coords.x, coords.y, coords.z, v.x, v.y, v.z, true)
@@ -112,12 +109,8 @@ Citizen.CreateThread(function()
 
                         PromptSetActiveGroupThisFrame(PromptGroup, label)
                         if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
-                            OpenSubMenu(k)
-
-                            TaskStartScenarioInPlace(v.NpcModel, GetHashKey('WORLD_HUMAN_CROUCH_INSPECT'), 30000, true, false, false, false)
+                            OpenCategory(k)
                             TaskStandStill(player, -1)
-
-
                         end
                     end
 
@@ -135,7 +128,7 @@ Citizen.CreateThread(function()
 
                             PromptSetActiveGroupThisFrame(PromptGroup, label)
                             if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
-                                OpenSubMenu(k)
+                                OpenCategory(k)
                                 TaskStandStill(player, -1)
                             end
                         end
@@ -153,17 +146,63 @@ Citizen.CreateThread(function()
 end)
 
 
-function OpenSubMenu(Value)
+
+---- items category ------
+function OpenCategory(Value)
     MenuData.CloseAll()
     isInMenu = true
 
     local elements = {
 
-        { label = "Buy", value = 'buy', desc = "buy items" },
-        { label = "Sell", value = 'sell', desc = "sell items" },
-
+        { label = "Food", value = 'food', desc = " Get some food" },
+        { label = "Tools", value = 'tools', desc = "Get some tools " },
+        { label = "Meds", value = 'meds', desc = "Get some medicine" },
 
     }
+
+
+
+    MenuData.Open('default', GetCurrentResourceName(), 'category' .. Value, {
+        title    = Config.Stores[Value].storeName,
+        subtext  = _U("SubMenu"),
+        align    = Config.Align,
+        elements = elements,
+
+
+    },
+        function(data, menu)
+            if (data.current.value == 'food') then
+                -- TEST
+                OpenSellMenu(Value)
+
+            end
+
+            if (data.current.value == 'tools') then
+
+                --OpenSellMenu2(Value)
+            end
+
+            if (data.current.value == 'meds') then
+                --OpenMeds(Value)
+
+            end
+        end,
+
+        function(data, menu)
+            menu.close()
+            isInMenu = false
+        end)
+
+end
+
+--sell only
+function OpenSubMenuSell(Value)
+    MenuData.CloseAll()
+    isInMenu = true
+    local elements = {
+        { label = "sell", value = 'sell', desc = "sell items" },
+    }
+
 
 
 
@@ -177,8 +216,39 @@ function OpenSubMenu(Value)
     },
         function(data, menu)
             if (data.current.value == 'sell') then
-                OpenSellMenu(Value)
+                --OpenSellMenu(Value)
+                --OpenCategory(Value)
             end
+
+
+        end,
+
+        function(data, menu)
+            menu.close()
+            isInMenu = false
+        end)
+
+end
+
+--test buy only
+function OpenSubMenuBuy(Value)
+    MenuData.CloseAll()
+    isInMenu = true
+    local elements = {
+        { label = "buy", value = 'buy', desc = "buy items" },
+    }
+
+
+    MenuData.Open('default', GetCurrentResourceName(), 'submenu' .. Value, {
+        title    = Config.Stores[Value].storeName,
+        subtext  = _U("SubMenu"),
+        align    = Config.Align,
+        elements = elements,
+
+
+    },
+        function(data, menu)
+
 
             if (data.current.value == 'buy') then
                 OpenBuyMenu(Value)
@@ -192,6 +262,7 @@ function OpenSubMenu(Value)
 
 end
 
+--sell
 function OpenSellMenu(Value)
     MenuData.CloseAll()
     isInMenu = true
@@ -199,14 +270,19 @@ function OpenSellMenu(Value)
     local player = PlayerPedId()
 
     for k, v in pairs(Config.SellItems[Value]) do
-        elements[k] = {
-            label = v.itemLabel,
-            value = "sell" .. k,
-            desc = v.desc .. "<br><br><br>" .. _U("price") .. " = <span style=color:Yellow;>" .. v.price .. " $" .. "<br>Your money",
-            info = v
 
-        }
+        if v.category == "food" then --get category
+            --display only items with category food
+            elements[k] = {
+                label = v.itemLabel,
+                value = "sell" .. k,
+                desc = v.desc .. "<br><br><br>" .. "PRICE" .. " = <span style=color:Yellow;>" .. v.price .. " $" .. "",
+                info = v
 
+
+            }
+
+        end
 
     end
 
@@ -224,9 +300,8 @@ function OpenSellMenu(Value)
             local ItemLabel = data.current.info.itemLabel
             local currencyType = data.current.info.currencyType
             local ItemPrice = data.current.info.price
-            local ItemDesc = data.current.info.desc
 
-            TriggerServerEvent("vorp_stores:sell", ItemLabel, ItemName, currencyType, ItemPrice, ItemDesc)
+            TriggerServerEvent("vorp_stores:sell", ItemLabel, ItemName, currencyType, ItemPrice) --sell it
 
         end,
 
@@ -238,10 +313,12 @@ function OpenSellMenu(Value)
 
 end
 
+--- buy
 function OpenBuyMenu(Value)
     MenuData.CloseAll()
     isInMenu = true
     local elements = {}
+    local player = PlayerPedId()
 
     for i, v in pairs(Config.BuyItems[Value]) do
         elements[i] = {
@@ -269,26 +346,26 @@ function OpenBuyMenu(Value)
             local ItemLabel = data.current.info.itemLabel
             local currencyType = data.current.info.currencyType
             local ItemPrice = data.current.info.price
-
-
             TriggerServerEvent("vorp_stores:buy", ItemLabel, ItemName, currencyType, ItemPrice)
 
         end,
 
         function(data, menu)
             menu.close()
-            ClearPedTasksImmediately(PlayerPedId())
+            ClearPedTasksImmediately(player)
             isInMenu = false
         end)
 
 end
 
+--- get job
 RegisterNetEvent("vorp_stores:sendPlayerJob")
 AddEventHandler("vorp_stores:sendPlayerJob", function(CharacterJob)
     PlayerJob = CharacterJob
 
 end)
 
+--remove all
 AddEventHandler('onResourceStop', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
@@ -308,5 +385,4 @@ AddEventHandler('onResourceStop', function(resourceName)
         SetEntityAsNoLongerNeeded(v.npc)
     end
 
-    -- blips = {}
 end)
