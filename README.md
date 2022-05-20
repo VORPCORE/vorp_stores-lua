@@ -23,6 +23,16 @@ vorp stores in Lua (not a conversion from th C#) totaly from scratch
 
 ## Preview
 
+<img width="327" alt="image" src="https://user-images.githubusercontent.com/87246847/169596794-2f15e055-8b36-4e9d-a038-a94080b600fe.png">
+<img width="299" alt="image" src="https://user-images.githubusercontent.com/87246847/169596867-8857a8c5-3f4b-472b-9c06-22e95b22c91a.png">
+<img width="310" alt="image" src="https://user-images.githubusercontent.com/87246847/169596908-19b5425d-68d3-4f88-b6a9-03fa8dfecdca.png">
+
+
+
+## Dependency
+[MenuApi](https://github.com/VORPCORE/vorp_stores-lua/files/8743531/menuapi.zip)
+- ensure menuapi `on the top of resources.cfg`
+- use this menuapi as it will have differente features. `it is compatible to other scripts` developers gonna have more to work with.
 
 
 ## Support 
