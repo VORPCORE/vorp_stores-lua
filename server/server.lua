@@ -100,7 +100,7 @@ AddEventHandler('vorp_stores:getPlayerJob', function()
     local User = VORPcore.getUser(_source)
     local Character = User.getUsedCharacter
     local CharacterJob = Character.job
+    local CharacterGrade = Character.jobGrade
 
-
-    TriggerClientEvent('vorp_stores:sendPlayerJob', _source, CharacterJob)
+    TriggerClientEvent('vorp_stores:sendPlayerJob', _source, CharacterJob, CharacterGrade)
 end)

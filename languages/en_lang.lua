@@ -3,11 +3,13 @@
 
 Locales["en_lang"] = {
 
-    SubPrompt = "press",
+    SubPrompt = "Press",
     Sellitem = "Sell Item",
     SubMenu = "Menu",
-    you_broke = "you broke",
-    price = "PRICE"
+    
+    categoryfood = "food",
+    categoryTools = "tools",
+    categoryMeds = "meds",
 
 
 }
