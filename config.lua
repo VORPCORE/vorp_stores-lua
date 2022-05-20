@@ -1,35 +1,27 @@
 Config = {}
 
 -- TODO
--- ADD BLUR
 -- CAMERA FACE NPC
--- CINEMATIC
 -- NPC ANIMATION
--- TYPE SELL OR BUY
--- jobrank
 
-
---- MENU POSITION ---
-
+--menu position
 -- "center" / "top-left" / "top-right"
-Config.Align = "center"
+Config.Align = "top-left"
 
---- CHOOSE LANGUAGE IF AVAILABLE ---
 Config.defaultlang = "en_lang"
 
 -- open stores
-Config.Key = 0x39336A4F --[Space]
+Config.Key = 0x760A9C6F --[G]
 
 
 
 --- STORES ---
 Config.Stores = {
-    Val = {
+    Valentine = {
         blipAllowed = true,
         BlipName = 'valentine store',
         storeName = 'valentine ',
         PromptName = "general store",
-        Actions = { sell = true, buy = false },
         sprite = 90287351,
         x = -380.723, y = 825.3263, z = 116.00, h = 100.00, --blip/ prompt and npc positions
         distanceOpenStore = 3.0,
@@ -37,16 +29,14 @@ Config.Stores = {
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         AllowedJobs = {}, -- empty everyone can use
         JobGrade = 0, -- rank allowed
-        -- todo have stores decide which categories to have
-        category = { "Food", "tools", "meds" }, -- you need to add the same to the items category
-        categoryDescription = { "get some food", "get some meds" }
+        category = { "food", "tools" }, -- you need to add the same words to the sellitems and buyitems category you can add new categories as long the items have the category names
+        storeType = { "sell", "buy" } -- choose the storetype
     },
 
     Rhodes = {
         blipAllowed = true,
         BlipName = 'Rhodes Store',
         storeName = 'Rhodes',
-        Actions = { sell = true, buy = false },
         PromptName = " general sell store",
         sprite = 90287351,
         x = -345.014, y = 840.3168, z = 116.63, h = 100.00,
@@ -54,10 +44,9 @@ Config.Stores = {
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         AllowedJobs = { "police", "sheriff" }, -- jobs allowed
-        JobGrade = 1,
-        -- todo have stores decide which categories to have
-        category = { "Food", "tools", "meds" },
-        categoryDescription = { "get some food", "get some tools", "get some meds" }
+        JobGrade = 0,
+        category = { "food", "tools", "meds" },
+        storeType = { "sell" } -- only one type
 
     },
 }
@@ -72,37 +61,35 @@ Config.Stores = {
 -- desc = a description of the item
 -- category = where the item will be displayed at
 
----- SELL ITEMS -----------
+---------------------------------------------------- SELL ITEMS --------------------------------------------------------------
 Config.SellItems = {
-    Val = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 10, desc = "fresh apples", category = "Food" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "gold", sellprice = 40, desc = "sell pick axe", category = "tools" },
+    Valentine = {
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 10, desc = "sell apples", category = "food" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
 
     },
     Rhodes = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell get cash", category = "Food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "gold", sellprice = 10, desc = " sell to get gold", category = "Food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell get cash", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = " sell to get gold", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "gold", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
     }
 }
 
-
-
---------- BUY ITEMS --------
+------------------------------------------------------ BUY ITEMS ---------------------------------------------------------
 Config.BuyItems = {
-    Val = {
-        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " gold nuget ", category = "Food" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", buyprice = 40, desc = " Pick Axe ", category = "tools" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "bandage", category = "meds" },
+    Valentine = {
+        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " buy gold nuget ", category = "food" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", buyprice = 40, desc = " buy Pick Axe ", category = "tools" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = " buy bandage", category = "meds" },
 
     },
 
     Rhodes = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "apple desc cash", category = "Food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "gold", buyprice = 10, desc = "buy water with gold", category = "Food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " gold nuget ", category = "Food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = " buy apple ", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water ", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
+        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " buy gold nuget ", category = "food" },
     }
 }
