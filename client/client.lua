@@ -157,8 +157,8 @@ function OpenCategory(storeId) -- CreateBaseMenu(storeId)
     --    { label = _U("category_misc"), value = "f", desc = "Get some tools " },
 
     --}
-    for k, v in pairs(Config.Stores[storeId]) do
-        table.insert(elements, { label = v.categoryLabel, value = "test", desc = "" })
+    for k, v in pairs(Config.Stores) do
+        table.insert(elements, { label = v.category, value = v.category, desc = "" })
     end
 
     MenuData.Open('default', GetCurrentResourceName(), 'menuapi' .. storeId, {

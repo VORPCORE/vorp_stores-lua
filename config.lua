@@ -37,9 +37,8 @@ Config.Stores = {
         NpcModel = "S_M_M_UNIBUTCHERS_01",
         AllowedJobs = {}, -- empty everyone can use
         JobGrade = 0, -- rank allowed
-
         -- todo have stores decide which categories to have
-        categoryLabel = { one = "Food" },
+        category = { "Food", "tools", "meds" }, -- you need to add the same to the items category
         categoryDescription = { "get some food", "get some meds" }
     },
 
@@ -57,7 +56,7 @@ Config.Stores = {
         AllowedJobs = { "police", "sheriff" }, -- jobs allowed
         JobGrade = 1,
         -- todo have stores decide which categories to have
-        categoryLabel = { "Food", "Tools", "Meds" },
+        category = { "Food", "tools", "meds" },
         categoryDescription = { "get some food", "get some tools", "get some meds" }
 
     },
@@ -76,14 +75,14 @@ Config.Stores = {
 ---- SELL ITEMS -----------
 Config.SellItems = {
     Val = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 10, desc = "fresh apples", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 10, desc = "fresh apples", category = "Food" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "gold", sellprice = 40, desc = "sell pick axe", category = "tools" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
 
     },
     Rhodes = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell get cash", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "gold", sellprice = 10, desc = " sell to get gold", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell get cash", category = "Food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "gold", sellprice = 10, desc = " sell to get gold", category = "Food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "gold", sellprice = 40, desc = "sell pick axe", category = "tools" },
     }
@@ -94,16 +93,16 @@ Config.SellItems = {
 --------- BUY ITEMS --------
 Config.BuyItems = {
     Val = {
-        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " gold nuget ", category = "food" },
+        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " gold nuget ", category = "Food" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", buyprice = 40, desc = " Pick Axe ", category = "tools" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "bandage", category = "meds" },
 
     },
 
     Rhodes = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "apple desc cash", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "gold", buyprice = 10, desc = "buy water with gold", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "apple desc cash", category = "Food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "gold", buyprice = 10, desc = "buy water with gold", category = "Food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " gold nuget ", category = "food" },
+        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " gold nuget ", category = "Food" },
     }
 }
