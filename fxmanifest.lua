@@ -17,7 +17,8 @@ shared_scripts {
 }
 
 dependencies {
-    'menuapi', -- download from the vorp github
+    'menuapi',
+    'vorp_inputs' -- download from the vorp github
 }
 
 --dont touch
