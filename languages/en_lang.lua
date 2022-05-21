@@ -24,5 +24,6 @@ Locales["en_lang"] = {
     youbought = "You bought ",
     youdontgold = "you dont have enough gold",
     youdontcash = "you dont have enough cash",
+    cantcarry = " you cant carry this items"
 
 }
