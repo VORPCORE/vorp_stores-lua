@@ -1,3 +1,7 @@
+<1.2>
+- minor fixes for notification not displaying
+- if menu is center added a check
+- fix for radar not showing and ped stuck
 <1.1>
 - remove radar and hud when in store
 - fix minor things
