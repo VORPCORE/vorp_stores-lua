@@ -262,7 +262,7 @@ function OpenSellMenu(storeId, category)
                     itemHeight = "2vh",
                     label = "<img style='max-height:45px;max-width:45px;float: left;text-align: center; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" .. storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" .. storeItem.itemLabel .. "</span>",
                     value = "sell" .. tostring(elementIndex),
-                    desc = "" .. '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' .. _U("sellfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. storeItem.sellprice .. "</span><span style='color:Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" .. storeItem.desc,
+                    desc = "" .. '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' .. _U("sellfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. storeItem.sellprice .. "</span><span style='color: Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" .. storeItem.desc,
                     info = storeItem
 
 
@@ -364,8 +364,8 @@ function OpenBuyMenu(storeId, category)
             end
 
             menuElements[elementIndex] = {
-                itemHeight = "2vh",
-                label = "<img style='max-height:40px;max-width:40px;float: left;text-align: center;margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" .. storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" .. storeItem.itemLabel .. "</span>",
+
+                label = "<img style='max-height: 40px;max-width: 40px;float: left;text-align: center;margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" .. storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" .. storeItem.itemLabel .. "</span>",
                 value = "sell" .. tostring(elementIndex),
                 desc = "" .. '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' .. _U("buyfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. storeItem.buyprice .. "</span><span style='color:Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" .. storeItem.desc,
                 info = storeItem
@@ -379,66 +379,67 @@ function OpenBuyMenu(storeId, category)
 
 
 
-
-
-        MenuData.Open('default', GetCurrentResourceName(), 'menuapi' .. storeId .. category, {
-            title    = storeConfig.storeName,
-            subtext  = storeItem.currencyType,
-            align    = Config.Align,
-            elements = menuElements,
-            lastmenu = "OpenSubMenu"
-
-        },
-            function(data, menu)
-                if (data.current == "backup") then
-                    _G[data.trigger](storeId, category)
-                else
-                    local ItemName = data.current.info.itemName
-                    local ItemLabel = data.current.info.itemLabel
-                    local currencyType = data.current.info.currencyType
-                    local buyPrice = data.current.info.buyprice
-
-                    local myInput = {
-                        type = "enableinput", -- dont touch
-                        inputType = "input",
-                        button = _U("confirm"), -- button name
-                        placeholder = _U("insertamount"), --placeholdername
-                        style = "block", --- dont touch
-                        attributes = {
-                            inputHeader = _U("amount"), -- header
-                            type = "number", -- inputype text, number,date.etc if number comment out the pattern
-                            pattern = "[0-9]", -- regular expression validated for only numbers "[0-9]", for letters only [A-Za-z]+   with charecter limit  [A-Za-z]{5,20}     with chareceter limit and numbers [A-Za-z0-9]{5,}
-                            title = _U("must"), -- if input doesnt match show this message
-                            style = "border-radius: 10px; background-color: ; border:none;", -- style  the inptup
-                        }
-                    }
-
-                    TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
-
-                        local qty = tonumber(result)
-                        if qty ~= nil and qty ~= 0 and qty > 0 then
-
-                            TriggerServerEvent("vorp_stores:buy", ItemLabel, ItemName, currencyType, buyPrice, qty) --sell it
-                        else
-                            TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
-                        end
-
-
-                    end)
-
-
-
-                end
-            end,
-
-            function(data, menu)
-                menu.close()
-                ClearPedTasksImmediately(player)
-                isInMenu = false
-                DisplayHud(true)
-                DisplayRadar(true)
-            end)
     end
+
+    MenuData.Open('default', GetCurrentResourceName(), 'menuapi' .. storeId .. category, {
+        title    = storeConfig.storeName,
+        subtext  = "buy menu",
+        align    = Config.Align,
+        elements = menuElements,
+        lastmenu = "OpenSubMenu"
+
+    },
+        function(data, menu)
+            if (data.current == "backup") then
+                _G[data.trigger](storeId, category)
+            else
+
+                local ItemName = data.current.info.itemName
+                local ItemLabel = data.current.info.itemLabel
+                local currencyType = data.current.info.currencyType
+                local buyPrice = data.current.info.buyprice
+
+                local myInput = {
+                    type = "enableinput", -- dont touch
+                    inputType = "input",
+                    button = _U("confirm"), -- button name
+                    placeholder = _U("insertamount"), --placeholdername
+                    style = "block", --- dont touch
+                    attributes = {
+                        inputHeader = _U("amount"), -- header
+                        type = "number", -- inputype text, number,date.etc if number comment out the pattern
+                        pattern = "[0-9]", -- regular expression validated for only numbers "[0-9]", for letters only [A-Za-z]+   with charecter limit  [A-Za-z]{5,20}     with chareceter limit and numbers [A-Za-z0-9]{5,}
+                        title = _U("must"), -- if input doesnt match show this message
+                        style = "border-radius: 10px; background-color: ; border:none;", -- style  the inptup
+                    }
+                }
+
+                TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
+
+                    local qty = tonumber(result)
+                    if qty ~= nil and qty ~= 0 and qty > 0 then
+
+                        TriggerServerEvent("vorp_stores:buy", ItemLabel, ItemName, currencyType, buyPrice, qty) --sell it
+                    else
+                        TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
+                    end
+
+
+                end)
+
+
+
+            end
+        end,
+
+        function(data, menu)
+            menu.close()
+            ClearPedTasksImmediately(player)
+            isInMenu = false
+            DisplayHud(true)
+            DisplayRadar(true)
+        end)
+
 end
 
 RegisterNetEvent("vorp_stores:sendPlayerJob")

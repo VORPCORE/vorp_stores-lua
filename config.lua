@@ -29,8 +29,8 @@ Config.Stores = {
         NpcModel = "U_M_M_NbxGeneralStoreOwner_01",
         AllowedJobs = {}, -- empty everyone can use
         JobGrade = 0, -- rank allowed
-        category = { "food", "tools" }, -- you need to add the same words to the sellitems and buyitems category you can add new categories as long the items have the category names
-        storeType = { "sell", "buy" } -- choose the storetype
+        category = { "food", "tools", "meds" }, -- you need to add the same words to the sellitems and buyitems category you can add new categories as long the items have the category names
+        storeType = { "sell", "buy", } -- choose the storetype
     },
 
     Rhodes = {
@@ -193,57 +193,58 @@ Config.Stores = {
 ---------------------------------------------------- SELL ITEMS --------------------------------------------------------------
 Config.SellItems = {
     Valentine = {
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
         { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 10, desc = "sell apples", category = "food" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
 
     },
     Rhodes = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = " sell ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
     },
     Strawberry = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = " sell ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
     },
     Blackwater = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = " sell ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
     },
     Armadillo = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = " sell ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
     },
     Tumbleweed = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = " sell ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
     },
     StDenis = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = " sell ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
     },
     Vanhorn = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = " sell ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = " sell ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
     },
     BlackwaterFishing = {
-        { itemLabel = "Bait", itemName = "Bait", currencyType = "cash", sellprice = 50, desc = " sell Bait", category = "bait" },
-        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", sellprice = 10, desc = " sell ", category = "bait" },
-        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", sellprice = 40, desc = "sell ", category = "bait" },
+        { itemLabel = "Bait", itemName = "Bait", currencyType = "cash", sellprice = 50, desc = "sell Bait", category = "bait" },
+        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", sellprice = 10, desc = "sell", category = "bait" },
+        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", sellprice = 40, desc = "sell", category = "bait" },
         { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
     },
     Wapiti = {
@@ -257,66 +258,67 @@ Config.SellItems = {
 ------------------------------------------------------ BUY ITEMS ---------------------------------------------------------
 Config.BuyItems = {
     Valentine = {
-        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " buy gold nuget ", category = "food" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", buyprice = 40, desc = " buy Pick Axe ", category = "tools" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = " buy bandage", category = "meds" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", buyprice = 40, desc = "buy Pick Axe", category = "tools" },
+        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = "buy gold nuget", category = "food" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", buyprice = 40, desc = "buy Pick Axe", category = "tools" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
 
     },
 
     Rhodes = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = " buy apple ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
-        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = " buy gold nuget ", category = "food" },
+        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = "buy gold nuget", category = "food" },
     },
 
     Strawberry = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = " buy apple ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
 
     },
 
     Blackwater = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = " buy apple ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
 
     },
     Armadillo = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = " buy apple ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
 
     },
     Tumbleweed = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = " buy apple ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
 
     },
     StDenis = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = " buy apple ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
 
     },
     Vanhorn = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = " buy apple ", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water ", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
         { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
 
     },
     BlackwaterFishing = {
-        { itemLabel = "Bait", itemName = "bait", currencyType = "cash", buyprice = 50, desc = " buy Bait ", category = "bait" },
+        { itemLabel = "Bait", itemName = "bait", currencyType = "cash", buyprice = 50, desc = "buy Bait", category = "bait" },
         { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", buyprice = 10, desc = "buy", category = "bait" },
-        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", buyprice = 40, desc = "buy ", category = "bait" },
+        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", buyprice = 40, desc = "buy", category = "bait" },
 
     },
     Wapiti = {
-        { itemLabel = "Bait", itemName = "bait", currencyType = "cash", buyprice = 50, desc = " buy Bait ", category = "bait" },
+        { itemLabel = "Bait", itemName = "bait", currencyType = "cash", buyprice = 50, desc = "buy Bait", category = "bait" },
         { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", buyprice = 10, desc = "buy", category = "bait" },
-        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", buyprice = 40, desc = "buy ", category = "bait" },
+        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", buyprice = 40, desc = "buy", category = "bait" },
 
     }
 }
