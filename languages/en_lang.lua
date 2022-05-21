@@ -21,7 +21,7 @@ Locales["en_lang"] = {
     fr = " for~o~ ",
     ofcash = "~q~of cash",
     ofgold = " ~q~ of gold",
-    youbough = "You bought ",
+    youbought = "You bought ",
     youdontgold = "you dont have enough gold",
     youdontcash = "you dont have enough cash",
 
