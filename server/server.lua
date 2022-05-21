@@ -39,7 +39,7 @@ AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty)
             TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. ItemPrice .. _U("ofgold"), 3000)
         end
     else
-        TriggerClientEvent("vorp:TipRight", _source, _U("youdontsell"), 3000)
+        TriggerClientEvent("vorp:TipRight", _source, "no item ", 3000)
     end
 end)
 
@@ -78,7 +78,7 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty)
                 if currencyType == "gold" then
                     if gold >= ItemPrice then
 
-                        local count = 1
+
                         VORPinv.addItem(_source, ItemName, quantity)
                         Character.removeCurrency(1, ItemPrice)
                         TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. "" .. ItemLabel .. _U("fr") .. ItemPrice .. _U("ofgold"), 3000)

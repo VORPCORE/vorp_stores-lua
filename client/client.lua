@@ -110,7 +110,7 @@ Citizen.CreateThread(function()
                         PromptSetActiveGroupThisFrame(PromptGroup, label)
                         if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
                             OpenCategory(storeId)
-                            DisplayHud(false)
+
                             DisplayRadar(false)
                             TaskStandStill(player, -1)
                         end
@@ -131,7 +131,7 @@ Citizen.CreateThread(function()
                                 PromptSetActiveGroupThisFrame(PromptGroup, label)
                                 if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
                                     OpenCategory(storeId)
-                                    DisplayHud(false)
+
                                     DisplayRadar(false)
                                     TaskStandStill(player, -1)
                                 end
@@ -182,7 +182,7 @@ function OpenCategory(storeId)
             menu.close()
             isInMenu = false
 
-            DisplayHud(true)
+
             DisplayRadar(true)
         end)
 
@@ -232,7 +232,7 @@ function OpenSubMenu(storeId, category)
         function(data, menu)
             menu.close()
             isInMenu = false
-            DisplayHud(true)
+
             DisplayRadar(true)
         end)
 
@@ -304,23 +304,23 @@ function OpenSellMenu(storeId, category)
                     attributes = {
                         inputHeader = _U("amount"), -- header
                         type = "number", -- inputype text, number,date.etc if number comment out the pattern
-                        pattern = "[0-9]{1,20}", -- regular expression validated for only numbers "[0-9]", for letters only [A-Za-z]+   with charecter limit  [A-Za-z]{5,20}     with chareceter limit and numbers [A-Za-z0-9]{5,}
+                        pattern = "[0-9]", -- regular expression validated for only numbers "[0-9]", for letters only [A-Za-z]+   with charecter limit  [A-Za-z]{5,20}     with chareceter limit and numbers [A-Za-z0-9]{5,}
                         title = _U("must"), -- if input doesnt match show this message
                         style = "border-radius: 10px; background-color: ; border:none;", -- style  the inptup
                     }
                 }
-                menu.close()
-                ClearPedTasksImmediately(player)
-                isInMenu = false
-
+                MenuData.CloseAll()
                 TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
                     local qty = tonumber(result)
 
                     if qty ~= nil and qty ~= 0 and qty > 0 then
 
                         TriggerServerEvent("vorp_stores:sell", ItemLabel, ItemName, currencyType, sellPrice, qty) --sell it
+                        print("hello2")
                     else
+                        print("hello")
                         TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
+
                     end
 
 
@@ -336,8 +336,6 @@ function OpenSellMenu(storeId, category)
             menu.close()
             ClearPedTasksImmediately(player)
             isInMenu = false
-
-            DisplayHud(true)
             DisplayRadar(true)
         end)
 
@@ -413,7 +411,7 @@ function OpenBuyMenu(storeId, category)
                         style = "border-radius: 10px; background-color: ; border:none;", -- style  the inptup
                     }
                 }
-
+                MenuData.CloseAll()
                 TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
 
                     local qty = tonumber(result)
@@ -436,7 +434,6 @@ function OpenBuyMenu(storeId, category)
             menu.close()
             ClearPedTasksImmediately(player)
             isInMenu = false
-            DisplayHud(true)
             DisplayRadar(true)
         end)
 

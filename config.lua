@@ -30,7 +30,7 @@ Config.Stores = {
         AllowedJobs = {}, -- empty everyone can use
         JobGrade = 0, -- rank allowed
         category = { "food", "tools", "meds" }, -- you need to add the same words to the sellitems and buyitems category you can add new categories as long the items have the category names
-        storeType = { "sell", "buy", } -- choose the storetype
+        storeType = { "sell", "buy" } -- choose the storetype
     },
 
     Rhodes = {
