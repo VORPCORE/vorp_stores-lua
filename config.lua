@@ -13,8 +13,6 @@ Config.defaultlang = "en_lang"
 -- open stores
 Config.Key = 0x760A9C6F --[G]
 
-
-
 --- STORES ---
 Config.Stores = {
     Valentine = {
