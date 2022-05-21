@@ -309,7 +309,13 @@ function OpenSellMenu(storeId, category)
                         style = "border-radius: 10px; background-color: ; border:none;", -- style  the inptup
                     }
                 }
-                MenuData.CloseAll()
+                if Config.Align == "center" then
+                    MenuData.CloseAll()
+                    ClearPedTasksImmediately(player)
+                    isInMenu = false
+                    DisplayRadar(true)
+                end
+
                 TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
                     local qty = tonumber(result)
 
@@ -411,7 +417,13 @@ function OpenBuyMenu(storeId, category)
                         style = "border-radius: 10px; background-color: ; border:none;", -- style  the inptup
                     }
                 }
-                MenuData.CloseAll()
+                if Config.Align == "center" then
+                    MenuData.CloseAll()
+                    ClearPedTasksImmediately(player)
+                    isInMenu = false
+                    DisplayRadar(true)
+                end
+
                 TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
 
                     local qty = tonumber(result)

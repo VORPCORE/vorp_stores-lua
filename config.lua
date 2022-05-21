@@ -6,7 +6,7 @@ Config = {}
 
 --menu position
 -- "center" / "top-left" / "top-right"
-Config.Align = "top-left"
+Config.Align = "center"
 
 Config.defaultlang = "en_lang"
 
