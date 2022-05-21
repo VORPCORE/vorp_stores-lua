@@ -357,7 +357,7 @@ function OpenBuyMenu(storeId, category)
 
             menuElements[elementIndex] = {
                 itemHeight = "2vh",
-                label = "<img style='max-height:40px;max-width:40px;float: left;text-align: center;' src='nui://vorp_inventory/html/img/items/" .. storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" .. storeItem.itemLabel .. "</span>",
+                label = "<img style='max-height:40px;max-width:40px;float: left;text-align: center;margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" .. storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" .. storeItem.itemLabel .. "</span>",
                 value = "sell" .. tostring(elementIndex),
                 desc = "" .. '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' .. _U("buyfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. storeItem.buyprice .. "</span><span style='color:Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" .. storeItem.desc,
                 info = storeItem
