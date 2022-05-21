@@ -57,7 +57,7 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty)
     local ItemLabel = label
     local currencyType = type
     local quantity = qty
-    local total = (tonumber(ItemPrice) * tonumber(quantity))
+    local total = (ItemPrice * quantity)
 
     TriggerEvent("vorpCore:canCarryItems", tonumber(_source), 1, function(canCarry) --check inv
         TriggerEvent("vorpCore:canCarryItem", tonumber(_source), ItemName, 1, function(canCarry2) --check item count

@@ -322,9 +322,9 @@ function OpenSellMenu(storeId, category)
                     if qty ~= nil and qty ~= 0 and qty > 0 then
 
                         TriggerServerEvent("vorp_stores:sell", ItemLabel, ItemName, currencyType, sellPrice, qty) --sell it
-                        print("hello2")
+                       
                     else
-                        print("hello")
+                      
                         TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
 
                     end
