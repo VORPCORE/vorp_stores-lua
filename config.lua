@@ -46,7 +46,7 @@ Config.Stores = {
         AllowedJobs = { "police", "sheriff" }, -- jobs allowed
         JobGrade = 0,
         category = { "food", "tools", "meds" },
-        storeType = { "sell", "buy" } -- only one type
+        storeType = { "sell", "buy" } --remove one
 
     },
     Strawberry = {
@@ -62,7 +62,7 @@ Config.Stores = {
         AllowedJobs = {}, -- jobs allowed
         JobGrade = 0,
         category = { "food", "tools", "meds" },
-        storeType = { "sell", "buy" } -- only one type
+        storeType = { "sell", "buy" }
 
     },
     Blackwater = {
