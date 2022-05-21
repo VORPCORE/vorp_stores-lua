@@ -21,7 +21,12 @@ dependencies {
     'vorp_inputs' -- download from the vorp github
 }
 
+<<<<<<< HEAD
 
+=======
+--dont
+--touch
+>>>>>>> d018675c8b9ea85e707ae78275115defe4fe3b2c
 version '1.0'
 vorp_checker 'yes'
 vorp_name '^4Resource version Check^3'
