@@ -86,7 +86,7 @@ Citizen.CreateThread(function()
     InsertNpcs()
 
     while true do
-        Citizen.Wait(15)
+        Citizen.Wait(0)
         local player = PlayerPedId()
         local coords = GetEntityCoords(player)
         local sleep = coords, true
