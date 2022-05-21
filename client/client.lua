@@ -110,7 +110,8 @@ Citizen.CreateThread(function()
                         PromptSetActiveGroupThisFrame(PromptGroup, label)
                         if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
                             OpenCategory(storeId)
-
+                            DisplayHud(false)
+                            DisplayRadar(false)
                             TaskStandStill(player, -1)
                         end
                     end
@@ -130,7 +131,8 @@ Citizen.CreateThread(function()
                                 PromptSetActiveGroupThisFrame(PromptGroup, label)
                                 if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
                                     OpenCategory(storeId)
-
+                                    DisplayHud(false)
+                                    DisplayRadar(false)
                                     TaskStandStill(player, -1)
                                 end
                             end
@@ -179,7 +181,9 @@ function OpenCategory(storeId)
         function(data, menu)
             menu.close()
             isInMenu = false
-            DestroyAllCams(true)
+
+            DisplayHud(true)
+            DisplayRadar(true)
         end)
 
 end
@@ -228,6 +232,8 @@ function OpenSubMenu(storeId, category)
         function(data, menu)
             menu.close()
             isInMenu = false
+            DisplayHud(true)
+            DisplayRadar(true)
         end)
 
 end
@@ -330,7 +336,9 @@ function OpenSellMenu(storeId, category)
             menu.close()
             ClearPedTasksImmediately(player)
             isInMenu = false
-            DestroyAllCams(true)
+
+            DisplayHud(true)
+            DisplayRadar(true)
         end)
 
 end
@@ -427,7 +435,8 @@ function OpenBuyMenu(storeId, category)
                 menu.close()
                 ClearPedTasksImmediately(player)
                 isInMenu = false
-                DestroyAllCams(true)
+                DisplayHud(true)
+                DisplayRadar(true)
             end)
     end
 end
