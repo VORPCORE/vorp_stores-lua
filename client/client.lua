@@ -5,6 +5,7 @@ local OpenStores
 local PlayerJob
 local JobGrade
 local PromptGroup = GetRandomIntInRange(0, 0xffffff)
+local PromptGroup2 = GetRandomIntInRange(0, 0xffffff)
 local isInMenu = false
 local blips = {}
 local npcs = {}
@@ -42,6 +43,21 @@ function PromptSetUp()
     Citizen.InvokeNative(0xC5F428EE08FA7F2C, OpenStores, true)
     PromptRegisterEnd(OpenStores)
     Blips()
+end
+
+function PromptSetUp2()
+    local str = _U("SubPrompt")
+    CloseStores = PromptRegisterBegin()
+    PromptSetControlAction(CloseStores, Config.Key)
+    str = CreateVarString(10, 'LITERAL_STRING', str)
+    PromptSetText(CloseStores, str)
+    PromptSetEnabled(CloseStores, 1)
+    PromptSetVisible(CloseStores, 1)
+    PromptSetStandardMode(CloseStores, 1)
+    PromptSetGroup(CloseStores, PromptGroup2)
+    Citizen.InvokeNative(0xC5F428EE08FA7F2C, CloseStores, true)
+    PromptRegisterEnd(CloseStores)
+
 end
 
 ------------------- NPCS --------------------
@@ -83,6 +99,7 @@ end
 ------- STORES START ----------
 Citizen.CreateThread(function()
     PromptSetUp()
+    PromptSetUp2()
     InsertNpcs()
 
     while true do
@@ -91,55 +108,131 @@ Citizen.CreateThread(function()
         local coords = GetEntityCoords(player)
         local sleep = coords, true
         local dead = IsEntityDead(player)
-
+        local hour = GetClockHours()
 
         if isInMenu == false and not dead then
 
             for storeId, storeConfig in pairs(Config.Stores) do
+                if storeConfig.StoreHoursAllowed == true then
+                    if hour >= storeConfig.StoreCLose then
+                        local coordsDist = vector3(coords.x, coords.y, coords.z)
+                        local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
+                        local distance = #(coordsDist - coordsStore)
 
-                --## run this before distance check  no need to run a code that is no meant for the client ## --
-                if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
-                    local coordsDist = vector3(coords.x, coords.y, coords.z)
-                    local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
-                    local distance = #(coordsDist - coordsStore)
+                        if (distance <= storeConfig.distanceOpenStore) then
+                            sleep = false
+                            local label2 = CreateVarString(10, 'LITERAL_STRING', _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreCLose .. _U("pm"))
+                            PromptSetActiveGroupThisFrame(PromptGroup2, label2)
 
-                    if (distance <= storeConfig.distanceOpenStore) then --check distance
-                        sleep = false
-                        local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
-
-                        PromptSetActiveGroupThisFrame(PromptGroup, label)
-                        if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
-                            OpenCategory(storeId)
-
-                            DisplayRadar(false)
-                            TaskStandStill(player, -1)
+                            if Citizen.InvokeNative(0xC92AC953F0A982AE, CloseStores) then
+                                Wait(100)
+                                TriggerEvent("vorp:TipRight", _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreCLose .. _U("pm"), 3000)
+                            end
                         end
-                    end
+                    elseif hour >= storeConfig.StoreOpen then
 
-                else -- job only
 
-                    TriggerServerEvent("vorp_stores:getPlayerJob")
+                        --## run this before distance check  no need to run a code that is no meant for the client ## --
+                        if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
+                            local coordsDist = vector3(coords.x, coords.y, coords.z)
+                            local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
+                            local distance = #(coordsDist - coordsStore)
 
-                    if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                        if storeConfig.JobGrade == JobGrade then
-                            local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y, storeConfig.z, true)
+                            if (distance <= storeConfig.distanceOpenStore) then --check distance
 
-                            if (distance <= storeConfig.distanceOpenStore) then
+
                                 sleep = false
                                 local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
-
                                 PromptSetActiveGroupThisFrame(PromptGroup, label)
-                                if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
-                                    OpenCategory(storeId)
 
+                                if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
+                                    OpenCategory(storeId)
+                                    print(storeId)
                                     DisplayRadar(false)
                                     TaskStandStill(player, -1)
                                 end
+
+
+                            end
+
+                        else -- job only
+
+                            TriggerServerEvent("vorp_stores:getPlayerJob")
+
+                            if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
+                                if storeConfig.JobGrade == JobGrade then
+                                    local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y, storeConfig.z, true)
+
+                                    if (distance <= storeConfig.distanceOpenStore) then
+                                        sleep = false
+                                        local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
+
+                                        PromptSetActiveGroupThisFrame(PromptGroup, label)
+                                        if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                                            OpenCategory(storeId)
+
+                                            DisplayRadar(false)
+                                            TaskStandStill(player, -1)
+                                        end
+                                    end
+                                end
+                            end
+
+                        end
+
+
+
+                    end
+                else
+                    --## run this before distance check  no need to run a code that is no meant for the client ## --
+                    if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
+                        local coordsDist = vector3(coords.x, coords.y, coords.z)
+                        local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
+                        local distance = #(coordsDist - coordsStore)
+
+                        if (distance <= storeConfig.distanceOpenStore) then --check distance
+
+
+                            sleep = false
+                            local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
+                            PromptSetActiveGroupThisFrame(PromptGroup, label)
+
+                            if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
+                                OpenCategory(storeId)
+                                print(storeId)
+                                DisplayRadar(false)
+                                TaskStandStill(player, -1)
+                            end
+
+
+                        end
+
+                    else -- job only
+
+                        TriggerServerEvent("vorp_stores:getPlayerJob")
+
+                        if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
+                            if storeConfig.JobGrade == JobGrade then
+                                local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y, storeConfig.z, true)
+
+                                if (distance <= storeConfig.distanceOpenStore) then
+                                    sleep = false
+                                    local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
+
+                                    PromptSetActiveGroupThisFrame(PromptGroup, label)
+                                    if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                                        OpenCategory(storeId)
+
+                                        DisplayRadar(false)
+                                        TaskStandStill(player, -1)
+                                    end
+                                end
                             end
                         end
-                    end
 
+                    end
                 end
+
             end
         end
         if sleep then
@@ -322,9 +415,9 @@ function OpenSellMenu(storeId, category)
                     if qty ~= nil and qty ~= 0 and qty > 0 then
 
                         TriggerServerEvent("vorp_stores:sell", ItemLabel, ItemName, currencyType, sellPrice, qty) --sell it
-                       
+
                     else
-                      
+
                         TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
 
                     end

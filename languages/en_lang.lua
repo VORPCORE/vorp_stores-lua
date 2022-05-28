@@ -24,6 +24,8 @@ Locales["en_lang"] = {
     youbought = "You bought ",
     youdontgold = "you dont have enough gold",
     youdontcash = "you dont have enough cash",
-    cantcarry = " you cant carry this items"
-
+    cantcarry = " you cant carry this items",
+    closed = "~e~CLOSED ~o~",
+    am = ":00~q~am to ~o~",
+    pm = ":00~q~pm"
 }

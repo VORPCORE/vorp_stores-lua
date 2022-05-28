@@ -6,7 +6,7 @@ Config = {}
 
 --menu position
 -- "center" / "top-left" / "top-right"
-Config.Align = "center"
+Config.Align = "top-left"
 
 Config.defaultlang = "en_lang"
 
@@ -28,7 +28,10 @@ Config.Stores = {
         AllowedJobs = {}, -- empty everyone can use
         JobGrade = 0, -- rank allowed
         category = { "food", "tools", "meds" }, -- you need to add the same words to the sellitems and buyitems category you can add new categories as long the items have the category names
-        storeType = { "sell", "buy" } -- choose the storetype
+        storeType = { "sell", "buy" }, -- choose the storetype
+        StoreHoursAllowed = true, -- if you want the stores to use opening and closed hours
+        StoreOpen = 7, -- am
+        StoreCLose = 21 -- pm
     },
 
     Rhodes = {
@@ -41,10 +44,13 @@ Config.Stores = {
         distanceOpenStore = 5.0,
         NpcAllowed = true,
         NpcModel = "S_M_M_UNIBUTCHERS_01",
-        AllowedJobs = { "police", "sheriff" }, -- jobs allowed
+        AllowedJobs = { "police", "sheriff" }, -- jobs allowed as many as you want
         JobGrade = 0,
         category = { "food", "tools", "meds" },
-        storeType = { "sell", "buy" } --remove one
+        storeType = { "sell", "buy" },
+        StoreHoursAllowed = true,
+        StoreOpen = 8, -- am
+        StoreCLose = 20 -- pm
 
     },
     Strawberry = {
@@ -60,7 +66,10 @@ Config.Stores = {
         AllowedJobs = {}, -- jobs allowed
         JobGrade = 0,
         category = { "food", "tools", "meds" },
-        storeType = { "sell", "buy" }
+        storeType = { "sell", "buy" },
+        StoreHoursAllowed = true,
+        StoreOpen = 6, -- am
+        StoreCLose = 23 -- pm
 
     },
     Blackwater = {
@@ -76,7 +85,10 @@ Config.Stores = {
         AllowedJobs = {}, -- jobs allowed
         JobGrade = 0,
         category = { "food", "tools", "meds" },
-        storeType = { "sell", "buy" } -- only one type
+        storeType = { "sell", "buy" }, -- only one type
+        StoreHoursAllowed = true,
+        StoreOpen = 7, -- am
+        StoreCLose = 21 -- pm
 
     },
     Armadillo = {
@@ -92,7 +104,9 @@ Config.Stores = {
         AllowedJobs = {}, -- jobs allowed
         JobGrade = 0,
         category = { "food", "tools", "meds" },
-        storeType = { "sell", "buy" } -- only one type
+        storeType = { "sell", "buy" },
+        StoreOpen = 7, -- am
+        StoreCLose = 21 -- pm
 
     },
     Tumbleweed = {
@@ -108,7 +122,9 @@ Config.Stores = {
         AllowedJobs = {}, -- jobs allowed
         JobGrade = 0,
         category = { "food", "tools", "meds" },
-        storeType = { "sell", "buy" } -- only one type
+        storeType = { "sell", "buy" }, -- only one type
+        StoreOpen = 7, -- am
+        StoreCLose = 21 -- pm
 
     },
     StDenis = {
@@ -124,7 +140,9 @@ Config.Stores = {
         AllowedJobs = {}, -- jobs allowed
         JobGrade = 0,
         category = { "food", "tools", "meds" },
-        storeType = { "sell", "buy" } -- only one type
+        storeType = { "sell", "buy" }, -- only one type
+        StoreOpen = 7, -- am
+        StoreCLose = 21 -- pm
 
     },
     Vanhorn = {
@@ -140,7 +158,9 @@ Config.Stores = {
         AllowedJobs = {}, -- jobs allowed
         JobGrade = 0,
         category = { "food", "tools", "meds" },
-        storeType = { "sell", "buy" } -- only one type
+        storeType = { "sell", "buy" }, -- only one type
+        StoreOpen = 7, -- am
+        StoreCLose = 21 -- pm
 
     },
     BlackwaterFishing = {
@@ -156,7 +176,9 @@ Config.Stores = {
         AllowedJobs = {}, -- jobs allowed
         JobGrade = 0,
         category = { "bait", "tools", },
-        storeType = { "sell", "buy" } -- only one type
+        storeType = { "sell", "buy" }, -- only one type
+        StoreOpen = 7, -- am
+        StoreCLose = 21 -- pm
 
     },
     Wapiti = {
@@ -172,7 +194,9 @@ Config.Stores = {
         AllowedJobs = {}, -- jobs allowed
         JobGrade = 0,
         category = { "food", "tools", },
-        storeType = { "sell", "buy" } -- only one type
+        storeType = { "sell", "buy" }, -- only one type
+        StoreOpen = 7, -- am
+        StoreCLose = 21 -- pm
 
     },
 }

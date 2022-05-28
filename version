@@ -1,3 +1,14 @@
+<1.4>
+- update stores now have opening hours and closed hours
+- changes were made in the config add this bellow to each store you have created so you dont have to redo all over again
+-  * ------------------------------------------------------------------------------------------
+-  StoreHoursAllowed = true, -- if you want the stores to use opening and closed hours
+-  StoreOpen = 7, -- am
+-  StoreCLose = 21 -- pm
+-  * -----------------------------------------------------------------------------------------
+- client files update them 
+- fxmanifest update them to get version check to work
+- update all those
 <1.3>
 - fixed selling and buying quantity
 <1.2>
