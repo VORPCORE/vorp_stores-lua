@@ -105,6 +105,7 @@ Config.Stores = {
         JobGrade = 0,
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" },
+        StoreHoursAllowed = true,
         StoreOpen = 7, -- am
         StoreCLose = 21 -- pm
 
@@ -123,6 +124,7 @@ Config.Stores = {
         JobGrade = 0,
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" }, -- only one type
+        StoreHoursAllowed = true,
         StoreOpen = 7, -- am
         StoreCLose = 21 -- pm
 
@@ -141,6 +143,7 @@ Config.Stores = {
         JobGrade = 0,
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" }, -- only one type
+        StoreHoursAllowed = true,
         StoreOpen = 7, -- am
         StoreCLose = 21 -- pm
 
@@ -159,6 +162,7 @@ Config.Stores = {
         JobGrade = 0,
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" }, -- only one type
+        StoreHoursAllowed = true,
         StoreOpen = 7, -- am
         StoreCLose = 21 -- pm
 
@@ -177,6 +181,7 @@ Config.Stores = {
         JobGrade = 0,
         category = { "bait", "tools", },
         storeType = { "sell", "buy" }, -- only one type
+        StoreHoursAllowed = true,
         StoreOpen = 7, -- am
         StoreCLose = 21 -- pm
 
@@ -195,6 +200,7 @@ Config.Stores = {
         JobGrade = 0,
         category = { "food", "tools", },
         storeType = { "sell", "buy" }, -- only one type
+        StoreHoursAllowed = true,
         StoreOpen = 7, -- am
         StoreCLose = 21 -- pm
 
