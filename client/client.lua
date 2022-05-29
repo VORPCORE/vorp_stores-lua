@@ -7,7 +7,6 @@ local JobGrade
 local PromptGroup = GetRandomIntInRange(0, 0xffffff)
 local PromptGroup2 = GetRandomIntInRange(0, 0xffffff)
 local isInMenu = false
-local npcs = {}
 MenuData = {}
 
 TriggerEvent("menuapi:getData", function(call)
@@ -22,6 +21,31 @@ function AddBlip(Store)
         SetBlipSprite(Config.Stores[Store].BlipHandle, Config.Stores[Store].sprite, 1)
         SetBlipScale(Config.Stores[Store].BlipHandle, 0.2)
         Citizen.InvokeNative(0x9CB1A1623062F402, Config.Stores[Store].BlipHandle, Config.Stores[Store].BlipName)
+    end
+end
+
+---------------- NPC ---------------------
+function LoadModel(model)
+    local model = GetHashKey(model)
+    RequestModel(model)
+    while not HasModelLoaded(model) do
+        RequestModel(model)
+        Citizen.Wait(100)
+    end
+end
+
+function SpawnNPC(Store)
+    local v = Config.Stores[Store]
+    LoadModel(v.NpcModel)
+    if v.NpcAllowed then
+        local npc = CreatePed(v.NpcModel, v.x, v.y, v.z, v.h, false, true, true, true)
+        Citizen.InvokeNative(0x283978A15512B2FE, npc, true)
+        SetEntityCanBeDamaged(npc, false)
+        SetEntityInvincible(npc, true)
+        Wait(500)
+        FreezeEntityPosition(npc, true)
+        SetBlockingOfNonTemporaryEvents(npc, true)
+        Config.Stores[Store].NPC = npc 
     end
 end
 
@@ -55,36 +79,6 @@ function PromptSetUp2()
 
 end
 
-------------------- NPCS --------------------
-function LoadModel(model)
-    local model = GetHashKey(model)
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        RequestModel(model)
-        Citizen.Wait(100)
-    end
-end
-
-function InsertNpcs()
-    for k, v in pairs(Config.Stores) do
-        LoadModel(v.NpcModel)
-        if v.NpcAllowed then
-            local npc = CreatePed(v.NpcModel, v.x, v.y, v.z, v.h, false, true, true, true)
-            Citizen.InvokeNative(0x283978A15512B2FE, npc, true)
-            SetEntityCanBeDamaged(npc, false)
-            SetEntityInvincible(npc, true)
-            Wait(500)
-            FreezeEntityPosition(npc, true)
-            SetBlockingOfNonTemporaryEvents(npc, true)
-            table.insert(npcs, {
-                npc = npc,
-                coords = vector3(v.x, v.y, v.z)
-            })
-
-        end
-    end
-end
-
 function CheckJob(table, element)
     for k, v in pairs(table) do
         if v == element then
@@ -98,7 +92,6 @@ end
 Citizen.CreateThread(function()
     PromptSetUp()
     PromptSetUp2()
-    InsertNpcs()
 
     while true do
         Citizen.Wait(0)
@@ -116,6 +109,12 @@ Citizen.CreateThread(function()
                         if Config.Stores[storeId].BlipHandle then
                             RemoveBlip(Config.Stores[storeId].BlipHandle)
                             Config.Stores[storeId].BlipHandle = nil
+                        end
+                        if Config.Stores[storeId].NPC then
+                            DeleteEntity(Config.Stores[storeId].NPC)
+                            DeletePed(Config.Stores[storeId].NPC)
+                            SetEntityAsNoLongerNeeded(Config.Stores[storeId].NPC)
+                            Config.Stores[storeId].NPC = nil
                         end
                         local coordsDist = vector3(coords.x, coords.y, coords.z)
                         local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
@@ -136,6 +135,9 @@ Citizen.CreateThread(function()
                     elseif hour >= storeConfig.StoreOpen then
                         if not Config.Stores[storeId].BlipHandle and storeConfig.blipAllowed then
                             AddBlip(storeId)
+                        end
+                        if not Config.Stores[storeId].NPC and storeConfig.NpcAllowed then
+                            SpawnNPC(storeId)
                         end
                         -- ## run this before distance check  no need to run a code that is no meant for the client ## --
                         if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
@@ -558,11 +560,10 @@ AddEventHandler('onResourceStop', function(resourceName)
         if v.BlipHandle then
             RemoveBlip(v.BlipHandle)
         end
+        if v.NPC then
+            DeleteEntity(v.NPC)
+            DeletePed(v.NPC)
+            SetEntityAsNoLongerNeeded(v.NPC)
+        end
     end
-    for _, v in pairs(npcs) do
-        DeleteEntity(v.npc)
-        DeletePed(v.npc)
-        SetEntityAsNoLongerNeeded(v.npc)
-    end
-
 end)
