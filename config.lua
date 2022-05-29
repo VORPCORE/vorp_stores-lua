@@ -30,8 +30,9 @@ Config.Stores = {
         category = { "food", "tools", "meds" }, -- you need to add the same words to the sellitems and buyitems category you can add new categories as long the items have the category names
         storeType = { "sell", "buy" }, -- choose the storetype
         StoreHoursAllowed = true, -- if you want the stores to use opening and closed hours
+        RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreCLose = 21 -- pm
+        StoreClose = 21 -- pm
     },
 
     Rhodes = {
@@ -49,8 +50,9 @@ Config.Stores = {
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" },
         StoreHoursAllowed = true,
+        RandomPrices = true,
         StoreOpen = 8, -- am
-        StoreCLose = 20 -- pm
+        StoreClose = 20 -- pm
 
     },
     Strawberry = {
@@ -68,8 +70,9 @@ Config.Stores = {
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" },
         StoreHoursAllowed = true,
+        RandomPrices = true,
         StoreOpen = 6, -- am
-        StoreCLose = 23 -- pm
+        StoreClose = 23 -- pm
 
     },
     Blackwater = {
@@ -87,8 +90,9 @@ Config.Stores = {
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" }, -- only one type
         StoreHoursAllowed = true,
+        RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreCLose = 21 -- pm
+        StoreClose = 21 -- pm
 
     },
     Armadillo = {
@@ -106,8 +110,9 @@ Config.Stores = {
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" },
         StoreHoursAllowed = true,
+        RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreCLose = 21 -- pm
+        StoreClose = 21 -- pm
 
     },
     Tumbleweed = {
@@ -125,8 +130,9 @@ Config.Stores = {
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" }, -- only one type
         StoreHoursAllowed = true,
+        RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreCLose = 21 -- pm
+        StoreClose = 21 -- pm
 
     },
     StDenis = {
@@ -144,8 +150,9 @@ Config.Stores = {
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" }, -- only one type
         StoreHoursAllowed = true,
+        RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreCLose = 21 -- pm
+        StoreClose = 21 -- pm
 
     },
     Vanhorn = {
@@ -163,8 +170,9 @@ Config.Stores = {
         category = { "food", "tools", "meds" },
         storeType = { "sell", "buy" }, -- only one type
         StoreHoursAllowed = true,
+        RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreCLose = 21 -- pm
+        StoreClose = 21 -- pm
 
     },
     BlackwaterFishing = {
@@ -182,8 +190,9 @@ Config.Stores = {
         category = { "bait", "tools", },
         storeType = { "sell", "buy" }, -- only one type
         StoreHoursAllowed = true,
+        RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreCLose = 21 -- pm
+        StoreClose = 21 -- pm
 
     },
     Wapiti = {
@@ -201,12 +210,11 @@ Config.Stores = {
         category = { "food", "tools", },
         storeType = { "sell", "buy" }, -- only one type
         StoreHoursAllowed = true,
+        RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreCLose = 21 -- pm
-
+        StoreClose = 21 -- pm
     },
 }
-
 
 
 ----------------------------------------------- STORE ITEMS --------------------------------------------------------------
@@ -221,132 +229,121 @@ Config.Stores = {
 ---------------------------------------------------- SELL ITEMS --------------------------------------------------------------
 Config.SellItems = {
     Valentine = {
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 10, desc = "sell apples", category = "food" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
-
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 10,randomprice = math.random(10), desc = "sell apples", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40,randomprice = math.random(25,42), desc = "sell bandage", category = "meds" },
     },
     Rhodes = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50,randomprice = math.random(40,55), desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10,randomprice = math.random(15), desc = "sell", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40,randomprice = math.random(30,45), desc = "sell bandage", category = "meds" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(32,52), desc = "sell pick axe", category = "tools" },
     },
     Strawberry = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50,randomprice = math.random(40,50), desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10,randomprice = math.random(12), desc = "sell", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40,randomprice = math.random(30,45), desc = "sell bandage", category = "meds" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell pick axe", category = "tools" },
     },
     Blackwater = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50,randomprice = math.random(40,50), desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10,randomprice = math.random(12), desc = "sell", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40,randomprice = math.random(30,45), desc = "sell bandage", category = "meds" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell pick axe", category = "tools" },
     },
     Armadillo = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50,randomprice = math.random(40,50), desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10,randomprice = math.random(12), desc = "sell", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40,randomprice = math.random(30,45), desc = "sell bandage", category = "meds" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell pick axe", category = "tools" },
     },
     Tumbleweed = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50,randomprice = math.random(40,50), desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10,randomprice = math.random(12), desc = "sell", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40,randomprice = math.random(30,45), desc = "sell bandage", category = "meds" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell pick axe", category = "tools" },
     },
     StDenis = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50,randomprice = math.random(40,50), desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10,randomprice = math.random(12), desc = "sell", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40,randomprice = math.random(30,45), desc = "sell bandage", category = "meds" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell pick axe", category = "tools" },
     },
     Vanhorn = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50, desc = "sell", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10, desc = "sell", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40, desc = "sell bandage", category = "meds" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", sellprice = 50,randomprice = math.random(40,50), desc = "sell", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", sellprice = 10,randomprice = math.random(12), desc = "sell", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", sellprice = 40,randomprice = math.random(30,45), desc = "sell bandage", category = "meds" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell pick axe", category = "tools" },
     },
     BlackwaterFishing = {
-        { itemLabel = "Bait", itemName = "Bait", currencyType = "cash", sellprice = 50, desc = "sell Bait", category = "bait" },
-        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", sellprice = 10, desc = "sell", category = "bait" },
-        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", sellprice = 40, desc = "sell", category = "bait" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Bait", itemName = "Bait", currencyType = "cash", sellprice = 50,randomprice = math.random(40,65), desc = "sell Bait", category = "bait" },
+        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", sellprice = 10,randomprice = math.random(15), desc = "sell", category = "bait" },
+        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell", category = "bait" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell pick axe", category = "tools" },
     },
     Wapiti = {
-        { itemLabel = "Bait", itemName = "Bait", currencyType = "cash", sellprice = 50, desc = " sell Bait", category = "bait" },
-        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", sellprice = 10, desc = " sell ", category = "bait" },
-        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", sellprice = 40, desc = "sell ", category = "bait" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40, desc = "sell pick axe", category = "tools" },
+        { itemLabel = "Bait", itemName = "Bait", currencyType = "cash", sellprice = 50,randomprice = math.random(40,65), desc = "sell Bait", category = "bait" },
+        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", sellprice = 10,randomprice = math.random(15), desc = "sell", category = "bait" },
+        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell", category = "bait" },
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", sellprice = 40,randomprice = math.random(30,50), desc = "sell pick axe", category = "tools" },
     },
 }
 
 ------------------------------------------------------ BUY ITEMS ---------------------------------------------------------
 Config.BuyItems = {
     Valentine = {
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", buyprice = 40, desc = "buy Pick Axe", category = "tools" },
-        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = "buy gold nuget", category = "food" },
-        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", buyprice = 40, desc = "buy Pick Axe", category = "tools" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
-
+        { itemLabel = "Pick Axe", itemName = "pickaxe", currencyType = "cash", buyprice = 40,randomprice = math.random(30,55), desc = "buy Pick Axe", category = "tools" },
+        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10,randomprice = math.random(15), desc = "buy gold nuget", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40,randomprice = math.random(30,40), desc = "buy bandage", category = "meds" },
     },
 
     Rhodes = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
-        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10, desc = "buy gold nuget", category = "food" },
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50,randomprice = math.random(30,52), desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10,randomprice = math.random(12), desc = "buy water", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40,randomprice = math.random(30,40), desc = "buy bandage", category = "meds" },
+        { itemLabel = "Gold nugget", itemName = "golden_nugget", currencyType = "gold", buyprice = 10,randomprice = math.random(15), desc = "buy gold nuget", category = "food" },
     },
 
     Strawberry = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
-
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50,randomprice = math.random(30,52), desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10,randomprice = math.random(12), desc = "buy water", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40,randomprice = math.random(30,40), desc = "buy bandage", category = "meds" },
     },
 
     Blackwater = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
-
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50,randomprice = math.random(30,52), desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10,randomprice = math.random(12), desc = "buy water", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40,randomprice = math.random(30,40), desc = "buy bandage", category = "meds" },
     },
     Armadillo = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
-
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50,randomprice = math.random(30,52), desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10,randomprice = math.random(12), desc = "buy water", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40,randomprice = math.random(30,40), desc = "buy bandage", category = "meds" },
     },
     Tumbleweed = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
-
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50,randomprice = math.random(30,52), desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10,randomprice = math.random(12), desc = "buy water", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40,randomprice = math.random(30,40), desc = "buy bandage", category = "meds" },
     },
     StDenis = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
-
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50,randomprice = math.random(30,52), desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10,randomprice = math.random(12), desc = "buy water", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40,randomprice = math.random(30,40), desc = "buy bandage", category = "meds" },
     },
     Vanhorn = {
-        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50, desc = "buy apple", category = "food" },
-        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10, desc = "buy water", category = "food" },
-        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40, desc = "buy bandage", category = "meds" },
-
+        { itemLabel = "Apple", itemName = "apple", currencyType = "cash", buyprice = 50,randomprice = math.random(30,52), desc = "buy apple", category = "food" },
+        { itemLabel = "Water", itemName = "water", currencyType = "cash", buyprice = 10,randomprice = math.random(12), desc = "buy water", category = "food" },
+        { itemLabel = "bandage", itemName = "bandage", currencyType = "cash", buyprice = 40,randomprice = math.random(30,40), desc = "buy bandage", category = "meds" },
     },
     BlackwaterFishing = {
-        { itemLabel = "Bait", itemName = "bait", currencyType = "cash", buyprice = 50, desc = "buy Bait", category = "bait" },
-        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", buyprice = 10, desc = "buy", category = "bait" },
-        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", buyprice = 40, desc = "buy", category = "bait" },
+        { itemLabel = "Bait", itemName = "bait", currencyType = "cash", buyprice = 50,randomprice = math.random(45,55), desc = "buy Bait", category = "bait" },
+        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", buyprice = 10,randomprice = math.random(14), desc = "buy", category = "bait" },
+        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", buyprice = 40,randomprice = math.random(34,49), desc = "buy", category = "bait" },
 
     },
     Wapiti = {
-        { itemLabel = "Bait", itemName = "bait", currencyType = "cash", buyprice = 50, desc = "buy Bait", category = "bait" },
-        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", buyprice = 10, desc = "buy", category = "bait" },
-        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", buyprice = 40, desc = "buy", category = "bait" },
-
+        { itemLabel = "Bait", itemName = "bait", currencyType = "cash", buyprice = 50,randomprice = math.random(45,55), desc = "buy Bait", category = "bait" },
+        { itemLabel = "Fish Bait", itemName = "fishbait", currencyType = "cash", buyprice = 10,randomprice = math.random(14), desc = "buy", category = "bait" },
+        { itemLabel = "Bread Bait", itemName = "p_baitBread01x", currencyType = "cash", buyprice = 40,randomprice = math.random(34,49), desc = "buy", category = "bait" },
     }
 }

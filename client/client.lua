@@ -1,31 +1,27 @@
 ------------------------------------------------------------------------------------------------------
 -------------------------------------------- CLIENT --------------------------------------------------
-
 local OpenStores
+local CloseStores
 local PlayerJob
 local JobGrade
 local PromptGroup = GetRandomIntInRange(0, 0xffffff)
 local PromptGroup2 = GetRandomIntInRange(0, 0xffffff)
 local isInMenu = false
-local blips = {}
 local npcs = {}
 MenuData = {}
-
 
 TriggerEvent("menuapi:getData", function(call)
     MenuData = call
 end)
 
-
 ---------------- BLIPS ---------------------
-function Blips()
-    for i, v in pairs(Config.Stores) do
-        if v.blipAllowed then
-            blips[i] = N_0x554d9d53f696d002(1664425300, v.x, v.y, v.z)
-            SetBlipSprite(blips[i], v.sprite, 1)
-            SetBlipScale(blips[i], 0.2)
-            Citizen.InvokeNative(0x9CB1A1623062F402, blips[i], v.BlipName)
-        end
+function AddBlip(Store)
+    if Config.Stores[Store].blipAllowed then
+        Config.Stores[Store].BlipHandle = N_0x554d9d53f696d002(1664425300, Config.Stores[Store].x,
+            Config.Stores[Store].y, Config.Stores[Store].z)
+        SetBlipSprite(Config.Stores[Store].BlipHandle, Config.Stores[Store].sprite, 1)
+        SetBlipScale(Config.Stores[Store].BlipHandle, 0.2)
+        Citizen.InvokeNative(0x9CB1A1623062F402, Config.Stores[Store].BlipHandle, Config.Stores[Store].BlipName)
     end
 end
 
@@ -42,7 +38,6 @@ function PromptSetUp()
     PromptSetGroup(OpenStores, PromptGroup)
     Citizen.InvokeNative(0xC5F428EE08FA7F2C, OpenStores, true)
     PromptRegisterEnd(OpenStores)
-    Blips()
 end
 
 function PromptSetUp2()
@@ -81,7 +76,10 @@ function InsertNpcs()
             Wait(500)
             FreezeEntityPosition(npc, true)
             SetBlockingOfNonTemporaryEvents(npc, true)
-            table.insert(npcs, { npc = npc, coords = vector3(v.x, v.y, v.z) })
+            table.insert(npcs, {
+                npc = npc,
+                coords = vector3(v.x, v.y, v.z)
+            })
 
         end
     end
@@ -106,7 +104,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         local player = PlayerPedId()
         local coords = GetEntityCoords(player)
-        local sleep = coords, true
+        local sleep = true
         local dead = IsEntityDead(player)
         local hour = GetClockHours()
 
@@ -114,32 +112,38 @@ Citizen.CreateThread(function()
 
             for storeId, storeConfig in pairs(Config.Stores) do
                 if storeConfig.StoreHoursAllowed == true then
-                    if hour >= storeConfig.StoreCLose then
+                    if hour >= storeConfig.StoreClose then
+                        if Config.Stores[storeId].BlipHandle then
+                            RemoveBlip(Config.Stores[storeId].BlipHandle)
+                            Config.Stores[storeId].BlipHandle = nil
+                        end
                         local coordsDist = vector3(coords.x, coords.y, coords.z)
                         local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
                         local distance = #(coordsDist - coordsStore)
 
                         if (distance <= storeConfig.distanceOpenStore) then
                             sleep = false
-                            local label2 = CreateVarString(10, 'LITERAL_STRING', _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreCLose .. _U("pm"))
+                            local label2 = CreateVarString(10, 'LITERAL_STRING',
+                                _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreClose .. _U("pm"))
                             PromptSetActiveGroupThisFrame(PromptGroup2, label2)
 
                             if Citizen.InvokeNative(0xC92AC953F0A982AE, CloseStores) then
                                 Wait(100)
-                                TriggerEvent("vorp:TipRight", _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreCLose .. _U("pm"), 3000)
+                                TriggerEvent("vorp:TipRight", _U("closed") .. storeConfig.StoreOpen .. _U("am") ..
+                                    storeConfig.StoreClose .. _U("pm"), 3000)
                             end
                         end
                     elseif hour >= storeConfig.StoreOpen then
-
-
-                        --## run this before distance check  no need to run a code that is no meant for the client ## --
+                        if not Config.Stores[storeId].BlipHandle and storeConfig.blipAllowed then
+                            AddBlip(storeId)
+                        end
+                        -- ## run this before distance check  no need to run a code that is no meant for the client ## --
                         if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
                             local coordsDist = vector3(coords.x, coords.y, coords.z)
                             local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
                             local distance = #(coordsDist - coordsStore)
 
-                            if (distance <= storeConfig.distanceOpenStore) then --check distance
-
+                            if (distance <= storeConfig.distanceOpenStore) then -- check distance
 
                                 sleep = false
                                 local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
@@ -152,7 +156,6 @@ Citizen.CreateThread(function()
                                     TaskStandStill(player, -1)
                                 end
 
-
                             end
 
                         else -- job only
@@ -161,7 +164,8 @@ Citizen.CreateThread(function()
 
                             if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
                                 if storeConfig.JobGrade == JobGrade then
-                                    local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y, storeConfig.z, true)
+                                    local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
+                                        storeConfig.z, true)
 
                                     if (distance <= storeConfig.distanceOpenStore) then
                                         sleep = false
@@ -180,18 +184,15 @@ Citizen.CreateThread(function()
 
                         end
 
-
-
                     end
                 else
-                    --## run this before distance check  no need to run a code that is no meant for the client ## --
+                    -- ## run this before distance check  no need to run a code that is no meant for the client ## --
                     if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
                         local coordsDist = vector3(coords.x, coords.y, coords.z)
                         local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
                         local distance = #(coordsDist - coordsStore)
 
-                        if (distance <= storeConfig.distanceOpenStore) then --check distance
-
+                        if (distance <= storeConfig.distanceOpenStore) then -- check distance
 
                             sleep = false
                             local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
@@ -204,7 +205,6 @@ Citizen.CreateThread(function()
                                 TaskStandStill(player, -1)
                             end
 
-
                         end
 
                     else -- job only
@@ -213,7 +213,8 @@ Citizen.CreateThread(function()
 
                         if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
                             if storeConfig.JobGrade == JobGrade then
-                                local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y, storeConfig.z, true)
+                                local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
+                                    storeConfig.z, true)
 
                                 if (distance <= storeConfig.distanceOpenStore) then
                                     sleep = false
@@ -241,15 +242,12 @@ Citizen.CreateThread(function()
     end
 end)
 
-
-
 ---- items category ------
 function OpenCategory(storeId)
     MenuData.CloseAll()
     isInMenu = true
 
     local elements = {}
-
 
     for k, v in pairs(Config.Stores[storeId].category) do
         elements[#elements + 1] = {
@@ -260,34 +258,27 @@ function OpenCategory(storeId)
     end
 
     MenuData.Open('default', GetCurrentResourceName(), 'menuapi' .. storeId, {
-        title    = Config.Stores[storeId].storeName,
-        subtext  = _U("SubMenu"),
-        align    = Config.Align,
-        elements = elements,
+        title = Config.Stores[storeId].storeName,
+        subtext = _U("SubMenu"),
+        align = Config.Align,
+        elements = elements
 
+    }, function(data, menu)
+        OpenSubMenu(storeId, data.current.value)
+    end, function(data, menu)
+        menu.close()
+        isInMenu = false
 
-    },
-        function(data, menu)
-            OpenSubMenu(storeId, data.current.value)
-        end,
-
-        function(data, menu)
-            menu.close()
-            isInMenu = false
-
-
-            DisplayRadar(true)
-        end)
+        DisplayRadar(true)
+    end)
 
 end
 
---sell only
+-- sell only
 function OpenSubMenu(storeId, category)
     MenuData.CloseAll()
     isInMenu = true
-    local elements = {
-
-    }
+    local elements = {}
 
     for k, v in pairs(Config.Stores[storeId].storeType) do
         elements[#elements + 1] = {
@@ -297,41 +288,37 @@ function OpenSubMenu(storeId, category)
         }
     end
 
-
     MenuData.Open('default', GetCurrentResourceName(), 'menuapi' .. storeId .. category, {
-        title    = Config.Stores[storeId].storeName,
-        subtext  = _U("SubMenu"),
-        align    = Config.Align,
+        title = Config.Stores[storeId].storeName,
+        subtext = _U("SubMenu"),
+        align = Config.Align,
         elements = elements,
         lastmenu = "OpenCategory"
 
-    },
-        function(data, menu)
-            if (data.current == "backup") then
-                _G[data.trigger](storeId, category)
-            end
+    }, function(data, menu)
+        if (data.current == "backup") then
+            _G[data.trigger](storeId, category)
+        end
 
-            if (data.current.value == "sell") then
-                OpenSellMenu(storeId, category)
+        if (data.current.value == "sell") then
+            OpenSellMenu(storeId, category)
 
-            end
+        end
 
-            if (data.current.value == "buy") then
-                OpenBuyMenu(storeId, category)
-            end
+        if (data.current.value == "buy") then
+            OpenBuyMenu(storeId, category)
+        end
 
-        end,
+    end, function(data, menu)
+        menu.close()
+        isInMenu = false
 
-        function(data, menu)
-            menu.close()
-            isInMenu = false
-
-            DisplayRadar(true)
-        end)
+        DisplayRadar(true)
+    end)
 
 end
 
---sell
+-- sell
 function OpenSellMenu(storeId, category)
     MenuData.CloseAll()
     isInMenu = true
@@ -353,11 +340,17 @@ function OpenSellMenu(storeId, category)
                 end
                 menuElements[elementIndex] = {
                     itemHeight = "2vh",
-                    label = "<img style='max-height:45px;max-width:45px;float: left;text-align: center; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" .. storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" .. storeItem.itemLabel .. "</span>",
+                    label = "<img style='max-height:45px;max-width:45px;float: left;text-align: center; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" ..
+                        storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" ..
+                        storeItem.itemLabel .. "</span>",
                     value = "sell" .. tostring(elementIndex),
-                    desc = "" .. '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' .. _U("sellfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. storeItem.sellprice .. "</span><span style='color: Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" .. storeItem.desc,
+                    desc = "" ..
+                        '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' ..
+                        _U("sellfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp ..
+                        '</span>' .. '<span style="font-size:30px;">' .. storeItem.sellprice ..
+                        "</span><span style='color: Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" ..
+                        storeItem.desc,
                     info = storeItem
-
 
                 }
 
@@ -369,74 +362,63 @@ function OpenSellMenu(storeId, category)
     end
 
     MenuData.Open('default', GetCurrentResourceName(), 'menuapi' .. storeId .. category, {
-        title    = storeConfig.storeName,
-        subtext  = _U("sellmenu"),
-        align    = Config.Align,
+        title = storeConfig.storeName,
+        subtext = _U("sellmenu"),
+        align = Config.Align,
         elements = menuElements,
-        lastmenu = "OpenSubMenu",
+        lastmenu = "OpenSubMenu"
+    }, function(data, menu)
+        if (data.current == "backup") then
+            _G[data.trigger](storeId, category)
+        else
 
+            local ItemName = data.current.info.itemName
+            local ItemLabel = data.current.info.itemLabel
+            local currencyType = data.current.info.currencyType
+            local sellPrice = data.current.info.sellprice
 
-
-    },
-        function(data, menu)
-            if (data.current == "backup") then
-                _G[data.trigger](storeId, category)
-            else
-
-                local ItemName = data.current.info.itemName
-                local ItemLabel = data.current.info.itemLabel
-                local currencyType = data.current.info.currencyType
-                local sellPrice = data.current.info.sellprice
-
-                local myInput = {
-                    type = "enableinput", -- dont touch
-                    inputType = "input",
-                    button = _U("confirm"), -- button name
-                    placeholder = _U("insertamount"), --placeholdername
-                    style = "block", --- dont touch
-                    attributes = {
-                        inputHeader = _U("amount"), -- header
-                        type = "number", -- inputype text, number,date.etc if number comment out the pattern
-                        pattern = "[0-9]", -- regular expression validated for only numbers "[0-9]", for letters only [A-Za-z]+   with charecter limit  [A-Za-z]{5,20}     with chareceter limit and numbers [A-Za-z0-9]{5,}
-                        title = _U("must"), -- if input doesnt match show this message
-                        style = "border-radius: 10px; background-color: ; border:none;", -- style  the inptup
-                    }
+            local myInput = {
+                type = "enableinput", -- dont touch
+                inputType = "input",
+                button = _U("confirm"), -- button name
+                placeholder = _U("insertamount"), -- placeholdername
+                style = "block", --- dont touch
+                attributes = {
+                    inputHeader = _U("amount"), -- header
+                    type = "number", -- inputype text, number,date.etc if number comment out the pattern
+                    pattern = "[0-9]", -- regular expression validated for only numbers "[0-9]", for letters only [A-Za-z]+   with charecter limit  [A-Za-z]{5,20}     with chareceter limit and numbers [A-Za-z0-9]{5,}
+                    title = _U("must"), -- if input doesnt match show this message
+                    style = "border-radius: 10px; background-color: ; border:none;" -- style  the inptup
                 }
-                if Config.Align == "center" then
-                    MenuData.CloseAll()
-                    ClearPedTasksImmediately(player)
-                    isInMenu = false
-                    DisplayRadar(true)
+            }
+            if Config.Align == "center" then
+                MenuData.CloseAll()
+                ClearPedTasksImmediately(player)
+                isInMenu = false
+                DisplayRadar(true)
+            end
+
+            TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
+                local qty = tonumber(result)
+
+                if qty ~= nil and qty ~= 0 and qty > 0 then
+
+                    TriggerServerEvent("vorp_stores:sell", ItemLabel, ItemName, currencyType, sellPrice, qty) -- sell it
+
+                else
+
+                    TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
+
                 end
 
-                TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
-                    local qty = tonumber(result)
-
-                    if qty ~= nil and qty ~= 0 and qty > 0 then
-
-                        TriggerServerEvent("vorp_stores:sell", ItemLabel, ItemName, currencyType, sellPrice, qty) --sell it
-
-                    else
-
-                        TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
-
-                    end
-
-
-                end)
-
-
-
-
-            end
-        end,
-
-        function(data, menu)
-            menu.close()
-            ClearPedTasksImmediately(player)
-            isInMenu = false
-            DisplayRadar(true)
-        end)
+            end)
+        end
+    end, function(data, menu)
+        menu.close()
+        ClearPedTasksImmediately(player)
+        isInMenu = false
+        DisplayRadar(true)
+    end)
 
 end
 
@@ -462,11 +444,17 @@ function OpenBuyMenu(storeId, category)
 
             menuElements[elementIndex] = {
 
-                label = "<img style='max-height: 40px;max-width: 40px;float: left;text-align: center;margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" .. storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" .. storeItem.itemLabel .. "</span>",
+                label = "<img style='max-height: 40px;max-width: 40px;float: left;text-align: center;margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" ..
+                    storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" ..
+                    storeItem.itemLabel .. "</span>",
                 value = "sell" .. tostring(elementIndex),
-                desc = "" .. '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' .. _U("buyfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. storeItem.buyprice .. "</span><span style='color:Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" .. storeItem.desc,
+                desc = "" ..
+                    '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' ..
+                    _U("buyfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp ..
+                    '</span>' .. '<span style="font-size:30px;">' .. storeItem.buyprice ..
+                    "</span><span style='color:Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" ..
+                    storeItem.desc,
                 info = storeItem
-
 
             }
 
@@ -474,73 +462,65 @@ function OpenBuyMenu(storeId, category)
 
         end
 
-
-
     end
 
     MenuData.Open('default', GetCurrentResourceName(), 'menuapi' .. storeId .. category, {
-        title    = storeConfig.storeName,
-        subtext  = "buy menu",
-        align    = Config.Align,
+        title = storeConfig.storeName,
+        subtext = "buy menu",
+        align = Config.Align,
         elements = menuElements,
         lastmenu = "OpenSubMenu"
 
-    },
-        function(data, menu)
-            if (data.current == "backup") then
-                _G[data.trigger](storeId, category)
-            else
+    }, function(data, menu)
+        if (data.current == "backup") then
+            _G[data.trigger](storeId, category)
+        else
 
-                local ItemName = data.current.info.itemName
-                local ItemLabel = data.current.info.itemLabel
-                local currencyType = data.current.info.currencyType
-                local buyPrice = data.current.info.buyprice
+            local ItemName = data.current.info.itemName
+            local ItemLabel = data.current.info.itemLabel
+            local currencyType = data.current.info.currencyType
+            local buyPrice = data.current.info.buyprice
 
-                local myInput = {
-                    type = "enableinput", -- dont touch
-                    inputType = "input",
-                    button = _U("confirm"), -- button name
-                    placeholder = _U("insertamount"), --placeholdername
-                    style = "block", --- dont touch
-                    attributes = {
-                        inputHeader = _U("amount"), -- header
-                        type = "number", -- inputype text, number,date.etc if number comment out the pattern
-                        pattern = "[0-9]", -- regular expression validated for only numbers "[0-9]", for letters only [A-Za-z]+   with charecter limit  [A-Za-z]{5,20}     with chareceter limit and numbers [A-Za-z0-9]{5,}
-                        title = _U("must"), -- if input doesnt match show this message
-                        style = "border-radius: 10px; background-color: ; border:none;", -- style  the inptup
-                    }
+            local myInput = {
+                type = "enableinput", -- dont touch
+                inputType = "input",
+                button = _U("confirm"), -- button name
+                placeholder = _U("insertamount"), -- placeholdername
+                style = "block", --- dont touch
+                attributes = {
+                    inputHeader = _U("amount"), -- header
+                    type = "number", -- inputype text, number,date.etc if number comment out the pattern
+                    pattern = "[0-9]", -- regular expression validated for only numbers "[0-9]", for letters only [A-Za-z]+   with charecter limit  [A-Za-z]{5,20}     with chareceter limit and numbers [A-Za-z0-9]{5,}
+                    title = _U("must"), -- if input doesnt match show this message
+                    style = "border-radius: 10px; background-color: ; border:none;" -- style  the inptup
                 }
-                if Config.Align == "center" then
-                    MenuData.CloseAll()
-                    ClearPedTasksImmediately(player)
-                    isInMenu = false
-                    DisplayRadar(true)
+            }
+            if Config.Align == "center" then
+                MenuData.CloseAll()
+                ClearPedTasksImmediately(player)
+                isInMenu = false
+                DisplayRadar(true)
+            end
+
+            TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
+
+                local qty = tonumber(result)
+                if qty ~= nil and qty ~= 0 and qty > 0 then
+
+                    TriggerServerEvent("vorp_stores:buy", ItemLabel, ItemName, currencyType, buyPrice, qty) -- sell it
+                else
+                    TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
                 end
 
-                TriggerEvent("vorpinputs:advancedInput", json.encode(myInput), function(result)
+            end)
 
-                    local qty = tonumber(result)
-                    if qty ~= nil and qty ~= 0 and qty > 0 then
-
-                        TriggerServerEvent("vorp_stores:buy", ItemLabel, ItemName, currencyType, buyPrice, qty) --sell it
-                    else
-                        TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
-                    end
-
-
-                end)
-
-
-
-            end
-        end,
-
-        function(data, menu)
-            menu.close()
-            ClearPedTasksImmediately(player)
-            isInMenu = false
-            DisplayRadar(true)
-        end)
+        end
+    end, function(data, menu)
+        menu.close()
+        ClearPedTasksImmediately(player)
+        isInMenu = false
+        DisplayRadar(true)
+    end)
 
 end
 
@@ -550,6 +530,20 @@ AddEventHandler("vorp_stores:sendPlayerJob", function(Job, grade)
     JobGrade = grade
 end)
 
+RegisterNetEvent("vorp_stores:RefreshStorePrices")
+AddEventHandler("vorp_stores:RefreshStorePrices", function(SellItems, BuyItems)
+    print("refresh")
+    Config.SellItems = SellItems
+    Config.BuyItems = BuyItems
+end)
+
+AddEventHandler('onClientResourceStart', function(resourceName)
+    if (GetCurrentResourceName() ~= resourceName) then
+        return
+    end
+    Wait(1000)
+    TriggerServerEvent("vorp_stores:GetRefreshedPrices")
+end)
 
 AddEventHandler('onResourceStop', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
@@ -560,9 +554,10 @@ AddEventHandler('onResourceStop', function(resourceName)
         PromptDelete(OpenStores)
         MenuData.CloseAll()
     end
-    for _, v in pairs(blips) do
-        RemoveBlip(v)
-
+    for i, v in pairs(Config.Stores) do
+        if v.BlipHandle then
+            RemoveBlip(v.BlipHandle)
+        end
     end
     for _, v in pairs(npcs) do
         DeleteEntity(v.npc)
