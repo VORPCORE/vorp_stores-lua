@@ -3,6 +3,7 @@
 - Blips Toggle depending on whether store is open or closed
 - Added a RandomPrices option
 - if randomPrices is enabled, the store will have randomised prices **chosen on server restart**
+- NPCs toggle depending on whether store is open or closed
 <1.4>
 - update stores now have opening hours and closed hours
 - changes were made in the config add this bellow to each store you have created so you dont have to redo all over again
