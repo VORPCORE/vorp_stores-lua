@@ -270,7 +270,7 @@ function OpenCategory(storeId)
     end, function(data, menu)
         menu.close()
         isInMenu = false
-
+        ClearPedTasksImmediately(PlayerPedId())
         DisplayRadar(true)
     end)
 
@@ -314,7 +314,7 @@ function OpenSubMenu(storeId, category)
     end, function(data, menu)
         menu.close()
         isInMenu = false
-
+        ClearPedTasksImmediately(PlayerPedId())
         DisplayRadar(true)
     end)
 
