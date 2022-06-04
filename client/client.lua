@@ -45,7 +45,7 @@ function SpawnNPC(Store)
         Wait(500)
         FreezeEntityPosition(npc, true)
         SetBlockingOfNonTemporaryEvents(npc, true)
-        Config.Stores[Store].NPC = npc 
+        Config.Stores[Store].NPC = npc
     end
 end
 
@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
         if isInMenu == false and not dead then
 
             for storeId, storeConfig in pairs(Config.Stores) do
-                if storeConfig.StoreHoursAllowed == true then
+                if storeConfig.StoreHoursAllowed then
                     if hour >= storeConfig.StoreClose then
                         if Config.Stores[storeId].BlipHandle then
                             RemoveBlip(Config.Stores[storeId].BlipHandle)
@@ -122,14 +122,12 @@ Citizen.CreateThread(function()
 
                         if (distance <= storeConfig.distanceOpenStore) then
                             sleep = false
-                            local label2 = CreateVarString(10, 'LITERAL_STRING',
-                                _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreClose .. _U("pm"))
+                            local label2 = CreateVarString(10, 'LITERAL_STRING', _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreClose .. _U("pm"))
                             PromptSetActiveGroupThisFrame(PromptGroup2, label2)
 
                             if Citizen.InvokeNative(0xC92AC953F0A982AE, CloseStores) then
                                 Wait(100)
-                                TriggerEvent("vorp:TipRight", _U("closed") .. storeConfig.StoreOpen .. _U("am") ..
-                                    storeConfig.StoreClose .. _U("pm"), 3000)
+                                TriggerEvent("vorp:TipRight", _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreClose .. _U("pm"), 3000)
                             end
                         end
                     elseif hour >= storeConfig.StoreOpen then
@@ -153,7 +151,7 @@ Citizen.CreateThread(function()
 
                                 if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
                                     OpenCategory(storeId)
-                                    print(storeId)
+
                                     DisplayRadar(false)
                                     TaskStandStill(player, -1)
                                 end
@@ -188,6 +186,12 @@ Citizen.CreateThread(function()
 
                     end
                 else
+                    if not Config.Stores[storeId].BlipHandle and storeConfig.blipAllowed then
+                        AddBlip(storeId)
+                    end
+                    if not Config.Stores[storeId].NPC and storeConfig.NpcAllowed then
+                        SpawnNPC(storeId)
+                    end
                     -- ## run this before distance check  no need to run a code that is no meant for the client ## --
                     if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
                         local coordsDist = vector3(coords.x, coords.y, coords.z)
@@ -202,7 +206,7 @@ Citizen.CreateThread(function()
 
                             if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then -- iff all pass open menu
                                 OpenCategory(storeId)
-                                print(storeId)
+
                                 DisplayRadar(false)
                                 TaskStandStill(player, -1)
                             end
@@ -302,12 +306,12 @@ function OpenSubMenu(storeId, category)
             _G[data.trigger](storeId, category)
         end
 
-        if (data.current.value == "sell") then
+        if (data.current.value == "sell") then --translate here same as the config
             OpenSellMenu(storeId, category)
 
         end
 
-        if (data.current.value == "buy") then
+        if (data.current.value == "buy") then --translate here same as the config
             OpenBuyMenu(storeId, category)
         end
 

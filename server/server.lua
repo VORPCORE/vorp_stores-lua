@@ -28,16 +28,14 @@ AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty)
         if currencyType == "cash" then
             VORPinv.subItem(_source, ItemName, quantity)
             Character.addCurrency(0, total)
-            TriggerClientEvent("vorp:TipRight", _source,
-                _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total .. _U("ofcash"), 3000)
+            TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total .. _U("ofcash"), 3000)
         end
 
         if currencyType == "gold" then
 
             VORPinv.subItem(_source, ItemName, quantity)
             Character.addCurrency(1, total)
-            TriggerClientEvent("vorp:TipRight", _source,
-                _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total .. _U("ofgold"), 3000)
+            TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total .. _U("ofgold"), 3000)
         end
     else
         TriggerClientEvent("vorp:TipRight", _source, _U("youdontsell"), 3000)
@@ -71,8 +69,7 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty)
                             VORPinv.addItem(_source, ItemName, quantity)
                             Character.removeCurrency(0, total)
 
-                            TriggerClientEvent("vorp:TipRight", _source,
-                                _U("youbought") .. quantity .. " " .. ItemLabel .. _U("fr") .. total .. _U("ofcash"),
+                            TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("fr") .. total .. _U("ofcash"),
                                 3000)
 
                         end
@@ -86,8 +83,7 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty)
 
                                 VORPinv.addItem(_source, ItemName, quantity)
                                 Character.removeCurrency(1, total)
-                                TriggerClientEvent("vorp:TipRight", _source,
-                                    _U("youbought") .. quantity .. "" .. ItemLabel .. _U("fr") .. total .. _U("ofgold"),
+                                TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. "" .. ItemLabel .. _U("fr") .. total .. _U("ofgold"),
                                     3000)
 
                             else
@@ -124,7 +120,7 @@ AddEventHandler('onResourceStart', function(resourceName)
         if storeConfig.RandomPrices then
             for index, storeItem in ipairs(Config.SellItems[storeId]) do
                 Config.SellItems[storeId][index].sellprice = storeItem.randomprice
-                --print(storeItem.itemLabel .. " " .. Config.SellItems[storeId][index].sellprice)
+
             end
             for index, storeItem in ipairs(Config.BuyItems[storeId]) do
                 Config.BuyItems[storeId][index].buyprice = storeItem.randomprice
