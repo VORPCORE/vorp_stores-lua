@@ -163,7 +163,7 @@ Citizen.CreateThread(function()
                             TriggerServerEvent("vorp_stores:getPlayerJob")
 
                             if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                                if storeConfig.JobGrade == JobGrade then
+                                if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
                                     local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
                                         storeConfig.z, true)
 
@@ -218,7 +218,7 @@ Citizen.CreateThread(function()
                         TriggerServerEvent("vorp_stores:getPlayerJob")
 
                         if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                            if storeConfig.JobGrade == JobGrade then
+                            if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
                                 local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
                                     storeConfig.z, true)
 
