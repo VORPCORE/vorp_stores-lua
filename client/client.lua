@@ -122,12 +122,15 @@ Citizen.CreateThread(function()
 
                         if (distance <= storeConfig.distanceOpenStore) then
                             sleep = false
-                            local label2 = CreateVarString(10, 'LITERAL_STRING', _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreClose .. _U("pm"))
+                            local label2 = CreateVarString(10, 'LITERAL_STRING',
+                                _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreClose .. _U("pm"))
                             PromptSetActiveGroupThisFrame(PromptGroup2, label2)
 
                             if Citizen.InvokeNative(0xC92AC953F0A982AE, CloseStores) then
                                 Wait(100)
-                                TriggerEvent("vorp:TipRight", _U("closed") .. storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreClose .. _U("pm"), 3000)
+                                TriggerEvent("vorp:TipRight",
+                                    _U("closed") ..
+                                    storeConfig.StoreOpen .. _U("am") .. storeConfig.StoreClose .. _U("pm"), 3000)
                             end
                         end
                     elseif hour >= storeConfig.StoreOpen then
@@ -162,12 +165,13 @@ Citizen.CreateThread(function()
 
                             TriggerServerEvent("vorp_stores:getPlayerJob")
 
-                            if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                                if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
-                                    local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
-                                        storeConfig.z, true)
 
-                                    if (distance <= storeConfig.distanceOpenStore) then
+                            local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
+                                storeConfig.z, true)
+
+                            if (distance <= storeConfig.distanceOpenStore) then
+                                if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
+                                    if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
                                         sleep = false
                                         local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
 
@@ -181,6 +185,8 @@ Citizen.CreateThread(function()
                                     end
                                 end
                             end
+
+
 
                         end
 
@@ -217,12 +223,17 @@ Citizen.CreateThread(function()
 
                         TriggerServerEvent("vorp_stores:getPlayerJob")
 
-                        if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                            if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
-                                local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
-                                    storeConfig.z, true)
+                        while PlayerJob == nil do
+                            Wait(100)
+                        end
 
-                                if (distance <= storeConfig.distanceOpenStore) then
+                        local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
+                            storeConfig.z, true)
+
+                        if (distance <= storeConfig.distanceOpenStore) then
+                            if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
+                                if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
+
                                     sleep = false
                                     local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
 
@@ -237,6 +248,8 @@ Citizen.CreateThread(function()
                             end
                         end
 
+
+
                     end
                 end
 
@@ -247,6 +260,7 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
 
 ---- items category ------
 function OpenCategory(storeId)
