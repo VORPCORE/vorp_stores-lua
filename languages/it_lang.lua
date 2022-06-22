@@ -19,11 +19,14 @@ Locales["it_lang"] = {
     must = "Può solo inserire min 1 e max 20 numeri.",
     yousold = "Hai venduto ",
     fr = " per~o~ ",
+    frcash = " per ~o~$",
     ofcash = "~q~ di denaro",
     ofgold = " ~q~ di oro",
     youbought = "Hai comprato ",
     youdontgold = "Non hai abbastanza oro!",
     youdontcash = "Non hai abbastanza denaro!",
-    cantcarry = "Non puoi trasportare più niente"
-
+    cantcarry = "Non puoi trasportare più niente",
+    closed = "~e~CLOSED ~o~",
+    am = ":00~q~am to ~o~",
+    pm = ":00~q~pm"
 }

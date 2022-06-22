@@ -28,7 +28,9 @@ AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty)
         if currencyType == "cash" then
             VORPinv.subItem(_source, ItemName, quantity)
             Character.addCurrency(0, total)
-            TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total .. _U("ofcash"), 3000)
+
+
+            TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total .. _U("ofcash"), 3000)
         end
 
         if currencyType == "gold" then
@@ -69,7 +71,7 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty)
                             VORPinv.addItem(_source, ItemName, quantity)
                             Character.removeCurrency(0, total)
 
-                            TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("fr") .. total .. _U("ofcash"),
+                            TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total .. _U("ofcash"),
                                 3000)
 
                         end
