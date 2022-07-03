@@ -463,7 +463,7 @@ function OpenBuyMenu(storeId, category)
             end
 
             menuElements[elementIndex] = {
-
+                itemHeight = "2vh",
                 label = "<img style='max-height: 40px;max-width: 40px;float: left;text-align: center;margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" ..
                     storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" ..
                     storeItem.itemLabel .. "</span>",
