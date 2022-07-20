@@ -367,7 +367,7 @@ function OpenSellMenu(storeId, category)
                     desc = "" ..
                         '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' ..
                         _U("sellfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp ..
-                        '</span>' .. '<span style="font-size:30px;">' .. storeItem.sellprice ..
+                        '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.sellprice) ..
                         "</span><span style='color: Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" ..
                         storeItem.desc,
                     info = storeItem
@@ -471,7 +471,7 @@ function OpenBuyMenu(storeId, category)
                 desc = "" ..
                     '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' ..
                     _U("buyfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp ..
-                    '</span>' .. '<span style="font-size:30px;">' .. storeItem.buyprice ..
+                    '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) ..
                     "</span><span style='color:Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" ..
                     storeItem.desc,
                 info = storeItem
