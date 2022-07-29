@@ -349,34 +349,31 @@ function OpenSellMenu(storeId, category)
     local elementIndex = 1
 
     for index, storeItem in ipairs(Config.SellItems[storeId]) do
+        
         if storeItem.category == category then
-
-            if storeItem.category == category then
-                local ctp = ""
-                if storeItem.currencyType == "gold" then
-                    ctp = "#"
-                else
-                    ctp = "$"
-                end
-                menuElements[elementIndex] = {
-                    itemHeight = "2vh",
-                    label = "<img style='max-height:45px;max-width:45px;float: left;text-align: center; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" ..
-                        storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" ..
-                        storeItem.itemLabel .. "</span>",
-                    value = "sell" .. tostring(elementIndex),
-                    desc = "" ..
-                        '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' ..
-                        _U("sellfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp ..
-                        '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.sellprice) ..
-                        "</span><span style='color: Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" ..
-                        storeItem.desc,
-                    info = storeItem
-
-                }
-
-                elementIndex = elementIndex + 1
+            local ctp = ""
+            if storeItem.currencyType == "gold" then
+                ctp = "#"
+            else
+                ctp = "$"
             end
+            menuElements[elementIndex] = {
+                itemHeight = "2vh",
+                label = "<img style='max-height:45px;max-width:45px;float: left;text-align: center; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" ..
+                    storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" ..
+                    storeItem.itemLabel .. "</span>",
+                value = "sell" .. tostring(elementIndex),
+                desc = "" ..
+                    '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' ..
+                    _U("sellfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp ..
+                    '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.sellprice) ..
+                    "</span><span style='color: Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" ..
+                    storeItem.desc,
+                info = storeItem
 
+            }
+
+            elementIndex = elementIndex + 1
         end
 
     end
