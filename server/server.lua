@@ -9,11 +9,29 @@ end)
 
 VORPinv = exports.vorp_inventory:vorp_inventoryApi()
 
+local storeLimits = {}
+
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------- Init Store Limits ----------------------------------------------
+Citizen.CreateThread(function ()
+    for k, v in pairs(Config.Stores) do
+        if v.LimitedItems and k~=nil  then
+            table.insert(storeLimits,k)
+            storeLimits[k]= v.LimitedItems
+        end  
+    end
+end)
+
+
+function setContains(key) --has Store limited Items?
+    return storeLimits[key] ~= nil
+end
+
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------- SELL -----------------------------------------------------------
 
 RegisterServerEvent('vorp_stores:sell')
-AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty)
+AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty, storeId)
     local _source = source
     local Character = VORPcore.getUser(_source).getUsedCharacter
     local ItemName = name
@@ -24,25 +42,50 @@ AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty)
     local quantity = qty
     local total = ItemPrice * quantity
     local total2 = (math.floor(total * 100) / 100)
+    local limitedItems = setContains(storeId)
+    local itemFound= false
 
     if count >= quantity then
-        if currencyType == "cash" then
-            VORPinv.subItem(_source, ItemName, quantity)
-            Character.addCurrency(0, total)
-
-            TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total2 .. _U("ofcash"), 3000)
-        end
-
-        if currencyType == "gold" then
-
-            VORPinv.subItem(_source, ItemName, quantity)
-            Character.addCurrency(1, total)
-            TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2 .. _U("ofgold"), 3000)
+        if not limitedItems then --when store have no limited items
+            sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,currencyType)
+        else --store have limited items
+            for k, items in pairs(storeLimits[storeId]) do
+                if items.itemName == ItemName then
+                    itemFound = true
+                    if items.amount >= quantity then
+                        sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,currencyType)
+                        items.amount = items.amount-quantity --update amount left for store
+                    else
+                        TriggerClientEvent("vorp:TipRight", _source, _U("limit"), 3000)
+                    end
+                end
+            end
+            if not itemFound then
+                sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,currencyType)
+            end
         end
     else
         TriggerClientEvent("vorp:TipRight", _source, _U("youdontsell"), 3000)
     end
 end)
+
+
+function sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,currencyType)
+    if currencyType == "cash" then
+        VORPinv.subItem(_source, ItemName, quantity)
+        Character.addCurrency(0, total)
+
+        TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total2 .. _U("ofcash"), 3000)
+    end
+
+    if currencyType == "gold" then
+
+        VORPinv.subItem(_source, ItemName, quantity)
+        Character.addCurrency(1, total)
+        TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2 .. _U("ofgold"), 3000)
+    end
+    
+end
 
 ------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------- BUY ---------------------------------------------------------------------

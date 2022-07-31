@@ -28,5 +28,6 @@ Locales["en_lang"] = {
     cantcarry = " you cant carry this item",
     closed = "~e~CLOSED ~o~",
     am = ":00~q~am to ~o~",
-    pm = ":00~q~pm"
+    pm = ":00~q~pm",
+    limit = "I do not buy any more of this item"
 }

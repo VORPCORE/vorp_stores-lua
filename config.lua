@@ -32,7 +32,10 @@ Config.Stores = {
         StoreHoursAllowed = true, -- if you want the stores to use opening and closed hours
         RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreClose = 21 -- pm
+        StoreClose = 21, -- pm
+        LimitedItems = { --add if you want limited amount the store accept until restart
+            {itemName="apple", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
 
     Rhodes = {
