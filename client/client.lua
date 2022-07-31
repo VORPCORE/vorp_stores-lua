@@ -163,27 +163,31 @@ Citizen.CreateThread(function()
 
                         else -- job only
 
-                            TriggerServerEvent("vorp_stores:getPlayerJob")
+                            
 
 
                             local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
                                 storeConfig.z, true)
 
                             if (distance <= storeConfig.distanceOpenStore) then
-                                if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                                    if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
-                                        sleep = false
-                                        local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
-
-                                        PromptSetActiveGroupThisFrame(PromptGroup, label)
-                                        if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                               
+                                sleep = false
+                                local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
+                                PromptSetActiveGroupThisFrame(PromptGroup, label)
+                                if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                                    TriggerServerEvent("vorp_stores:getPlayerJob")
+                                    Citizen.Wait(100)
+                                    if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
+                                        if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
                                             OpenCategory(storeId)
-
                                             DisplayRadar(false)
                                             TaskStandStill(player, -1)
                                         end
+                                    else
+                                        TriggerEvent("vorp:NotifyLeft", _U("wrongJobTitle"),_U("wrongJobMsg"), "menu_textures", "cross", 4000, 'COLOR_WHITE')
                                     end
                                 end
+                        
                             end
 
 
@@ -231,21 +235,24 @@ Citizen.CreateThread(function()
                             storeConfig.z, true)
 
                         if (distance <= storeConfig.distanceOpenStore) then
-                            if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                                if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
-
-                                    sleep = false
-                                    local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
-
-                                    PromptSetActiveGroupThisFrame(PromptGroup, label)
-                                    if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                            
+                            sleep = false
+                            local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
+                            PromptSetActiveGroupThisFrame(PromptGroup, label)
+                            if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                                TriggerServerEvent("vorp_stores:getPlayerJob")
+                                Citizen.Wait(100)
+                                if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
+                                    if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
                                         OpenCategory(storeId)
-
                                         DisplayRadar(false)
                                         TaskStandStill(player, -1)
                                     end
+                                else
+                                    TriggerEvent("vorp:NotifyLeft", _U("wrongJobTitle"),_U("wrongJobMsg"), "menu_textures", "cross", 4000, 'COLOR_WHITE')
                                 end
                             end
+                       
                         end
 
 
