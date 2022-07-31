@@ -28,5 +28,7 @@ Locales["it_lang"] = {
     cantcarry = "Non puoi trasportare più niente",
     closed = "~e~CLOSED ~o~",
     am = ":00~q~am to ~o~",
-    pm = ":00~q~pm"
+    pm = ":00~q~pm",
+    wrongJobTitle = "Nessun accesso",
+    wrongJobMsg = "Non sei autorizzato ad acquistare qui"
 }
