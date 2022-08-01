@@ -23,10 +23,6 @@ Citizen.CreateThread(function ()
 end)
 
 
-function setContains(key) --has Store limited Items?
-    return storeLimits[key] ~= nil
-end
-
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------- SELL -----------------------------------------------------------
 
@@ -43,25 +39,29 @@ AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty, stor
     local total = ItemPrice * quantity
     local total2 = (math.floor(total * 100) / 100)
     local itemFound= false
+    local storeconfig = Config.Stores[storeId]
 
     if count >= quantity then
         if not storeLimits[storeId] then --when store have no limited items
             sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,currencyType)
         else --store have limited items
             for k, items in pairs(storeLimits[storeId]) do
-                if items.itemName == ItemName then
+                if items.itemName == ItemName and items.type == "sell" then
                     itemFound = true
                     if items.amount >= quantity then
                         sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,currencyType)
                         items.amount = items.amount-quantity --update amount left for store
                     else
-                        TriggerClientEvent("vorp:TipRight", _source, _U("limit"), 3000)
+                        TriggerClientEvent("vorp:TipRight", _source, _U("limitSell"), 3000)
                     end
                 end
             end
             if not itemFound then
                 sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,currencyType)
             end
+        end
+        if storeconfig.DynamicStore then
+            dynamicStoreHandler(storeconfig,storeId,ItemName,quantity)
         end
     else
         TriggerClientEvent("vorp:TipRight", _source, _U("youdontsell"), 3000)
@@ -86,11 +86,20 @@ function sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,cu
     
 end
 
+function dynamicStoreHandler(storeconfig,storeId,ItemName,quantity)
+
+        for k, items in pairs(storeLimits[storeId]) do
+            if items.itemName == ItemName and items.type == "buy" then
+                items.amount = items.amount+quantity
+            end
+        end
+end
+
 ------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------- BUY ---------------------------------------------------------------------
 
 RegisterServerEvent('vorp_stores:buy')
-AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty)
+AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty,storeId)
     local _source = source
     local Character = VORPcore.getUser(_source).getUsedCharacter
     local money = Character.money
@@ -102,33 +111,28 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty)
     local quantity = qty
     local total = ItemPrice * quantity
     local total2 = (math.floor(total * 100) / 100)
+    local itemFound = false
 
     TriggerEvent("vorpCore:canCarryItems", tonumber(_source), quantity, function(canCarry) -- chek inv space
         TriggerEvent("vorpCore:canCarryItem", tonumber(_source), ItemName, quantity,
             function(canCarry2) -- check item count
                 if canCarry and canCarry2 then
-
-                    if money >= total then
-                        if currencyType == "cash" then
-                            VORPinv.addItem(_source, ItemName, quantity)
-                            Character.removeCurrency(0, total)
-
-                            TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total2 .. _U("ofcash"), 3000)
-
-                        end
+                    if not storeLimits[storeId] then --when store have no limited items
+                        buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
                     else
-                        TriggerClientEvent("vorp:TipRight", _source, _U("youdontcash"), 3000)
-                    end
-
-                    if gold >= total then
-                        if currencyType == "gold" then
-                            if gold >= ItemPrice then
-                                VORPinv.addItem(_source, ItemName, quantity)
-                                Character.removeCurrency(1, total)
-                                TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2 .. _U("ofgold"), 3000)
-                            else
-                                TriggerClientEvent("vorp:TipRight", _source, _U("youdontgold"), 3000)
+                        for k, items in pairs(storeLimits[storeId]) do
+                            if items.itemName == ItemName and items.type == "buy" then
+                                itemFound = true
+                                if items.amount >= quantity then
+                                    buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
+                                    items.amount = items.amount-quantity --update amount left for store
+                                else
+                                    TriggerClientEvent("vorp:TipRight", _source, _U("limitBuy"), 3000)
+                                end
                             end
+                        end
+                        if not itemFound then
+                            buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
                         end
                     end
                 else
@@ -137,6 +141,33 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty)
             end)
     end)
 end)
+
+function buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
+    if money >= total then
+        if currencyType == "cash" then
+            VORPinv.addItem(_source, ItemName, quantity)
+            Character.removeCurrency(0, total)
+
+            TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total2 .. _U("ofcash"), 3000)
+
+        end
+    else
+        TriggerClientEvent("vorp:TipRight", _source, _U("youdontcash"), 3000)
+    end
+
+    if gold >= total then
+        if currencyType == "gold" then
+            if gold >= ItemPrice then
+                VORPinv.addItem(_source, ItemName, quantity)
+                Character.removeCurrency(1, total)
+                TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2 .. _U("ofgold"), 3000)
+            else
+                TriggerClientEvent("vorp:TipRight", _source, _U("youdontgold"), 3000)
+            end
+        end
+    end
+    
+end
 
 -------------------- GetJOB --------------------
 RegisterServerEvent('vorp_stores:getPlayerJob')

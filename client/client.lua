@@ -524,7 +524,7 @@ function OpenBuyMenu(storeId, category)
                 local qty = tonumber(result)
                 if qty ~= nil and qty ~= 0 and qty > 0 then
 
-                    TriggerServerEvent("vorp_stores:buy", ItemLabel, ItemName, currencyType, buyPrice, qty) -- sell it
+                    TriggerServerEvent("vorp_stores:buy", ItemLabel, ItemName, currencyType, buyPrice, qty,storeId) -- sell it
                 else
                     TriggerEvent("vorp:TipRight", _U("insertamount"), 3000)
                 end

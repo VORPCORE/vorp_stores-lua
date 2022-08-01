@@ -29,5 +29,6 @@ Locales["en_lang"] = {
     closed = "~e~CLOSED ~o~",
     am = ":00~q~am to ~o~",
     pm = ":00~q~pm",
-    limit = "I no longer buy so much of this item anymore"
+    limitSell = "I no longer buy so much of this item anymore",
+    limitBuy = "I have unfortunately no longer so much in stock"
 }
