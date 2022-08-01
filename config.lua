@@ -33,7 +33,7 @@ Config.Stores = {
         RandomPrices = true,
         StoreOpen = 7, -- am
         StoreClose = 21, -- pm
-        LimitedItems = { --add if you want limited amount the store accept until restart
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
             {itemName="apple", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
         }
     },
@@ -55,8 +55,10 @@ Config.Stores = {
         StoreHoursAllowed = true,
         RandomPrices = true,
         StoreOpen = 8, -- am
-        StoreClose = 20 -- pm
-
+        StoreClose = 20, -- pm
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
+            {itemName="apple", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
     Strawberry = {
         blipAllowed = true,
@@ -75,8 +77,10 @@ Config.Stores = {
         StoreHoursAllowed = true,
         RandomPrices = true,
         StoreOpen = 6, -- am
-        StoreClose = 23 -- pm
-
+        StoreClose = 23, -- pm
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
+            {itemName="apple", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
     Blackwater = {
         blipAllowed = true,
@@ -95,8 +99,10 @@ Config.Stores = {
         StoreHoursAllowed = true,
         RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreClose = 21 -- pm
-
+        StoreClose = 21, -- pm
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
+            {itemName="apple", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
     Armadillo = {
         blipAllowed = true,
@@ -115,8 +121,10 @@ Config.Stores = {
         StoreHoursAllowed = true,
         RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreClose = 21 -- pm
-
+        StoreClose = 21, -- pm
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
+            {itemName="apple", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
     Tumbleweed = {
         blipAllowed = true,
@@ -135,8 +143,10 @@ Config.Stores = {
         StoreHoursAllowed = true,
         RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreClose = 21 -- pm
-
+        StoreClose = 21, -- pm
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
+            {itemName="apple", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
     StDenis = {
         blipAllowed = true,
@@ -155,8 +165,10 @@ Config.Stores = {
         StoreHoursAllowed = true,
         RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreClose = 21 -- pm
-
+        StoreClose = 21, -- pm
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
+            {itemName="apple", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
     Vanhorn = {
         blipAllowed = true,
@@ -175,8 +187,10 @@ Config.Stores = {
         StoreHoursAllowed = true,
         RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreClose = 21 -- pm
-
+        StoreClose = 21, -- pm
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
+            {itemName="apple", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
     BlackwaterFishing = {
         blipAllowed = true,
@@ -195,8 +209,10 @@ Config.Stores = {
         StoreHoursAllowed = true,
         RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreClose = 21 -- pm
-
+        StoreClose = 21, -- pm
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
+            {itemName="bait", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
     Wapiti = {
         blipAllowed = true,
@@ -215,7 +231,10 @@ Config.Stores = {
         StoreHoursAllowed = true,
         RandomPrices = true,
         StoreOpen = 7, -- am
-        StoreClose = 21 -- pm
+        StoreClose = 21, -- pm
+        LimitedItems = { --delete or leave empty if you don't want the store to to buy only a certain quantity of an item
+            {itemName="bait", amount=10}  --add as many items you want and set limit amount (obviously the item has to be in Config.SellItems)
+        }
     },
 }
 

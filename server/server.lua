@@ -16,7 +16,7 @@ local storeLimits = {}
 Citizen.CreateThread(function ()
     for k, v in pairs(Config.Stores) do
         if v.LimitedItems and k~=nil  then
-            table.insert(storeLimits,k)
+            storeLimits[#storeLimits+1] = k
             storeLimits[k]= v.LimitedItems
         end  
     end
@@ -42,11 +42,10 @@ AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty, stor
     local quantity = qty
     local total = ItemPrice * quantity
     local total2 = (math.floor(total * 100) / 100)
-    local limitedItems = setContains(storeId)
     local itemFound= false
 
     if count >= quantity then
-        if not limitedItems then --when store have no limited items
+        if not storeLimits[storeId] then --when store have no limited items
             sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,currencyType)
         else --store have limited items
             for k, items in pairs(storeLimits[storeId]) do
