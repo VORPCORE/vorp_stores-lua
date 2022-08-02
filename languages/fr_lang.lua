@@ -29,5 +29,6 @@ Locales["fr_lang"] = {
     closed = "~e~FERMÉ ~o~",
     am = ":00~q~am à ~o~",
     pm = ":00~q~pm",
-    limit = "Je n'achète plus autant de cet objet"
+    limitSell = "Je n'achète plus autant de cet objet",
+    limitBuy = "Je n'en ai malheureusement plus beaucoup en réserve."
 }
