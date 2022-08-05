@@ -52,7 +52,7 @@ AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty, stor
                         sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,currencyType)
                         items.amount = items.amount-quantity --update amount left for store
                     else
-                        TriggerClientEvent("vorp:TipRight", _source, _U("limitSell"), 3000)
+                        VORPcore.NotifyRightTip( _source, _U("limitSell"), 3000)
                     end
                 end
             end
@@ -64,7 +64,7 @@ AddEventHandler('vorp_stores:sell', function(label, name, type, price, qty, stor
             dynamicStoreHandler(storeconfig,storeId,ItemName,quantity)
         end
     else
-        TriggerClientEvent("vorp:TipRight", _source, _U("youdontsell"), 3000)
+        VORPcore.NotifyRightTip( _source,_U("youdontsell"), 3000)
     end
 end)
 
@@ -74,14 +74,14 @@ function sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,cu
         VORPinv.subItem(_source, ItemName, quantity)
         Character.addCurrency(0, total)
 
-        TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total2 .. _U("ofcash"), 3000)
+        VORPcore.NotifyRightTip( _source, _U("yousold") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total .. _U("ofcash"), 3000)
     end
 
     if currencyType == "gold" then
 
         VORPinv.subItem(_source, ItemName, quantity)
         Character.addCurrency(1, total)
-        TriggerClientEvent("vorp:TipRight", _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2 .. _U("ofgold"), 3000)
+        VORPcore.NotifyRightTip( _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total .. _U("ofgold"), 3000)
     end
     
 end
@@ -98,6 +98,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------- BUY ---------------------------------------------------------------------
 
+
 RegisterServerEvent('vorp_stores:buy')
 AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty,storeId)
     local _source = source
@@ -112,34 +113,35 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty,storeI
     local total = ItemPrice * quantity
     local total2 = (math.floor(total * 100) / 100)
     local itemFound = false
-
-    TriggerEvent("vorpCore:canCarryItems", tonumber(_source), quantity, function(canCarry) -- chek inv space
-        TriggerEvent("vorpCore:canCarryItem", tonumber(_source), ItemName, quantity,
-            function(canCarry2) -- check item count
-                if canCarry and canCarry2 then
-                    if not storeLimits[storeId] then --when store have no limited items
-                        buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
-                    else
-                        for k, items in pairs(storeLimits[storeId]) do
-                            if items.itemName == ItemName and items.type == "buy" then
-                                itemFound = true
-                                if items.amount >= quantity then
-                                    buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
-                                    items.amount = items.amount-quantity --update amount left for store
-                                else
-                                    TriggerClientEvent("vorp:TipRight", _source, _U("limitBuy"), 3000)
-                                end
-                            end
-                        end
-                        if not itemFound then
+    local canCarry = VORPinv.canCarryItems(_source, quantity) --can carry inv space
+    local canCarry2 = VORPinv.canCarryItem(_source, ItemName, quantity) --cancarry item limit
+    local itemCheck = VORPinv.getDBItem(_source, ItemName) --check items exist in DB
+    if itemCheck then
+        if canCarry and canCarry2 then
+            if not storeLimits[storeId] then --when store have no limited items
+                buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
+            else
+                for k, items in pairs(storeLimits[storeId]) do
+                    if items.itemName == ItemName and items.type == "buy" then
+                        itemFound = true
+                        if items.amount >= quantity then
                             buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
+                            items.amount = items.amount-quantity --update amount left for store
+                        else
+                            VORPcore.NotifyRightTip(_source, _U("limitBuy"), 3000)
                         end
                     end
-                else
-                    TriggerClientEvent("vorp:TipRight", _source, _U("cantcarry"), 3000)
                 end
-            end)
-    end)
+                if not itemFound then
+                    buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
+                end
+            end
+        else
+            VORPcore.NotifyRightTip(_source, _U("cantcarry"), 3000)
+        end
+    else
+        VORPcore.NotifyRightTip(_source, "item does not exist", 3000)
+    end
 end)
 
 function buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,ItemName,quantity,ItemLabel,total2)
@@ -148,11 +150,11 @@ function buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,Ite
             VORPinv.addItem(_source, ItemName, quantity)
             Character.removeCurrency(0, total)
 
-            TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total2 .. _U("ofcash"), 3000)
+            VORPcore.NotifyRightTip( _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total .. _U("ofcash"),3000)
 
         end
     else
-        TriggerClientEvent("vorp:TipRight", _source, _U("youdontcash"), 3000)
+        VORPcore.NotifyRightTip(_source, _U("youdontcash"), 3000)
     end
 
     if gold >= total then
@@ -160,9 +162,9 @@ function buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,Ite
             if gold >= ItemPrice then
                 VORPinv.addItem(_source, ItemName, quantity)
                 Character.removeCurrency(1, total)
-                TriggerClientEvent("vorp:TipRight", _source, _U("youbought") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2 .. _U("ofgold"), 3000)
+                VORPcore.NotifyRightTip(_source, _U("youbought") .. quantity .. "" .. ItemLabel .. _U("fr") .. total .. _U("ofgold"),3000)
             else
-                TriggerClientEvent("vorp:TipRight", _source, _U("youdontgold"), 3000)
+                VORPcore.NotifyRightTip(_source, _U("youdontgold"), 3000)
             end
         end
     end
