@@ -162,28 +162,29 @@ Citizen.CreateThread(function()
                             end
 
                         else -- job only
-
-                            TriggerServerEvent("vorp_stores:getPlayerJob")
-
-
-                            local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
-                                storeConfig.z, true)
+                            local coordsDist = vector3(coords.x, coords.y, coords.z)
+                            local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
+                            local distance = #(coordsDist - coordsStore)
 
                             if (distance <= storeConfig.distanceOpenStore) then
-                                if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                                    if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
-                                        sleep = false
-                                        local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
+                                TriggerServerEvent("vorp_stores:getPlayerJob")
+                                Wait(200)
+                                if PlayerJob then
+                                    if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
+                                        if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
+                                            sleep = false
+                                            local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
 
-                                        PromptSetActiveGroupThisFrame(PromptGroup, label)
-                                        if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
-                                            OpenCategory(storeId)
+                                            PromptSetActiveGroupThisFrame(PromptGroup, label)
+                                            if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                                                OpenCategory(storeId)
 
-                                            DisplayRadar(false)
-                                            TaskStandStill(player, -1)
+                                                DisplayRadar(false)
+                                                TaskStandStill(player, -1)
+                                            end
                                         end
                                     end
-                                end
+                                 end
                             end
 
 
@@ -221,31 +222,30 @@ Citizen.CreateThread(function()
 
                     else -- job only
 
-                        TriggerServerEvent("vorp_stores:getPlayerJob")
-
-                        while PlayerJob == nil do
-                            Wait(100)
-                        end
-
-                        local distance = Vdist2(coords.x, coords.y, coords.z, storeConfig.x, storeConfig.y,
-                            storeConfig.z, true)
+                        local coordsDist = vector3(coords.x, coords.y, coords.z)
+                        local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
+                        local distance = #(coordsDist - coordsStore)
 
                         if (distance <= storeConfig.distanceOpenStore) then
-                            if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                                if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
+                            TriggerServerEvent("vorp_stores:getPlayerJob")
+                            Wait(200)
+                            if PlayerJob then
+                                if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
+                                    if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
 
-                                    sleep = false
-                                    local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
+                                        sleep = false
+                                        local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
 
-                                    PromptSetActiveGroupThisFrame(PromptGroup, label)
-                                    if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
-                                        OpenCategory(storeId)
+                                        PromptSetActiveGroupThisFrame(PromptGroup, label)
+                                        if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                                            OpenCategory(storeId)
 
-                                        DisplayRadar(false)
-                                        TaskStandStill(player, -1)
+                                            DisplayRadar(false)
+                                            TaskStandStill(player, -1)
+                                        end
                                     end
                                 end
-                            end
+                            end        
                         end
 
 
