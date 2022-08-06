@@ -4,6 +4,7 @@ local OpenStores
 local CloseStores
 local PlayerJob
 local JobGrade
+local shopStocks = {} 
 local PromptGroup = GetRandomIntInRange(0, 0xffffff)
 local PromptGroup2 = GetRandomIntInRange(0, 0xffffff)
 local isInMenu = false
@@ -347,7 +348,7 @@ function OpenSellMenu(storeId, category)
     local storeConfig = Config.Stores[storeId]
 
     local elementIndex = 1
-
+    
     for index, storeItem in ipairs(Config.SellItems[storeId]) do
         
         if storeItem.category == category then
@@ -446,10 +447,12 @@ function OpenBuyMenu(storeId, category)
     local menuElements = {}
     local player = PlayerPedId()
     local storeConfig = Config.Stores[storeId]
-
     local elementIndex = 1
+    TriggerServerEvent("vorp_stores:getShopStock")
+    Citizen.Wait(100)
 
     for index, storeItem in ipairs(Config.BuyItems[storeId]) do
+        local itemFound = false
 
         if storeItem.category == category then
             local ctp = ""
@@ -458,25 +461,56 @@ function OpenBuyMenu(storeId, category)
             else
                 ctp = "$"
             end
-
-            menuElements[elementIndex] = {
-                itemHeight = "2vh",
-                label = "<img style='max-height: 40px;max-width: 40px;float: left;text-align: center;margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" ..
-                    storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" ..
-                    storeItem.itemLabel .. "</span>",
-                value = "sell" .. tostring(elementIndex),
-                desc = "" ..
-                    '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' ..
-                    _U("buyfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp ..
-                    '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) ..
-                    "</span><span style='color:Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" ..
-                    storeItem.desc,
-                info = storeItem
-
-            }
-
-            elementIndex = elementIndex + 1
-
+            if shopStocks[storeId] then
+                for k, items in pairs(shopStocks[storeId]) do
+                    if items.itemName == storeItem.itemName and items.type == "buy" then
+                        itemFound = true
+                        menuElements[elementIndex] = {
+                            itemHeight = "2vh",
+                            label = "<span style=font-size:15px;text-align:center;>" ..
+                            items.amount .. "</span>".." <img style='max-height: 40px;max-width: 40px;float: left;text-align: center;margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" ..
+                                storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" ..
+                                storeItem.itemLabel .. "</span>",
+                            value = "sell" .. tostring(elementIndex),
+                            desc = "" ..
+                                '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' ..
+                                _U("buyfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp ..
+                                '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) ..
+                                "</span><span style='color:Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" ..
+                                storeItem.desc,
+                            info = storeItem
+            
+                        }
+            
+                        elementIndex = elementIndex + 1
+    
+                    end
+                end
+  
+            end
+            
+            if not itemFound then
+                menuElements[elementIndex] = {
+                    itemHeight = "2vh",
+                    label = "<span style=font-size:15px;text-align:left;>∞</span>".. "<img style='max-height: 40px;max-width: 40px;float: left;text-align: center;margin-top: -5px;' src='nui://vorp_inventory/html/img/items/" ..
+                        storeItem.itemName .. ".png'><span style=margin-left:40px;font-size:25px;text-align:center;>" ..
+                        storeItem.itemLabel .. "</span>",
+                    value = "sell" .. tostring(elementIndex),
+                    desc = "" ..
+                        '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>' ..
+                        _U("buyfor") .. '<span style="margin-left:90px;">' .. '<span style="font-size:25px;">' .. ctp ..
+                        '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) ..
+                        "</span><span style='color:Yellow;'>  " .. storeItem.currencyType .. "</span><br><br><br>" ..
+                        storeItem.desc,
+                    info = storeItem
+    
+                }
+    
+                elementIndex = elementIndex + 1
+    
+                
+            end
+            
         end
 
     end
@@ -540,6 +574,11 @@ function OpenBuyMenu(storeId, category)
     end)
 
 end
+
+RegisterNetEvent("vorp_stores:sendShopStock")
+AddEventHandler("vorp_stores:sendShopStock", function(stock)
+    shopStocks = stock
+end)
 
 RegisterNetEvent("vorp_stores:sendPlayerJob")
 AddEventHandler("vorp_stores:sendPlayerJob", function(Job, grade)
