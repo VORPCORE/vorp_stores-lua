@@ -171,6 +171,16 @@ function buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,Ite
     
 end
 
+
+-------------------- GetStocks --------------------
+RegisterServerEvent('vorp_stores:getShopStock')
+AddEventHandler('vorp_stores:getShopStock', function()
+    local _source = source
+    local stock =  storeLimits
+
+    TriggerClientEvent('vorp_stores:sendShopStock', _source, stock)
+end)
+
 -------------------- GetJOB --------------------
 RegisterServerEvent('vorp_stores:getPlayerJob')
 AddEventHandler('vorp_stores:getPlayerJob', function()
