@@ -74,14 +74,14 @@ function sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,cu
         VORPinv.subItem(_source, ItemName, quantity)
         Character.addCurrency(0, total)
 
-        VORPcore.NotifyRightTip( _source, _U("yousold") .. quantity .. " " .. ItemLabel .. _U("frcash") .. string.format("%.2f", total) .. _U("ofcash"), 3000)
+        VORPcore.NotifyRightTip( _source, _U("yousold") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total2 .. _U("ofcash"), 3000)
     end
 
     if currencyType == "gold" then
 
         VORPinv.subItem(_source, ItemName, quantity)
         Character.addCurrency(1, total)
-        VORPcore.NotifyRightTip( _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. string.format("%.2f", total) .. _U("ofgold"), 3000)
+        VORPcore.NotifyRightTip( _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2) .. _U("ofgold"), 3000)
     end
     
 end
@@ -111,7 +111,6 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty,storeI
     local currencyType = type
     local quantity = qty
     local total = ItemPrice * quantity
-    local total2 = (math.floor(total * 100) / 100)
     local itemFound = false
     local canCarry = VORPinv.canCarryItems(_source, quantity) --can carry inv space
     local canCarry2 = VORPinv.canCarryItem(_source, ItemName, quantity) --cancarry item limit
@@ -150,7 +149,7 @@ function buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,Ite
             VORPinv.addItem(_source, ItemName, quantity)
             Character.removeCurrency(0, total)
 
-            VORPcore.NotifyRightTip( _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("frcash") .. string.format("%.2f", total) .. _U("ofcash"),3000)
+            VORPcore.NotifyRightTip( _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total2 .. _U("ofcash"),3000)
 
         end
     else
@@ -162,7 +161,7 @@ function buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,Ite
             if gold >= ItemPrice then
                 VORPinv.addItem(_source, ItemName, quantity)
                 Character.removeCurrency(1, total)
-                VORPcore.NotifyRightTip(_source, _U("youbought") .. quantity .. "" .. ItemLabel .. _U("fr") .. string.format("%.2f", total) .. _U("ofgold"),3000)
+                VORPcore.NotifyRightTip(_source, _U("youbought") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2 .. _U("ofgold"),3000)
             else
                 VORPcore.NotifyRightTip(_source, _U("youdontgold"), 3000)
             end
