@@ -185,11 +185,13 @@ end)
 RegisterServerEvent('vorp_stores:getPlayerJob')
 AddEventHandler('vorp_stores:getPlayerJob', function()
     local _source = source
-    local Character = VORPcore.getUser(_source).getUsedCharacter
-    local CharacterJob = Character.job
-    local CharacterGrade = Character.jobGrade
+    if _source then
+        local Character = VORPcore.getUser(_source).getUsedCharacter
+        local CharacterJob = Character.job
+        local CharacterGrade = Character.jobGrade
 
-    TriggerClientEvent('vorp_stores:sendPlayerJob', _source, CharacterJob, CharacterGrade)
+        TriggerClientEvent('vorp_stores:sendPlayerJob', _source, CharacterJob, CharacterGrade)
+    end
 end)
 
 AddEventHandler('onResourceStart', function(resourceName)
