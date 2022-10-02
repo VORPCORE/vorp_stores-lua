@@ -81,7 +81,7 @@ function sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,cu
 
         VORPinv.subItem(_source, ItemName, quantity)
         Character.addCurrency(1, total)
-        VORPcore.NotifyRightTip( _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2) .. _U("ofgold"), 3000)
+        VORPcore.NotifyRightTip( _source, _U("yousold") .. quantity .. "" .. ItemLabel .. _U("fr") .. total2 .. _U("ofgold"), 3000)
     end
     
 end
