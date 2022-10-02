@@ -111,6 +111,7 @@ AddEventHandler('vorp_stores:buy', function(label, name, type, price, qty,storeI
     local currencyType = type
     local quantity = qty
     local total = ItemPrice * quantity
+    local total2 = (math.floor(total * 100) / 100)
     local itemFound = false
     local canCarry = VORPinv.canCarryItems(_source, quantity) --can carry inv space
     local canCarry2 = VORPinv.canCarryItem(_source, ItemName, quantity) --cancarry item limit
