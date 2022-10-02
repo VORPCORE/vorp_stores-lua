@@ -73,7 +73,9 @@ function sellItems(_source,Character,ItemName,quantity,ItemLabel,total,total2,cu
     if currencyType == "cash" then
         VORPinv.subItem(_source, ItemName, quantity)
         Character.addCurrency(0, total)
-
+        local fname = Character.firstname
+        local lname = Character.lastname
+        VORPcore.AddWebhook("Stores", Config.Webhook, fname.." " ..lname.. " sell " ..quantity.. " " ..ItemLabel.. " for ".. total2)
         VORPcore.NotifyRightTip( _source, _U("yousold") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total .. _U("ofcash"), 3000)
     end
 
@@ -149,7 +151,9 @@ function buyItems(_source,Character,money,gold,currencyType,ItemPrice, total,Ite
         if currencyType == "cash" then
             VORPinv.addItem(_source, ItemName, quantity)
             Character.removeCurrency(0, total)
-
+            local fname = Character.firstname
+            local lname = Character.lastname
+            VORPcore.AddWebhook("Stores", Config.Webhook, fname.." " ..lname.. " sell " ..quantity.. " " ..ItemLabel.. " for ".. total2)
             VORPcore.NotifyRightTip( _source, _U("youbought") .. quantity .. " " .. ItemLabel .. _U("frcash") .. total .. _U("ofcash"),3000)
 
         end
