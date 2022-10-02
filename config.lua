@@ -8,6 +8,20 @@ Config = {}
 -- "center" / "top-left" / "top-right"
 Config.Align = "top-left"
 
+--Webhook Section, description is in translation
+Config.UseWebhook = false -- Use webhook
+
+--Mandatory Webhook Parts
+Config.WebhookTitle = ""
+Config.Webhook = ""
+
+--Optional Webhook Parts, if not filled will default vorp_core config
+Config.WebhookColor = ""
+Config.WebhookName = ""
+Config.WebhookLogo = ""
+Config.WebhookLogo2 = ""
+Config.WebhookAvatar
+
 Config.defaultlang = "en_lang"
 
 -- open stores
