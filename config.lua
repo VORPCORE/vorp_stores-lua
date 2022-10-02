@@ -10,6 +10,8 @@ Config.Align = "top-left"
 
 Config.defaultlang = "en_lang"
 
+Config.Webhook = ""
+
 -- open stores
 Config.Key = 0x760A9C6F --[G]
 
