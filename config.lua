@@ -20,7 +20,7 @@ Config.WebhookColor = ""
 Config.WebhookName = ""
 Config.WebhookLogo = ""
 Config.WebhookLogo2 = ""
-Config.WebhookAvatar
+Config.WebhookAvatar = ""
 
 Config.defaultlang = "en_lang"
 
