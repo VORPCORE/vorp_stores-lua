@@ -229,27 +229,26 @@ Citizen.CreateThread(function()
                         local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
                         local distance = #(coordsDist - coordsStore)
 
-                        if (distance <= storeConfig.distanceOpenStore) then
-                            TriggerServerEvent("vorp_stores:getPlayerJob")
-                            Wait(200)
-                            if PlayerJob then
-                                if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
-                                    if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
+                       if (distance <= storeConfig.distanceOpenStore) then
 
-                                        sleep = false
-                                        local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
-
-                                        PromptSetActiveGroupThisFrame(PromptGroup, label)
-                                        if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                            sleep = false
+                            local label = CreateVarString(10, 'LITERAL_STRING', storeConfig.PromptName)
+                            PromptSetActiveGroupThisFrame(PromptGroup, label)
+                            if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+                                TriggerServerEvent("vorp_stores:getPlayerJob")
+                                Wait(200)
+                                if PlayerJob then
+                                    if CheckJob(storeConfig.AllowedJobs, PlayerJob) then
+                                        if tonumber(storeConfig.JobGrade) <= tonumber(JobGrade) then
                                             OpenCategory(storeId)
-
                                             DisplayRadar(false)
                                             TaskStandStill(player, -1)
                                         end
                                     end
                                 end
-                            end        
+                            end
                         end
+
 
 
 
