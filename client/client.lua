@@ -107,9 +107,18 @@ Citizen.CreateThread(function()
             for storeId, storeConfig in pairs(Config.Stores) do
                 if storeConfig.StoreHoursAllowed then
                     if hour >= storeConfig.StoreClose or hour < storeConfig.StoreOpen then
+                        if Config.blipAllowedClosed then
+                            if not Config.Stores[storeId].BlipHandle and storeConfig.blipAllowed then
+                                AddBlip(storeId)
+                            end
+                        else
+                            if Config.Stores[storeId].BlipHandle then
+                                RemoveBlip(Config.Stores[storeId].BlipHandle)
+                                Config.Stores[storeId].BlipHandle = nil
+                            end
+                        end
                         if Config.Stores[storeId].BlipHandle then
-                            RemoveBlip(Config.Stores[storeId].BlipHandle)
-                            Config.Stores[storeId].BlipHandle = nil
+                            Citizen.InvokeNative(0x662D364ABF16DE2F, Config.Stores[storeId].BlipHandle, GetHashKey(storeConfig.blipColorClosed))
                         end
                         if Config.Stores[storeId].NPC then
                             DeleteEntity(Config.Stores[storeId].NPC)
@@ -143,6 +152,9 @@ Citizen.CreateThread(function()
                         end
                         -- ## run this before distance check  no need to run a code that is no meant for the client ## --
                         if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
+                            if Config.Stores[storeId].BlipHandle then
+                                Citizen.InvokeNative(0x662D364ABF16DE2F, Config.Stores[storeId].BlipHandle, GetHashKey(storeConfig.blipColorOpen))
+                            end
                             local coordsDist = vector3(coords.x, coords.y, coords.z)
                             local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
                             local distance = #(coordsDist - coordsStore)
@@ -163,6 +175,9 @@ Citizen.CreateThread(function()
                             end
 
                         else -- job only
+                            if Config.Stores[storeId].BlipHandle then
+                                Citizen.InvokeNative(0x662D364ABF16DE2F, Config.Stores[storeId].BlipHandle, GetHashKey(storeConfig.blipColorJob))
+                            end
                             local coordsDist = vector3(coords.x, coords.y, coords.z)
                             local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
                             local distance = #(coordsDist - coordsStore)
@@ -204,6 +219,9 @@ Citizen.CreateThread(function()
                     end
                     -- ## run this before distance check  no need to run a code that is no meant for the client ## --
                     if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
+                        if Config.Stores[storeId].BlipHandle then
+                            Citizen.InvokeNative(0x662D364ABF16DE2F, Config.Stores[storeId].BlipHandle, GetHashKey(storeConfig.blipColorOpen)) -- BlipAddModifier
+                        end
                         local coordsDist = vector3(coords.x, coords.y, coords.z)
                         local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
                         local distance = #(coordsDist - coordsStore)
@@ -224,7 +242,9 @@ Citizen.CreateThread(function()
                         end
 
                     else -- job only
-
+                        if Config.Stores[storeId].BlipHandle then
+                            Citizen.InvokeNative(0x662D364ABF16DE2F, Config.Stores[storeId].BlipHandle, GetHashKey(storeConfig.blipColorJob)) -- BlipAddModifier
+                        end
                         local coordsDist = vector3(coords.x, coords.y, coords.z)
                         local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
                         local distance = #(coordsDist - coordsStore)
