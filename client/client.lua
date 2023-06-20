@@ -135,11 +135,21 @@ Citizen.CreateThread(function()
                             end
                         end
                     elseif hour >= storeConfig.StoreOpen then
+                        local coordsDist = vector3(coords.x, coords.y, coords.z)
+                        local coordsStore = vector3(storeConfig.x, storeConfig.y, storeConfig.z)
+                        local spawndistance = #(coordsDist - coordsStore)
                         if not Config.Stores[storeId].BlipHandle and storeConfig.blipAllowed then
                             AddBlip(storeId)
                         end
-                        if not Config.Stores[storeId].NPC and storeConfig.NpcAllowed then
-                            SpawnNPC(storeId)
+                        if spawndistance <= storeConfig.NpcSpawnDistance then
+                            if not Config.Stores[storeId].NPC and storeConfig.NpcAllowed then
+                                SpawnNPC(storeId)
+                            end
+                        else
+                            if Config.Stores[storeId].NPC then
+                                DeleteEntity(Config.Stores[storeId].NPC)
+                                Config.Stores[storeId].NPC = nil
+                            end
                         end
                         -- ## run this before distance check  no need to run a code that is no meant for the client ## --
                         if not next(storeConfig.AllowedJobs) then -- if jobs empty then everyone can use
