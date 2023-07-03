@@ -372,8 +372,9 @@ end
 RegisterServerEvent('vorp_stores:GetRefreshedPrices', function()
     local _source = source
     TriggerClientEvent('vorp_stores:RefreshStorePrices', _source, Config.SellItems, Config.BuyItems)
-    
-    local character = VORPcore.getUser(_source).getUsedCharacter
+
+    -- enable for tests
+    --[[   local character = VORPcore.getUser(_source).getUsedCharacter
     local job = character.job
     local grade = character.jobGrade
 
@@ -390,7 +391,7 @@ RegisterServerEvent('vorp_stores:GetRefreshedPrices', function()
         end
     end
 
-    TriggerClientEvent("vorp_stores:Server:tableOfJobs", _source, Jobs)
+    TriggerClientEvent("vorp_stores:Server:tableOfJobs", _source, Jobs) ]]
 end)
 
 
