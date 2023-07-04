@@ -397,11 +397,12 @@ end)
 
 RegisterNetEvent("vorp:SelectedCharacter", function(source, character)
     local _source = source
+
     local job = character.job
     local grade = character.jobGrade
 
     for key, value in pairs(Config.Stores) do
-        if job == value.AllowedJobs then
+        if CheckTable(value.AllowedJobs, job) then
             if not Jobs[_source] then
                 Jobs[_source] = {}
             end
