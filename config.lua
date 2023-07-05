@@ -3,7 +3,7 @@ Config = {}
 --menu position
 -- "center" / "top-left" / "top-right"
 Config.Align = "top-left"
-
+Config.DevMode = false    -- if true you can use /reload to reload the script
 --Webhook Section, description is in translation
 Config.UseWebhook = false -- Use webhook
 Config.WebhookTitle = ""
@@ -48,8 +48,8 @@ Config.Stores = {
         -- * store type allow which type of store to show in the store
         -- * buy and sell USE ENGLISH ONLY
         storeType = {
-            { label = "Buy",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" },
+            { label = "Buy", Type = "buy", desc = "Buy from store", img = "consumable_bread_roll" },
+            --{ label = "Sell", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" },
         },
 
         storeName = "valentine",      -- menu name

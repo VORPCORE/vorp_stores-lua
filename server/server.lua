@@ -374,28 +374,35 @@ RegisterServerEvent('vorp_stores:GetRefreshedPrices', function()
     TriggerClientEvent('vorp_stores:RefreshStorePrices', _source, Config.SellItems, Config.BuyItems)
 
     -- enable for tests
-    --[[   local character = VORPcore.getUser(_source).getUsedCharacter
-    local job = character.job
-    local grade = character.jobGrade
+    if Config.DevMode then
+        local character = VORPcore.getUser(_source).getUsedCharacter
+        local job = character.job
+        local grade = character.jobGrade
 
-    for key, value in pairs(Config.Stores) do
-        if CheckTable(value.AllowedJobs, job) then
-            if not Jobs[_source] then
-                Jobs[_source] = {}
+        for key, value in pairs(Config.Stores) do
+            if CheckTable(value.AllowedJobs, job) then
+                if not Jobs[_source] then
+                    Jobs[_source] = {}
+                end
+
+                Jobs[_source] = {
+                    job = job,
+                    grade = grade
+                }
             end
-
-            Jobs[_source] = {
-                job = job,
-                grade = grade
-            }
         end
-    end
 
-    TriggerClientEvent("vorp_stores:Server:tableOfJobs", _source, Jobs) ]]
+        TriggerClientEvent("vorp_stores:Server:tableOfJobs", _source, Jobs)
+    end
 end)
 
 
 RegisterNetEvent("vorp:SelectedCharacter", function(source, character)
+    if Config.DevMode then
+        print("do not use devmode in live servers")
+        return
+    end
+
     local _source = source
 
     local job = character.job
@@ -411,6 +418,7 @@ RegisterNetEvent("vorp:SelectedCharacter", function(source, character)
                 job = job,
                 grade = grade
             }
+            break
         end
     end
 
