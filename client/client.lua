@@ -83,7 +83,8 @@ local function SpawnNPC(Store)
 
 
     local value = Config.Stores[Store]
-    local ped   = VORPutils.Peds:Create(value.Npc.Model, value.Npc.Pos, 'world', false, true, nil, false)
+    local ped   = VORPutils.Peds:Create(value.Npc.Model, nil, nil, nil, nil, 'world', false, true, nil, false,
+        value.Npc.Pos)
     ped:CanBeDamaged(false)
     Wait(500)
     ped:Freeze(true)
