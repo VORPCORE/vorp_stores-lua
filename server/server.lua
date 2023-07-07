@@ -400,7 +400,8 @@ end)
 
 RegisterNetEvent("vorp:SelectedCharacter", function(source, character)
     local _source = source
-    if not Config.DevMode then
+    
+    if  Config.DevMode then
         return
     end
 
