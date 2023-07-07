@@ -53,7 +53,38 @@ local function DiscordLog(message)
     end
 end
 
-local function sellItems(_source, Character, value, ItemName)
+local function checkStoreLimits(storeId, ItemName, quantity, action)
+    if not storeLimits[storeId] then
+        return true
+    end
+    for k, v in pairs(storeLimits[storeId]) do
+        if action == "sell" then
+            -- *sell to store and increase stock from buy items and decrease stock from sell items  * --
+            if v.itemName == ItemName and v.type == "buy" then
+                v.amount = v.amount + quantity
+            end
+            -- if you dont want to decrease stock from sell items remove this if statement
+            if v.itemName == ItemName and v.type == "sell" then
+                v.amount = v.amount - quantity
+            end
+        end
+
+        if action == "buy" then
+            -- *buy from store and decrease amount in stock * --
+            if v.itemName == ItemName and v.type == "buy" then
+                if v.amount >= quantity then
+                    v.amount = v.amount - quantity
+                    return true
+                else
+                    return false
+                end
+            end
+        end
+    end
+    return true
+end
+
+local function sellItems(_source, Character, value, ItemName, storeId)
     local fname = Character.firstname
     local lname = Character.lastname
     local canContinue = false
@@ -87,6 +118,12 @@ local function sellItems(_source, Character, value, ItemName)
 
     if not canContinue then
         return
+    end
+
+    if Config.Stores[storeId].DynamicStore then
+        if not checkStoreLimits(storeId, ItemName, value.quantity, "sell") then
+            return VORPcore.NotifyRightTip(_source, _U("limitBuy"), 3000)
+        end
     end
 
     if value.currency == "cash" then
@@ -158,36 +195,7 @@ local function buyItems(_source, Character, value, ItemName)
     end
 end
 
-local function checkStoreLimits(storeId, ItemName, quantity, action)
-    if not storeLimits[storeId] then
-        return true
-    end
-    for k, v in pairs(storeLimits[storeId]) do
-        if action == "sell" then
-            -- *sell to store and increase stock from buy items and decrease stock from sell items  * --
-            if v.itemName == ItemName and v.type == "buy" then
-                storeLimits[storeId][k].amount = storeLimits[storeId][k].amount + quantity
-            end
 
-            if v.itemName == ItemName and v.type == "sell" then
-                storeLimits[storeId][k].amount = storeLimits[storeId][k].amount - quantity
-            end
-        end
-
-        if action == "buy" then
-            -- *buy from store and decrease amount in stock * --
-            if v.itemName == ItemName and v.type == "buy" then
-                if v.amount >= quantity then
-                    storeLimits[storeId][k].amount = storeLimits[storeId][k].amount - quantity
-                    return true
-                else
-                    return false
-                end
-            end
-        end
-    end
-    return true
-end
 
 -- * EVENTS * --
 RegisterServerEvent('vorp_stores:Client:sellItems', function(dataItems, storeId)
@@ -201,20 +209,9 @@ RegisterServerEvent('vorp_stores:Client:sellItems', function(dataItems, storeId)
     local Character = User.getUsedCharacter
 
     for ItemName, value in pairs(dataItems) do
-        if not storeLimits[storeId] then
-            Wait(200)
-            if value.quantity > 0 then
-                sellItems(_source, Character, value, ItemName)
-            end
-        else
-            Wait(200)
-            if Config.Stores[storeId].DynamicStore then
-                if not checkStoreLimits(storeId, ItemName, value.quantity, "sell") then
-                    return VORPcore.NotifyRightTip(_source, _U("limitBuy"), 3000)
-                end
-            end
-
-            sellItems(_source, Character, value, ItemName)
+        Wait(200)
+        if value.quantity > 0 then
+            sellItems(_source, Character, value, ItemName, storeId)
         end
     end
 end)
@@ -400,8 +397,7 @@ end)
 
 RegisterNetEvent("vorp:SelectedCharacter", function(source, character)
     local _source = source
-    
-    if  Config.DevMode then
+    if Config.DevMode then
         return
     end
 
