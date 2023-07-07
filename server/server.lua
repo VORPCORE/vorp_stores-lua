@@ -43,20 +43,13 @@ Citizen.CreateThread(function()
     end
 end)
 
+
 -- * FUNCTIONS * --
 
 local function DiscordLog(message)
     if Config.UseWebhook then
         VORPcore.AddWebhook(Config.WebhookTitle, Config.Webhook, message, Config.WebhookColor, Config.WebhookName,
             Config.WebhookLogo, Config.WebhookLogo2, Config.WebhookAvatar)
-    end
-end
-
-local function dynamicStoreHandler(storeId, ItemName, quantity)
-    for k, items in pairs(storeLimits[storeId]) do
-        if items.itemName == ItemName and items.type == "buy" then
-            items.amount = items.amount + quantity
-        end
     end
 end
 
@@ -165,6 +158,36 @@ local function buyItems(_source, Character, value, ItemName)
     end
 end
 
+local function checkStoreLimits(storeId, ItemName, quantity, action)
+    if not storeLimits[storeId] then
+        return true
+    end
+    for k, v in pairs(storeLimits[storeId]) do
+        if action == "sell" then
+            -- *sell to store and increase stock from buy items and decrease stock from sell items  * --
+            if v.itemName == ItemName and v.type == "buy" then
+                storeLimits[storeId][k].amount = storeLimits[storeId][k].amount + quantity
+            end
+
+            if v.itemName == ItemName and v.type == "sell" then
+                storeLimits[storeId][k].amount = storeLimits[storeId][k].amount - quantity
+            end
+        end
+
+        if action == "buy" then
+            -- *buy from store and decrease amount in stock * --
+            if v.itemName == ItemName and v.type == "buy" then
+                if v.amount >= quantity then
+                    storeLimits[storeId][k].amount = storeLimits[storeId][k].amount - quantity
+                    return true
+                else
+                    return false
+                end
+            end
+        end
+    end
+    return true
+end
 
 -- * EVENTS * --
 RegisterServerEvent('vorp_stores:Client:sellItems', function(dataItems, storeId)
@@ -185,41 +208,17 @@ RegisterServerEvent('vorp_stores:Client:sellItems', function(dataItems, storeId)
             end
         else
             Wait(200)
-            if storeLimits[storeId].itemName == ItemName and istoreLimits[storeId].type == "sell" then
-                if storeLimits[storeId].amount >= value.quantity then
-                    sellItems(_source, Character, value, ItemName)
-                    storeLimits[storeId].amount = storeLimits[storeId].amount - value.quantity
-                else
-                    VORPcore.NotifyRightTip(_source, _U("limitSell"), 3000)
+            if Config.Stores[storeId].DynamicStore then
+                if not checkStoreLimits(storeId, ItemName, value.quantity, "sell") then
+                    return VORPcore.NotifyRightTip(_source, _U("limitBuy"), 3000)
                 end
-            else
-                sellItems(_source, Character, value, ItemName)
             end
 
-            -- when selling to store allow increase of items to buy from store if store is dynamic so when you sell it increases the amount you can buy
-            if Config.Stores[storeId].DynamicStore then
-                dynamicStoreHandler(storeId, ItemName, value.quantity)
-            end
+            sellItems(_source, Character, value, ItemName)
         end
     end
 end)
 
-local function checkStoreLimits(storeId, ItemName, quantity)
-    if not storeLimits[storeId] then
-        return true
-    end
-
-    if storeLimits[storeId].itemName == ItemName and storeLimits[storeId].type == "buy" then
-        if items.amount >= quantity then
-            storeLimits[storeId].amount = storeLimits[storeId].amount - quantity
-            return true
-        else
-            return false
-        end
-    else
-        return true
-    end
-end
 
 RegisterServerEvent('vorp_stores:Client:buyItems', function(dataItems, storeId)
     local _source = source
@@ -251,9 +250,10 @@ RegisterServerEvent('vorp_stores:Client:buyItems', function(dataItems, storeId)
             if not canCarry2 then
                 return VORPcore.NotifyRightTip(_source, _U("cantcarryitem"), 3000)
             end
-
-            if not checkStoreLimits(storeId, ItemName, quantity) then
-                return VORPcore.NotifyRightTip(_source, _U("limitBuy"), 3000)
+            if Config.Stores[storeId].DynamicStore then
+                if not checkStoreLimits(storeId, ItemName, quantity, "buy") then
+                    return VORPcore.NotifyRightTip(_source, _U("limitBuy"), 3000)
+                end
             end
 
             buyItems(_source, Character, value, ItemName)
@@ -373,37 +373,36 @@ RegisterServerEvent('vorp_stores:GetRefreshedPrices', function()
     local _source = source
     TriggerClientEvent('vorp_stores:RefreshStorePrices', _source, Config.SellItems, Config.BuyItems)
 
-    -- enable for tests
-    if Config.DevMode then
-        local character = VORPcore.getUser(_source).getUsedCharacter
-        local job = character.job
-        local grade = character.jobGrade
-
-        for key, value in pairs(Config.Stores) do
-            if CheckTable(value.AllowedJobs, job) then
-                if not Jobs[_source] then
-                    Jobs[_source] = {}
-                end
-
-                Jobs[_source] = {
-                    job = job,
-                    grade = grade
-                }
-            end
-        end
-
-        TriggerClientEvent("vorp_stores:Server:tableOfJobs", _source, Jobs)
+    if not Config.DevMode then
+        return
     end
+    -- enable for tests
+    local character = VORPcore.getUser(_source).getUsedCharacter
+    local job = character.job
+    local grade = character.jobGrade
+
+    for key, value in pairs(Config.Stores) do
+        if CheckTable(value.AllowedJobs, job) then
+            if not Jobs[_source] then
+                Jobs[_source] = {}
+            end
+
+            Jobs[_source] = {
+                job = job,
+                grade = grade
+            }
+        end
+    end
+
+    TriggerClientEvent("vorp_stores:Server:tableOfJobs", _source, Jobs)
 end)
 
 
 RegisterNetEvent("vorp:SelectedCharacter", function(source, character)
-    if Config.DevMode then
-        print("do not use devmode in live servers")
+    local _source = source
+    if not Config.DevMode then
         return
     end
-
-    local _source = source
 
     local job = character.job
     local grade = character.jobGrade
@@ -418,10 +417,10 @@ RegisterNetEvent("vorp:SelectedCharacter", function(source, character)
                 job = job,
                 grade = grade
             }
+
             break
         end
     end
-
     TriggerClientEvent("vorp_stores:Server:tableOfJobs", _source, Jobs)
 end)
 
