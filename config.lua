@@ -1,11 +1,11 @@
 Config = {}
 
-Lang = "Portugues_BR"
+Lang = "English"
 
 -- menu position
 -- "center" / "top-left" / "top-right"
 Config.Align = "top-left"
-Config.DevMode = true    -- if true you can use /reload to reload the script
+Config.DevMode = false    -- if true you can use /reload to reload the script
 
 -- Webhook Section, description is in translation
 Config.UseWebhook = false -- Use webhook
