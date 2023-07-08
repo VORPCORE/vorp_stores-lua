@@ -10,16 +10,17 @@ server_script 'server/server.lua'
 
 shared_scripts {
     'config.lua',
-    'buyitemsCFG.lua',
-    'sellitemsCFG.lua',
-    'locale.lua',
-    'languages/*.lua',
+    'shared/buyitemsCFG.lua',
+    'shared/sellitemsCFG.lua',
+    'shared/language.lua',
     'images/*.png'
 }
 
 dependencies {
     'menuapi',
-    'vorp_utils' -- download from the vorp github
+    'vorp_core', -- download from the vorp github
+    'vorp_utils', -- download from the vorp github
+    'vorp_inventory', -- download from the vorp github
 }
 
 
