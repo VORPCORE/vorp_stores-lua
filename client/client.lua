@@ -404,7 +404,7 @@ function OpenSellMenu(storeId, category)
             label = T.totalToReceive .. " <br> " .. ctp .. 0,
             value = "sell",
             desc  = T.pressEnterToSell,
-            info  = T.finish
+            info  = "finish"
         }
 
         MenuData.Open('default', GetCurrentResourceName(), 'menuapi' .. storeId .. category, {
@@ -571,7 +571,7 @@ function OpenBuyMenu(storeId, category)
             label = T.totalToPay .. " <br> " .. ctp .. 0,
             value = "finish",
             desc = T.pressHereToFinish,
-            info = T.finish
+            info = "finish"
         }
 
         MenuData.Open('default', GetCurrentResourceName(), 'menuapi' .. storeId .. category, {
