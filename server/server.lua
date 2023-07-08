@@ -5,6 +5,9 @@ local VORPcore = {}
 local storeLimits = {}
 local VORPinv = exports.vorp_inventory:vorp_inventoryApi()
 local Jobs = {}
+
+T = TranslationStores.Langs[Lang]
+
 TriggerEvent("getCore", function(core)
     VORPcore = core
 end)
@@ -48,8 +51,7 @@ end)
 
 local function DiscordLog(message)
     if Config.UseWebhook then
-        VORPcore.AddWebhook(Config.WebhookTitle, Config.Webhook, message, Config.WebhookColor, Config.WebhookName,
-            Config.WebhookLogo, Config.WebhookLogo2, Config.WebhookAvatar)
+        VORPcore.AddWebhook(Config.WebhookLanguage.WebhookTitle, Config.WebhookLanguage.Webhook, message, Config.WebhookLanguage.WebhookColor, Config.WebhookLanguage.WebhookName, Config.WebhookLanguage.WebhookLogo, Config.WebhookLanguage.WebhookLogo2, Config.WebhookLanguage.WebhookAvatar)
     end
 end
 
@@ -112,7 +114,7 @@ local function sellItems(_source, Character, value, ItemName, storeId)
             VORPinv.subItem(_source, ItemName, value.quantity)
             canContinue = true
         else
-            return VORPcore.NotifyObjective(_source, "you dont have that many to sell", 5000)
+            return VORPcore.NotifyObjective(_source, T.noManyQty, 5000)
         end
     end
 
@@ -122,26 +124,20 @@ local function sellItems(_source, Character, value, ItemName, storeId)
 
     if Config.Stores[storeId].DynamicStore then
         if not checkStoreLimits(storeId, ItemName, value.quantity, "sell") then
-            return VORPcore.NotifyRightTip(_source, _U("limitBuy"), 3000)
+            return VORPcore.NotifyRightTip(_source, T.limitBuy, 3000)
         end
     end
 
     if value.currency == "cash" then
         Character.addCurrency(0, total)
-        VORPcore.NotifyRightTip(_source,
-            _U("yousold") .. value.quantity .. " " .. value.label .. _U("frcash") .. total2 .. _U("ofcash"), 3000)
-        DiscordLog(fname ..
-            " " ..
-            lname .. _U("hassold") .. " " .. value.quantity .. value.label .. _U("frcash") .. total2 .. _U("ofcash"))
+        VORPcore.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
     end
 
     if value.currency == "gold" then
         Character.addCurrency(1, total)
-        VORPcore.NotifyRightTip(_source,
-            _U("yousold") .. value.quantity .. "" .. value.label .. _U("fr") .. total2 .. _U("ofgold"), 3000)
-        DiscordLog(fname ..
-            " " .. lname .. _U("hassold") .. " " .. value.quantity .. value.label .. _U("fr") .. total2 ..
-            _U("ofgold"))
+        VORPcore.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
     end
 end
 
@@ -156,7 +152,7 @@ local function buyItems(_source, Character, value, ItemName)
 
     if value.currency == "cash" then
         if money < total then
-            return VORPcore.NotifyRightTip(_source, _U("youdontcash"), 3000)
+            return VORPcore.NotifyRightTip(_source, T.youdontcash, 3000)
         end
         if value.weapon then
             for i = 1, value.quantity, 1 do
@@ -168,17 +164,14 @@ local function buyItems(_source, Character, value, ItemName)
         end
 
         Character.removeCurrency(0, total)
-        VORPcore.NotifyRightTip(_source,
-            _U("youbought") .. value.quantity .. " " .. value.label .. _U("frcash") .. total2 .. _U("ofcash"), 3000)
-        DiscordLog(fname ..
-            " " ..
-            lname .. _U("hasbought") .. " " .. value.quantity .. value.label .. _U("frcash") .. total2 .. _U("ofcash"))
+        VORPcore.NotifyRightTip(_source, T.youbought .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
     end
 
 
     if value.currency == "gold" then
         if gold < total then
-            return VORPcore.NotifyRightTip(_source, _U("youdontgold"), 3000)
+            return VORPcore.NotifyRightTip(_source, T.youdontgold, 3000)
         end
 
         if value.weapon then
@@ -188,10 +181,8 @@ local function buyItems(_source, Character, value, ItemName)
         end
         Character.removeCurrency(1, total)
 
-        VORPcore.NotifyRightTip(_source,
-            _U("youbought") .. value.quantity .. "" .. value.label .. _U("fr") .. total2 .. _U("ofgold"), 3000)
-        DiscordLog(fname ..
-            " " .. lname .. _U("hasbought") .. " " .. value.quantity .. value.label .. _U("fr") .. total2 .. _U("ofgold"))
+        VORPcore.NotifyRightTip(_source, T.youbought .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
     end
 end
 
@@ -237,19 +228,19 @@ RegisterServerEvent('vorp_stores:Client:buyItems', function(dataItems, storeId)
             local itemCheck = VORPinv.getDBItem(_source, ItemName)              --check items exist in DB
 
             if not itemCheck then
-                return VORPcore.NotifyRightTip(_source, "item does not exist", 3000)
+                return VORPcore.NotifyRightTip(_source, T.itemNotExist, 3000)
             end
 
             if not canCarry then
-                return VORPcore.NotifyRightTip(_source, _U("cantcarry"), 3000)
+                return VORPcore.NotifyRightTip(_source, T.cantcarry, 3000)
             end
 
             if not canCarry2 then
-                return VORPcore.NotifyRightTip(_source, _U("cantcarryitem"), 3000)
+                return VORPcore.NotifyRightTip(_source, T.cantcarryitem, 3000)
             end
             if Config.Stores[storeId].DynamicStore then
                 if not checkStoreLimits(storeId, ItemName, quantity, "buy") then
-                    return VORPcore.NotifyRightTip(_source, _U("limitBuy"), 3000)
+                    return VORPcore.NotifyRightTip(_source, T.limitBuy, 3000)
                 end
             end
 
@@ -260,11 +251,11 @@ RegisterServerEvent('vorp_stores:Client:buyItems', function(dataItems, storeId)
             VORPinv.canCarryWeapons(_source, 1, function(cb) --can carry weapons
                 local canCarryWep = cb
                 if not canCarryWep then
-                    return VORPcore.NotifyRightTip(_source, _U("cantcarryweapon"), 5000)
+                    return VORPcore.NotifyRightTip(_source, T.cantcarryweapon, 5000)
                 end
 
                 if not checkStoreLimits(storeId, ItemName, quantity) then
-                    return VORPcore.NotifyRightTip(_source, _U("limitBuy"), 3000)
+                    return VORPcore.NotifyRightTip(_source, T.limitBuy, 3000)
                 end
 
                 buyItems(_source, Character, value, ItemName)
@@ -308,7 +299,7 @@ VORPcore.addRpcCallback('vorp_stores:callback:getShopStock', function(source, cb
 
     if not ItemsFound then
         ItemsFound = false
-        VORPcore.NotifyRightTip(source, "you dont have the items that are allowed to be sold at this store", 3000)
+        VORPcore.NotifyRightTip(source, T.notAllowItem, 3000)
         return cb(false)
     end
 

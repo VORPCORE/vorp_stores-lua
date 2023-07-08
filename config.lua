@@ -1,25 +1,26 @@
 Config = {}
 
---menu position
+Lang = "English"
+
+-- menu position
 -- "center" / "top-left" / "top-right"
 Config.Align = "top-left"
 Config.DevMode = false    -- if true you can use /reload to reload the script
---Webhook Section, description is in translation
-Config.UseWebhook = false -- Use webhook
-Config.WebhookTitle = ""
-Config.Webhook = ""
-Config.WebhookColor = ""
-Config.WebhookName = ""
-Config.WebhookLogo = ""
-Config.WebhookLogo2 = ""
-Config.WebhookAvatar = ""
 
--- language to use make sure you check if it exist in the folder languages
-Config.defaultlang = "en_lang"
+-- Webhook Section, description is in translation
+Config.UseWebhook = false -- Use webhook
+Config.WebhookLanguage = {
+    WebhookUrl = "",
+    WebhookTitle = "",
+    WebhookColor = "",
+    WebhookName = "",
+    WebhookLogo = "",
+    WebhookLogo2 = "",
+    WebhookAvatar = ""
+}
 
 -- open stores
 Config.Key = 0x760A9C6F --[G] open stores
-
 
 Config.Stores = {
 
@@ -92,8 +93,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Sell ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Buy ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -131,8 +132,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Sell ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Buy ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -167,8 +168,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Sell ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Buy ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -204,8 +205,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Sell ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Buy ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -240,8 +241,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Sell ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Buy ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -276,8 +277,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Sell ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Buy ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -312,8 +313,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Sell ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Buy ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -351,8 +352,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Sell ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Buy ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -386,8 +387,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Sell ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Buy ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
