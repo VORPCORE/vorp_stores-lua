@@ -170,7 +170,7 @@ local function buyItems(_source, Character, value, ItemName, storeId)
         end
 
         if Config.Stores[storeId].DynamicStore then
-            if not checkStoreLimits(storeId, ItemName, quantity, "buy") then
+            if not checkStoreLimits(storeId, ItemName, value.quantity, "buy") then
                 return VORPcore.NotifyRightTip(_source, T.limitBuy, 3000)
             end
         end
@@ -202,7 +202,7 @@ local function buyItems(_source, Character, value, ItemName, storeId)
             " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
 
         if Config.Stores[storeId].DynamicStore then
-            if not checkStoreLimits(storeId, ItemName, quantity, "buy") then
+            if not checkStoreLimits(storeId, ItemName, value.quantity, "buy") then
                 return VORPcore.NotifyRightTip(_source, T.limitBuy, 3000)
             end
         end
