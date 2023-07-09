@@ -521,7 +521,7 @@ function OpenBuyMenu(storeId, category)
                             itemFound = true
                             menuElements[#menuElements + 1] = {
 
-                                label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. items.amount .. " " .. avaliable,
+                                label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
                                 value = 0,
                                 min = 0,
                                 max = items.amount,
