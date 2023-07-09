@@ -353,10 +353,10 @@ AddEventHandler('onResourceStart', function(resourceName)
     end
     for storeId, storeConfig in pairs(Config.Stores) do
         if storeConfig.RandomPrices then
-            for index, storeItem in ipairs(Config.SellItems[storeId]) do
+            for index, storeItem in ipairs(Config.SellItems[storeId] or {}) do
                 Config.SellItems[storeId][index].sellprice = storeItem.randomprice
             end
-            for index, storeItem in ipairs(Config.BuyItems[storeId]) do
+            for index, storeItem in ipairs(Config.BuyItems[storeId] or {}) do
                 Config.BuyItems[storeId][index].buyprice = storeItem.randomprice
             end
         end
