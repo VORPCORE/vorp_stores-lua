@@ -18,6 +18,20 @@ Config.WebhookLanguage = {
     WebhookLogo2 = "",
     WebhookAvatar = ""
 }
+-- if you have UI you want to hid use it in this function
+-- remove what you dont use
+Config.UI = function(state)
+    if state then
+        ExecuteCommand("hideneeds hidden")
+        ExecuteCommand("hideui")
+        TriggerEvent('vorpmetabolism:setHud', false)
+    else
+        ExecuteCommand("hideneeds visible")
+        ExecuteCommand("showui")
+        TriggerEvent('vorpmetabolism:setHud', true)
+    end
+end
+
 
 -- open stores
 Config.Key = 0x760A9C6F --[G] open stores

@@ -193,7 +193,7 @@ local function closeAll()
    isInMenu = false
    ClearPedTasksImmediately(PlayerPedId())
    DisplayRadar(true)
-
+   Config.UI(false)
    Core.RpcCall("vorp_stores:callback:CloseStore", function()
       __StoreInUse = nil
    end, __StoreInUse)
@@ -262,6 +262,7 @@ end)
 
 -- * MENU  * --
 function OpenCategory(storeId)
+   Config.UI(true)
    MenuData.CloseAll()
    isInMenu = true
    local elements = {}
