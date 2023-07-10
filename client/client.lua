@@ -193,6 +193,10 @@ local function closeAll()
    isInMenu = false
    ClearPedTasksImmediately(PlayerPedId())
    DisplayRadar(true)
+
+   Core.RpcCall("vorp_stores:callback:CloseStore", function()
+      __StoreInUse = nil
+   end, __StoreInUse)
 end
 
 -- * MAIN THREAD * --
@@ -719,11 +723,4 @@ RegisterNetEvent("vorp_stores:Server:tableOfJobs", function(jobs)
    Jobs = jobs
    Wait(1000)
    Spawn = true
-end)
-
-AddEventHandler("menuapi:closemenu", function()
-   -- check if current script name is the same as the one that is open
-   Core.RpcCall("vorp_stores:callback:CloseStore", function()
-      __StoreInUse = nil
-   end, __StoreInUse)
 end)
