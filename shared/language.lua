@@ -30,7 +30,7 @@ TranslationStores.Langs = {
         pm = ":00~q~pm",
         limitSell = "I no longer buy so much of this item anymore",
         limitBuy = "I have unfortunately no longer so much in stock",
-        hassold = "has sold",    -- for webhook
+        hassold = "has sold",     -- for webhook
         hasbought = "has bought", -- for webhook
         noManyQty = "you don't have that many to sell",
         itemNotExist = "item does not exist",
@@ -44,7 +44,8 @@ TranslationStores.Langs = {
         forSale = "for sale",
         totalToPay = "total to Pay",
         pressHereToFinish = "press here when finish",
-        buyMenu = "buy menu"
+        buyMenu = "buy menu",
+        StoreInUse = "Store is in use by another player",
     },
     Portugues_PT = {
         SubPrompt = "Carregue",
@@ -89,7 +90,8 @@ TranslationStores.Langs = {
         forSale = "à venda",
         totalToPay = "total a pagar",
         pressHereToFinish = "pressione aqui quando terminar",
-        buyMenu = "menu de compra"
+        buyMenu = "menu de compra",
+        StoreInUse = "Store is in use by another player",
     },
     Portugues_BR = {
         SubPrompt = "Pressione",
@@ -134,7 +136,8 @@ TranslationStores.Langs = {
         forSale = "à venda",
         totalToPay = "total a pagar",
         pressHereToFinish = "pressione aqui quando finalizar",
-        buyMenu = "menu de compra"
+        buyMenu = "menu de compra",
+        StoreInUse = "Store is in use by another player",
     },
     Francais = {
         SubPrompt = "Appuyez",
@@ -179,7 +182,8 @@ TranslationStores.Langs = {
         forSale = "à vendre",
         totalToPay = "total à payer",
         pressHereToFinish = "appuyez ici lorsque vous avez terminé",
-        buyMenu = "menu d'achat"
+        buyMenu = "menu d'achat",
+        StoreInUse = "Store is in use by another player",
     },
     German = {
         SubPrompt = "Drücke",
@@ -210,7 +214,7 @@ TranslationStores.Langs = {
         pm = ":00~q~Uhr nachmittags",
         limitSell = "Ich kaufe nicht mehr so viel von diesem Artikel",
         limitBuy = "Leider habe ich nicht mehr so viel auf Lager",
-        hassold = "hat verkauft",    -- für Webhook
+        hassold = "hat verkauft",  -- für Webhook
         hasbought = "hat gekauft", -- für Webhook
         noManyQty = "Du hast nicht so viele zum Verkaufen",
         itemNotExist = "Artikel existiert nicht",
@@ -224,7 +228,8 @@ TranslationStores.Langs = {
         forSale = "zum Verkauf",
         totalToPay = "Gesamtbetrag zu zahlen",
         pressHereToFinish = "Drücke hier, um abzuschließen",
-        buyMenu = "Kaufmenü"
+        buyMenu = "Kaufmenü",
+        StoreInUse = "Store is in use by another player",
     },
     Spanish = {
         SubPrompt = "Presiona",
@@ -269,6 +274,7 @@ TranslationStores.Langs = {
         forSale = "en venta",
         totalToPay = "total a pagar",
         pressHereToFinish = "presiona aquí cuando hayas terminado",
-        buyMenu = "menú de compra"
+        buyMenu = "menú de compra",
+        StoreInUse = "Store is in use by another player",
     },
 }

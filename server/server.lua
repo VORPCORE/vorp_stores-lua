@@ -345,7 +345,25 @@ VORPcore.addRpcCallback('vorp_stores:callback:getPlayerJob', function(source, cb
     end
     return cb(false)
 end)
+local storesInUse = {}
+VORPcore.addRpcCallback("vorp_stores:callback:canOpenStore", function(source, cb, storeIndex)
+    local _source = source
 
+    if not storesInUse[storeIndex] then
+        storesInUse[storeIndex] = true
+        return cb(true)
+    else
+        return cb(false)
+    end
+end)
+
+VORPcore.addRpcCallback("vorp_stores:callback:CloseStore", function(source, cb, storeIndex)
+    local _source = source
+    if storesInUse[storeIndex] then
+        storesInUse[storeIndex] = nil
+        return cb(true)
+    end
+end)
 -- * LOGIC FOR RANDOM PRICES * --
 AddEventHandler('onResourceStart', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then

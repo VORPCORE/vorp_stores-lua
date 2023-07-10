@@ -4,12 +4,12 @@
 local OpenStores
 local PromptGroup = GetRandomIntInRange(0, 0xffffff)
 local isInMenu = false
-local stateChanged = false
 local MenuData = {}
 local Core = {}
 local VORPutils = {}
 local Jobs = {}
 local TableDelete = {}
+local __StoreInUse = nil
 local imgPathMenu =
 "<img style='max-height:120px;max-width:120px;float: center;' src='nui://vorp_stores/images/%s.png'><br>"
 local imgPath =
@@ -66,7 +66,7 @@ local function AddBlip(Store)
    local value = Config.Stores[Store]
    local x, y, z = table.unpack(value.Blip.Pos)
    local blip = VORPutils.Blips:SetBlip(value.Blip.Name, value.Blip.sprite, 0.2, x, y, z)
-   Citizen.InvokeNative(0x662D364ABF16DE2F, blip:Get(), joaat("BLIP_MODIFIER_MP_COLOR_32"))  -- WHITE
+   Citizen.InvokeNative(0x662D364ABF16DE2F, blip:Get(), joaat("BLIP_MODIFIER_MP_COLOR_32")) -- WHITE
    value.BlipHandle = blip:Get()
    TableDelete[#TableDelete + 1] = { blip = blip:Get() }
 end
@@ -118,6 +118,18 @@ local function showPrompt(label, action)
 end
 
 
+local function CheckStoreInUse(storeId)
+   Core.RpcCall("vorp_stores:callback:canOpenStore", function(canOpen)
+      if canOpen then
+         OpenCategory(storeId)
+         DisplayRadar(false)
+         TaskStandStill(PlayerPedId(), -1)
+         __StoreInUse = storeId
+      else
+         Core.NotifyObjective(T.StoreInUse, 5000)
+      end
+   end, storeId)
+end
 
 local function storeOpen(storeConfig, storeId)
    local distance = GetPlayerDistanceFromCoords(storeConfig.Blip.Pos)
@@ -148,9 +160,7 @@ local function storeOpen(storeConfig, storeId)
    if not next(storeConfig.AllowedJobs) then
       if inDistance then
          if (showPrompt(storeConfig.PromptName, "open") == "open") then
-            OpenCategory(storeId)
-            DisplayRadar(false)
-            TaskStandStill(player, -1)
+            CheckStoreInUse(storeId)
          end
       end
    else
@@ -160,9 +170,7 @@ local function storeOpen(storeConfig, storeId)
          end
 
          if (showPrompt(storeConfig.PromptName, "openJob") == "openJob") then
-            OpenCategory(storeId)
-            DisplayRadar(false)
-            TaskStandStill(player, -1)
+            CheckStoreInUse(storeId)
          end
       end
    end
@@ -347,7 +355,8 @@ function OpenSellMenu(storeId, category)
                            itemFound = true
                            menuElements[#menuElements + 1] = {
                               label = imgPath:format("left", storeItem.itemName) ..
-                              storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. items.amount .. " " .. T.avaliable,
+                                  storeItem.itemLabel ..
+                                  " " .. T.forSale .. " <br> " .. items.amount .. " " .. T.avaliable,
                               action = "sell",
                               value = 0,
                               min = 0,
@@ -374,7 +383,7 @@ function OpenSellMenu(storeId, category)
                      menuElements[#menuElements + 1] = {
 
                         label = imgPath:format("left", storeItem.itemName) ..
-                        storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. count .. " " .. T.avaliable,
+                            storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. count .. " " .. T.avaliable,
                         action = "sell",
                         value = 0,
                         min = 0,
@@ -524,7 +533,7 @@ function OpenBuyMenu(storeId, category)
                      menuElements[#menuElements + 1] = {
 
                         label = imgPath:format("left", storeItem.itemName) ..
-                        storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
+                            storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
                         value = 0,
                         min = 0,
                         max = items.amount,
@@ -548,7 +557,7 @@ function OpenBuyMenu(storeId, category)
                menuElements[#menuElements + 1] = {
 
                   label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. T
-                  .chooseAmount,
+                      .chooseAmount,
                   value = 0,
                   min = 0,
                   max = 100,
@@ -657,7 +666,7 @@ function OpenBuyMenu(storeId, category)
                return Core.NotifyObjective(T.notSelectedItem, 5000)
             end
 
-            TriggerServerEvent("vorp_stores:Client:buyItems", BuyTable, storeId)     -- sell it
+            TriggerServerEvent("vorp_stores:Client:buyItems", BuyTable, storeId) -- sell it
             BuyTable = {}
             closeAll()
          end
@@ -710,4 +719,11 @@ RegisterNetEvent("vorp_stores:Server:tableOfJobs", function(jobs)
    Jobs = jobs
    Wait(1000)
    Spawn = true
+end)
+
+AddEventHandler("menuapi:closemenu", function()
+   -- check if current script name is the same as the one that is open
+   Core.RpcCall("vorp_stores:callback:CloseStore", function()
+      __StoreInUse = nil
+   end, __StoreInUse)
 end)
