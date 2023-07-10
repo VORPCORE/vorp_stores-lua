@@ -5,7 +5,7 @@ Lang = "English"
 -- menu position
 -- "center" / "top-left" / "top-right"
 Config.Align = "top-left"
-Config.DevMode = false    -- if true you can use /reload to reload the script
+Config.DevMode = false -- if true you can use /reload to reload the script
 
 -- Webhook Section, description is in translation
 Config.UseWebhook = false -- Use webhook
@@ -23,8 +23,14 @@ Config.WebhookLanguage = {
 Config.Key = 0x760A9C6F --[G] open stores
 
 Config.Stores = {
+    -- any name you want sell items and buy items must have same name
+    Valentine = {
 
-    Valentine = { -- any name you want
+        useRandomLocation = true, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place set blip to false
+        possibleLocations = {
+            vector3(-324.628, 803.9818, 116.88),
+            -- add more it will pick a random location from the list
+        },
 
         Blip = {
             Allowed = true,                            -- allow blip to show on map?
@@ -68,6 +74,11 @@ Config.Stores = {
 
     Rhodes = {
 
+        useRandomLocation = false,
+        possibleLocations = {
+            --vector3(-324.628, 803.9818, 116.88),
+            -- add more it will pick a random location from the list
+        },
         Blip = {
             Allowed = true,
             Name = "rhodes store",
@@ -93,8 +104,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -105,6 +116,11 @@ Config.Stores = {
 
     },
     Strawberry = {
+        useRandomLocation = false,
+        possibleLocations = {
+            -- vector3(-324.628, 803.9818, 116.88),
+            -- add more it will pick a random location from the list
+        },
 
         Blip = {
             Allowed = true,
@@ -132,8 +148,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -144,6 +160,11 @@ Config.Stores = {
 
     },
     Blackwater = {
+        useRandomLocation = false,
+        possibleLocations = {
+            --vector3(-324.628, 803.9818, 116.88),
+            -- add more it will pick a random location from the list
+        },
         Blip = {
             Allowed = true,
             Name = "Blackwater Store",
@@ -168,8 +189,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -180,6 +201,11 @@ Config.Stores = {
 
     },
     Armadillo = {
+        useRandomLocation = false,
+        possibleLocations = {
+            --vector3(-324.628, 803.9818, 116.88),
+            -- add more it will pick a random location from the list
+        },
         Blip = {
             Allowed = true,
             Name = "Armadillo Store",
@@ -205,8 +231,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -217,6 +243,11 @@ Config.Stores = {
 
     },
     Tumbleweed = {
+        useRandomLocation = false,
+        possibleLocations = {
+            --vector3(-324.628, 803.9818, 116.88),
+            -- add more it will pick a random location from the list
+        },
         Blip = {
             Allowed = true,
             Name = "Tumbleweed Store",
@@ -241,8 +272,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -252,6 +283,11 @@ Config.Stores = {
         DynamicStore = true,
     },
     StDenis = {
+        useRandomLocation = false,
+        possibleLocations = {
+            --vector3(-324.628, 803.9818, 116.88),
+            -- add more it will pick a random location from the list
+        },
         Blip = {
             Allowed = true,
             Name = "St Denis Store",
@@ -277,8 +313,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -289,6 +325,11 @@ Config.Stores = {
 
     },
     Vanhorn = {
+        useRandomLocation = false,
+        possibleLocations = {
+            --vector3(-324.628, 803.9818, 116.88),
+            -- add more it will pick a random location from the list
+        },
         Blip = {
             Allowed = true,
             Name = "Vanhorn Store",
@@ -313,8 +354,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -325,6 +366,11 @@ Config.Stores = {
 
     },
     BlackwaterFishing = {
+        useRandomLocation = false,
+        possibleLocations = {
+            --vector3(-324.628, 803.9818, 116.88),
+            -- add more it will pick a random location from the list
+        },
         Blip = {
             Allowed = true,
             Name = "Blackwater Fishing Store",
@@ -352,8 +398,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,
@@ -363,6 +409,10 @@ Config.Stores = {
         DynamicStore = true,
     },
     Wapiti = {
+        useRandomLocation = false,
+        possibleLocations = {
+            --vector3(-324.628, 803.9818, 116.88),
+        },
         Blip = {
             Allowed = true,
             Name = "Wapiti Store",
@@ -387,8 +437,8 @@ Config.Stores = {
         },
         -- * store type allow which type of store to show in the store
         storeType = {
-            { label = "Buy ", Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
-            { label = "Sell ",  Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
+            { label = "Buy ",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell ", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" }
 
         },
         StoreHoursAllowed = true,

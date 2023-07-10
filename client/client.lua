@@ -685,9 +685,10 @@ end
 -- GET CHARACTER SPAWN EENT
 
 
-RegisterNetEvent("vorp_stores:RefreshStorePrices", function(SellItems, BuyItems)
+RegisterNetEvent("vorp_stores:RefreshStorePrices", function(SellItems, BuyItems, Stores)
    Config.SellItems = SellItems
    Config.BuyItems = BuyItems
+   Config.Stores = Stores
 end)
 
 AddEventHandler('onClientResourceStart', function(resourceName)

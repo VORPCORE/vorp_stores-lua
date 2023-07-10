@@ -378,6 +378,10 @@ AddEventHandler('onResourceStart', function(resourceName)
                 Config.BuyItems[storeId][index].buyprice = storeItem.randomprice
             end
         end
+        if storeConfig.useRandomLocation then
+            local randomLocation = math.random(1, #storeConfig.possibleLocations)
+            Config.Stores[storeId].Blip.Pos = storeConfig.possibleLocations[randomLocation]
+        end
     end
 end)
 
@@ -391,7 +395,7 @@ end
 
 RegisterServerEvent('vorp_stores:GetRefreshedPrices', function()
     local _source = source
-    TriggerClientEvent('vorp_stores:RefreshStorePrices', _source, Config.SellItems, Config.BuyItems)
+    TriggerClientEvent('vorp_stores:RefreshStorePrices', _source, Config.SellItems, Config.BuyItems, Config.Stores)
 
     if not Config.DevMode then
         return
