@@ -40,10 +40,17 @@ Config.Stores = {
     -- any name you want sell items and buy items must have same name
     Valentine = {
 
-        useRandomLocation = true, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place set blip to false
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            vector3(-324.628, 803.9818, 116.88),
-            -- add more it will pick a random location from the list
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
         },
 
         Blip = {
@@ -88,10 +95,17 @@ Config.Stores = {
 
     Rhodes = {
 
-        useRandomLocation = false,
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            --vector3(-324.628, 803.9818, 116.88),
-            -- add more it will pick a random location from the list
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
         },
         Blip = {
             Allowed = true,
@@ -130,10 +144,17 @@ Config.Stores = {
 
     },
     Strawberry = {
-        useRandomLocation = false,
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            -- vector3(-324.628, 803.9818, 116.88),
-            -- add more it will pick a random location from the list
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
         },
 
         Blip = {
@@ -174,10 +195,17 @@ Config.Stores = {
 
     },
     Blackwater = {
-        useRandomLocation = false,
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            --vector3(-324.628, 803.9818, 116.88),
-            -- add more it will pick a random location from the list
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
         },
         Blip = {
             Allowed = true,
@@ -215,10 +243,17 @@ Config.Stores = {
 
     },
     Armadillo = {
-        useRandomLocation = false,
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            --vector3(-324.628, 803.9818, 116.88),
-            -- add more it will pick a random location from the list
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
         },
         Blip = {
             Allowed = true,
@@ -257,10 +292,17 @@ Config.Stores = {
 
     },
     Tumbleweed = {
-        useRandomLocation = false,
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            --vector3(-324.628, 803.9818, 116.88),
-            -- add more it will pick a random location from the list
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
         },
         Blip = {
             Allowed = true,
@@ -297,10 +339,17 @@ Config.Stores = {
         DynamicStore = true,
     },
     StDenis = {
-        useRandomLocation = false,
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            --vector3(-324.628, 803.9818, 116.88),
-            -- add more it will pick a random location from the list
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
         },
         Blip = {
             Allowed = true,
@@ -339,10 +388,17 @@ Config.Stores = {
 
     },
     Vanhorn = {
-        useRandomLocation = false,
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            --vector3(-324.628, 803.9818, 116.88),
-            -- add more it will pick a random location from the list
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
         },
         Blip = {
             Allowed = true,
@@ -380,10 +436,17 @@ Config.Stores = {
 
     },
     BlackwaterFishing = {
-        useRandomLocation = false,
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            --vector3(-324.628, 803.9818, 116.88),
-            -- add more it will pick a random location from the list
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
         },
         Blip = {
             Allowed = true,
@@ -423,9 +486,16 @@ Config.Stores = {
         DynamicStore = true,
     },
     Wapiti = {
-        useRandomLocation = false,
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
-            --vector3(-324.628, 803.9818, 116.88),
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
         },
         Blip = {
             Allowed = true,

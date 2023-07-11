@@ -379,8 +379,9 @@ AddEventHandler('onResourceStart', function(resourceName)
             end
         end
         if storeConfig.useRandomLocation then
-            local randomLocation = math.random(1, #storeConfig.possibleLocations)
-            Config.Stores[storeId].Blip.Pos = storeConfig.possibleLocations[randomLocation]
+            local randomLocation = math.random(1, #storeConfig.possibleLocations.OpenMenu)
+            Config.Stores[storeId].Blip.Pos = storeConfig.possibleLocations.OpenMenu[randomLocation]
+            Config.Stores[storeId].Npc.Pos = storeConfig.possibleLocations.Npcs[randomLocation]
         end
     end
 end)
