@@ -50,8 +50,8 @@ end)
 -- * FUNCTIONS * --
 
 local function DiscordLog(message)
-    if Config.UseWebhook then
-        VORPcore.AddWebhook(Config.WebhookLanguage.WebhookTitle, Config.WebhookLanguage.Webhook, message,
+    if Config.UseWebhook == true then
+        VORPcore.AddWebhook(Config.WebhookLanguage.WebhookTitle, Config.WebhookLanguage.WebhookUrl, message,
             Config.WebhookLanguage.WebhookColor, Config.WebhookLanguage.WebhookName, Config.WebhookLanguage.WebhookLogo,
             Config.WebhookLanguage.WebhookLogo2, Config.WebhookLanguage.WebhookAvatar)
     end
