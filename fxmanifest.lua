@@ -16,13 +16,6 @@ shared_scripts {
     'images/*.png'
 }
 
-dependencies {
-    'menuapi',
-    'vorp_core',      -- download from the vorp github
-    'vorp_utils',     -- download from the vorp github
-    'vorp_inventory', -- download from the vorp github
-}
-
 
 --dont
 --touch
