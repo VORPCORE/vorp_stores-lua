@@ -14,7 +14,7 @@ local imgPathMenu =
 "<img style='max-height:120px;max-width:120px;float: center;' src='nui://vorp_stores/images/%s.png'><br>"
 local imgPath =
 "<img style='max-height:64px;max-width:64px; float:%s; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/%s.png'>"
-local font = '<span style="font-family: crock; src:nui://menuapi/html/fonts/crock.ttf) format("truetype")</span>'
+local font = '<span style="font-family: crock; src:nui://vorp_menu/html/fonts/crock.ttf) format("truetype")</span>'
 
 T = TranslationStores.Langs[Lang]
 
@@ -359,8 +359,7 @@ function OpenSellMenu(storeId, category)
                         if items.itemName == storeItem.itemName and items.type == "sell" then
                            itemFound = true
                            menuElements[#menuElements + 1] = {
-                              label = imgPath:format("left", storeItem.itemName) ..
-                                  storeItem.itemLabel ..
+                              label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel ..
                                   " " .. T.forSale .. " <br> " .. items.amount .. " " .. T.avaliable,
                               action = "sell",
                               value = 0,
