@@ -79,11 +79,6 @@ local function GetPlayerDistanceFromCoords(vector)
 end
 
 local function SpawnNPC(Store)
-   if not CheckJobs(Store) then
-      return
-   end
-
-
    local value = Config.Stores[Store]
    local ped   = VORPutils.Peds:Create(value.Npc.Model, nil, nil, nil, nil, 'world', false, true, nil, false,
       value.Npc.Pos)
