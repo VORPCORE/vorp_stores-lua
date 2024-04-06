@@ -1,16 +1,11 @@
 ---@diagnostic disable: undefined-global
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------- SERVER SIDE ----------------------------------------------------
-local VORPcore = {}
+local VORPcore = exports.vorp_core:GetCore()
 local storeLimits = {}
 local VORPinv = exports.vorp_inventory:vorp_inventoryApi()
-local Jobs = {}
+local T = TranslationStores.Langs[Lang]
 
-T = TranslationStores.Langs[Lang]
-
-TriggerEvent("getCore", function(core)
-    VORPcore = core
-end)
 
 -- * STORE ITEM SELL/BUY LIMITS * --
 Citizen.CreateThread(function()
@@ -51,8 +46,7 @@ end)
 
 local function DiscordLog(message)
     if Config.UseWebhook == true then
-        VORPcore.AddWebhook(Config.WebhookLanguage.WebhookTitle, Config.WebhookLanguage.WebhookUrl, message,
-            Config.WebhookLanguage.WebhookColor, Config.WebhookLanguage.WebhookName, Config.WebhookLanguage.WebhookLogo,
+        VORPcore.AddWebhook(Config.WebhookLanguage.WebhookTitle, Config.WebhookLanguage.WebhookUrl, message, Config.WebhookLanguage.WebhookColor, Config.WebhookLanguage.WebhookName, Config.WebhookLanguage.WebhookLogo,
             Config.WebhookLanguage.WebhookLogo2, Config.WebhookLanguage.WebhookAvatar)
     end
 end
@@ -132,18 +126,14 @@ local function sellItems(_source, Character, value, ItemName, storeId)
 
     if value.currency == "cash" then
         Character.addCurrency(0, total)
-        VORPcore.NotifyRightTip(_source,
-            T.yousold .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
-        DiscordLog(fname ..
-            " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
+        VORPcore.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
     end
 
     if value.currency == "gold" then
         Character.addCurrency(1, total)
-        VORPcore.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold,
-            3000)
-        DiscordLog(fname ..
-            " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
+        VORPcore.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
     end
 end
 
@@ -177,10 +167,8 @@ local function buyItems(_source, Character, value, ItemName, storeId)
 
         Character.removeCurrency(0, total)
         Character.money = Character.money - total
-        VORPcore.NotifyRightTip(_source,
-            T.youbought .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
-        DiscordLog(fname ..
-            " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
+        VORPcore.NotifyRightTip(_source, T.youbought .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
         return
     end
 
@@ -197,10 +185,8 @@ local function buyItems(_source, Character, value, ItemName, storeId)
         end
         Character.removeCurrency(1, total)
 
-        VORPcore.NotifyRightTip(_source,
-            T.youbought .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold, 3000)
-        DiscordLog(fname ..
-            " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
+        VORPcore.NotifyRightTip(_source, T.youbought .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
 
         if Config.Stores[storeId].DynamicStore then
             if not checkStoreLimits(storeId, ItemName, value.quantity, "buy") then
@@ -332,20 +318,6 @@ VORPcore.addRpcCallback('vorp_stores:callback:ShopStock', function(source, cb, a
     return cb(data)
 end)
 
-VORPcore.addRpcCallback('vorp_stores:callback:getPlayerJob', function(source, cb, args)
-    local _source = source
-    local Character = VORPcore.getUser(_source).getUsedCharacter
-    local CharacterJob = Character.job
-    local CharacterGrade = Character.jobGrade
-    for key, jobs in ipairs(args.joblist) do
-        if jobs == CharacterJob then
-            if args.grade <= CharacterGrade then
-                return cb(true)
-            end
-        end
-    end
-    return cb(false)
-end)
 
 local storesInUse = {}
 VORPcore.addRpcCallback("vorp_stores:callback:canOpenStore", function(source, cb, storeIndex)
@@ -357,12 +329,11 @@ VORPcore.addRpcCallback("vorp_stores:callback:canOpenStore", function(source, cb
     end
 
     return cb(false)
-    
 end)
 
 VORPcore.addRpcCallback("vorp_stores:callback:CloseStore", function(source, cb, storeIndex)
     local _source = source
-   
+
     if storesInUse[storeIndex] == _source then
         storesInUse[storeIndex] = nil
         return cb(true)
@@ -392,78 +363,20 @@ AddEventHandler('onResourceStart', function(resourceName)
     end
 end)
 
-local function CheckTable(table, job)
-    for index, value in ipairs(table) do
-        if value == job then
-            return true
-        end
-    end
-end
+
 
 RegisterServerEvent('vorp_stores:GetRefreshedPrices', function()
     local _source = source
     TriggerClientEvent('vorp_stores:RefreshStorePrices', _source, Config.SellItems, Config.BuyItems, Config.Stores)
-
-    if not Config.DevMode then
-        return
-    end
-    -- enable for tests
-    local character = VORPcore.getUser(_source).getUsedCharacter
-    local job = character.job
-    local grade = character.jobGrade
-
-    for key, value in pairs(Config.Stores) do
-        if CheckTable(value.AllowedJobs, job) then
-            if not Jobs[_source] then
-                Jobs[_source] = {}
-            end
-
-            Jobs[_source] = {
-                job = job,
-                grade = grade
-            }
-        end
-    end
-
-    TriggerClientEvent("vorp_stores:Server:tableOfJobs", _source, Jobs)
 end)
 
-
-RegisterNetEvent("vorp:SelectedCharacter", function(source, character)
-    local _source = source
-    if Config.DevMode then
-        return
-    end
-
-    local job = character.job
-    local grade = character.jobGrade
-
-    for key, value in pairs(Config.Stores) do
-        if CheckTable(value.AllowedJobs, job) then
-            if not Jobs[_source] then
-                Jobs[_source] = {}
-            end
-
-            Jobs[_source] = {
-                job = job,
-                grade = grade
-            }
-
-            break
-        end
-    end
-    TriggerClientEvent("vorp_stores:Server:tableOfJobs", _source, Jobs)
-end)
 
 -- event drrop player
 AddEventHandler('vorp:playerDropped', function(source, reason)
     local _source = source
-    if Jobs[_source] then
-        Jobs[_source] = nil
-    end
-    for k,v in pairs(storesInUse) do
-       if v == _source then
-        storesInUse[k] = nil
-       end
+    for k, v in pairs(storesInUse) do
+        if v == _source then
+            storesInUse[k] = nil
+        end
     end
 end)
