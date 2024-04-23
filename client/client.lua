@@ -24,8 +24,6 @@ TriggerEvent("getUtils", function(utils)
 end)
 
 
-
-
 -- * LOCAL FUNCTIONS * --
 
 local function CheckJobs(store)
@@ -36,7 +34,7 @@ local function CheckJobs(store)
     end
 
     local job = LocalPlayer.state.Character.Job
-    local grade = LocalPlayer.state.Character.JobGrade
+    local grade = LocalPlayer.state.Character.Grade
 
     for _, v in ipairs(data.AllowedJobs) do
         if v == job and grade >= data.JobGrade then
@@ -69,7 +67,8 @@ end
 
 local function SpawnNPC(Store)
     local value = Config.Stores[Store]
-    local ped   = VORPutils.Peds:Create(value.Npc.Model, nil, nil, nil, nil, 'world', false, true, nil, false, value.Npc.Pos)
+    local ped   = VORPutils.Peds:Create(value.Npc.Model, nil, nil, nil, nil, 'world', false, true, nil, false,
+        value.Npc.Pos)
     ped:CanBeDamaged(false)
     Wait(500)
     ped:Freeze(true)
@@ -121,7 +120,8 @@ local function storeOpen(storeConfig, storeId)
         if not Config.Stores[storeId].BlipHandle then
             AddBlip(storeId)
         else
-            Citizen.InvokeNative(0x662D364ABF16DE2F, Config.Stores[storeId].BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_32"))
+            Citizen.InvokeNative(0x662D364ABF16DE2F, Config.Stores[storeId].BlipHandle,
+                joaat("BLIP_MODIFIER_MP_COLOR_32"))
         end
     end
 
@@ -197,7 +197,8 @@ Citizen.CreateThread(function()
             if storeConfig.StoreHoursAllowed then
                 if IsStoreClosed(storeConfig) == "closed" then
                     if storeConfig.BlipHandle then
-                        Citizen.InvokeNative(0x662D364ABF16DE2F, storeConfig.BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_2"))
+                        Citizen.InvokeNative(0x662D364ABF16DE2F, storeConfig.BlipHandle,
+                            joaat("BLIP_MODIFIER_MP_COLOR_2"))
                     end
 
                     if storeConfig.NPC then
@@ -618,7 +619,9 @@ function OpenBuyMenu(storeId, category)
                             string.format("%.2f", data.current.info.buyprice) ..
                             "    </span><span style='color:" .. color .. ";'>   " .. currencyType ..
                             "</span><br><br><span style='font-size:25px;'> " .. T.totalToPay .. " =</span> " ..
-                            ctp .. "<span style='color: Green; font-size:25px;'>" .. string.format("%.2f", buyPrice) .. "</span><br><br>" ..
+                            ctp ..
+                            "<span style='color: Green; font-size:25px;'>" ..
+                            string.format("%.2f", buyPrice) .. "</span><br><br>" ..
                             data.current.info.desc ..
                             "<br>" .. "<br><br><span style='color:" .. color .. ";'></span>")
                         menu.refresh()
