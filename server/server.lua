@@ -263,7 +263,7 @@ Core.Callback.Register('vorp_stores:callback:getShopStock', function(source, cb,
     local items = Config.SellItems[args]
     local ItemsFound = false
     local PlayerItems = {}
-    local userInv = exports.vorp_inventory:getUserInventory(source)
+    local userInv = exports.vorp_inventory:getUserInventoryItems(source)
     local userWeapons = exports.vorp_inventory:getUserWeapons(source)
     for _, value in pairs(userInv) do
         for _, v in pairs(items) do
