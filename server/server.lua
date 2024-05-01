@@ -232,7 +232,7 @@ RegisterServerEvent('vorp_stores:Client:buyItems', function(dataItems, storeId)
         if not value.weapon then
             local quantity = value.quantity
             local canCarry = exports.vorp_inventory:canCarryItem(_source, ItemName, quantity) --cancarry item limit
-            local itemCheck = exports.vorp_inventory:getDBItem(_source, ItemName)             --check items exist in DB
+            local itemCheck = exports.vorp_inventory:getItemDB(_source, ItemName)             --check items exist in DB
 
             if not itemCheck then
                 return Core.NotifyRightTip(_source, T.itemNotExist, 3000)
