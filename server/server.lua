@@ -96,7 +96,7 @@ local function sellItems(_source, Character, value, ItemName, storeId)
             end
         end
     else
-        local count = exports.vorp_inventory:getItemCount(_source, ItemName)
+        local count = exports.vorp_inventory:getItemCount(_source, nil, ItemName)
         if value.quantity <= count then
             exports.vorp_inventory:subItem(_source, ItemName, value.quantity)
             canContinue = true
@@ -145,6 +145,7 @@ local function buyItems(_source, Character, value, ItemName, storeId)
         if money < total then
             return Core.NotifyRightTip(_source, T.youdontcash, 3000)
         end
+
         if value.weapon then
             for i = 1, value.quantity, 1 do
                 Wait(100)
@@ -165,7 +166,7 @@ local function buyItems(_source, Character, value, ItemName, storeId)
         Core.NotifyRightTip(_source,
             T.youbought .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
         DiscordLog(fname ..
-            " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
+        " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
         return
     end
 
