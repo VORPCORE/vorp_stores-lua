@@ -4,23 +4,17 @@
 local OpenStores
 local PromptGroup = GetRandomIntInRange(0, 0xffffff)
 local isInMenu = false
-local MenuData = {}
+local MenuData = exports.vorp_menu:GetMenuData()
 local Core = exports.vorp_core:GetCore()
 local VORPutils = {}
 local TableDelete = {}
 local __StoreInUse = nil
-local imgPathMenu =
-"<img style='max-height:120px;max-width:120px;float: center;' src='nui://vorp_stores/images/%s.png'><br>"
-local imgPath =
-"<img style='max-height:64px;max-width:64px; float:%s; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/%s.png'>"
+local imgPathMenu = "<img style='max-height:120px;max-width:120px;float: center;' src='nui://vorp_stores/images/%s.png'><br>"
+local imgPath = "<img style='max-height:64px;max-width:64px; float:%s; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/%s.png'>"
 local font = '<span style="font-family: crock; src:nui://vorp_menu/html/fonts/crock.ttf) format("truetype")</span>'
 local T = TranslationStores.Langs[Lang]
 
 -- * API * --
-TriggerEvent("menuapi:getData", function(call)
-    MenuData = call
-end)
-
 TriggerEvent("getUtils", function(utils)
     VORPutils = utils
 end)
@@ -54,7 +48,7 @@ local function AddBlip(Store)
     local value = Config.Stores[Store]
     local x, y, z = table.unpack(value.Blip.Pos)
     local blip = VORPutils.Blips:SetBlip(value.Blip.Name, value.Blip.sprite, 0.2, x, y, z)
-    Citizen.InvokeNative(0x662D364ABF16DE2F, blip:Get(), joaat("BLIP_MODIFIER_MP_COLOR_32")) -- WHITE
+    BlipAddModifier(blip:Get(), joaat("BLIP_MODIFIER_MP_COLOR_32"))
     value.BlipHandle = blip:Get()
     TableDelete[#TableDelete + 1] = { blip = blip:Get() }
 end
@@ -68,8 +62,7 @@ end
 
 local function SpawnNPC(Store)
     local value = Config.Stores[Store]
-    local ped   = VORPutils.Peds:Create(value.Npc.Model, nil, nil, nil, nil, 'world', false, true, nil, false,
-        value.Npc.Pos)
+    local ped   = VORPutils.Peds:Create(value.Npc.Model, nil, nil, nil, nil, 'world', false, true, nil, false, value.Npc.Pos)
     ped:CanBeDamaged(false)
     Wait(500)
     ped:Freeze(true)
@@ -79,22 +72,22 @@ local function SpawnNPC(Store)
 end
 
 local function setUpPrompt()
-    OpenStores = PromptRegisterBegin()
-    PromptSetControlAction(OpenStores, Config.Key)
+    OpenStores = UiPromptRegisterBegin()
+    UiPromptSetControlAction(OpenStores, Config.Key)
     local label = CreateVarString(10, 'LITERAL_STRING', T.SubPrompt)
-    PromptSetText(OpenStores, label)
-    PromptSetEnabled(OpenStores, true)
-    PromptSetVisible(OpenStores, true)
-    PromptSetStandardMode(OpenStores, true)
-    PromptSetGroup(OpenStores, PromptGroup)
-    PromptRegisterEnd(OpenStores)
+    UiPromptSetText(OpenStores, label)
+    UiPromptSetEnabled(OpenStores, true)
+    UiPromptSetVisible(OpenStores, true)
+    UiPromptSetStandardMode(OpenStores, true)
+    UiPromptSetGroup(OpenStores, PromptGroup, 0)
+    UiPromptRegisterEnd(OpenStores)
 end
 
 local function showPrompt(label, action)
     local labelToDisplay = CreateVarString(10, 'LITERAL_STRING', label)
-    PromptSetActiveGroupThisFrame(PromptGroup, labelToDisplay)
+    UiPromptSetActiveGroupThisFrame(PromptGroup, labelToDisplay, 0, 0, 0, 0)
 
-    if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenStores) then
+    if UiPromptHasStandardModeCompleted(OpenStores, 0) then
         Wait(100)
         return action
     end
@@ -102,7 +95,7 @@ end
 
 
 local function CheckStoreInUse(storeId)
-    Core.RpcCall("vorp_stores:callback:canOpenStore", function(canOpen)
+    Core.Callback.TriggerAsync("vorp_stores:callback:canOpenStore", function(canOpen)
         if canOpen then
             OpenCategory(storeId)
             DisplayRadar(false)
@@ -121,8 +114,7 @@ local function storeOpen(storeConfig, storeId)
         if not Config.Stores[storeId].BlipHandle then
             AddBlip(storeId)
         else
-            Citizen.InvokeNative(0x662D364ABF16DE2F, Config.Stores[storeId].BlipHandle,
-                joaat("BLIP_MODIFIER_MP_COLOR_32"))
+            BlipAddModifier(Config.Stores[storeId].BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_32"))
         end
     end
 
@@ -198,8 +190,7 @@ Citizen.CreateThread(function()
             if storeConfig.StoreHoursAllowed then
                 if IsStoreClosed(storeConfig) == "closed" then
                     if storeConfig.BlipHandle then
-                        Citizen.InvokeNative(0x662D364ABF16DE2F, storeConfig.BlipHandle,
-                            joaat("BLIP_MODIFIER_MP_COLOR_2"))
+                        BlipAddModifier(storeConfig.BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_2"))
                     end
 
                     if storeConfig.NPC then
@@ -218,10 +209,10 @@ Citizen.CreateThread(function()
 
                     if (distance <= storeConfig.distanceOpenStore) then
                         sleep = 0
-                        PromptSetEnabled(OpenStores, false)
+                        UiPromptSetEnabled(OpenStores, false)
                     end
                 else
-                    PromptSetEnabled(OpenStores, true)
+                    UiPromptSetEnabled(OpenStores, true)
                     if storeOpen(storeConfig, storeId) then
                         sleep = 0
                     end
@@ -366,8 +357,7 @@ function OpenSellMenu(storeId, category)
                         -- if not found in the stock allow to sell only what player holds
                         menuElements[#menuElements + 1] = {
 
-                            label = imgPath:format("left", storeItem.itemName) ..
-                                storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. count .. " " .. T.avaliable,
+                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. count .. " " .. T.avaliable,
                             action = "sell",
                             value = 0,
                             min = 0,
@@ -515,8 +505,7 @@ function OpenBuyMenu(storeId, category)
                         itemFound = true
                         menuElements[#menuElements + 1] = {
 
-                            label = imgPath:format("left", storeItem.itemName) ..
-                                storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
+                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
                             value = 0,
                             min = 0,
                             max = items.amount,
@@ -683,7 +672,7 @@ AddEventHandler('onResourceStop', function(resourceName)
 
     if isInMenu == true then
         ClearPedTasksImmediately(PlayerPedId())
-        PromptDelete(OpenStores)
+        UiPromptDelete(OpenStores)
         MenuData.CloseAll()
     end
 

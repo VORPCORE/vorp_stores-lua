@@ -166,7 +166,7 @@ local function buyItems(_source, Character, value, ItemName, storeId)
         Core.NotifyRightTip(_source,
             T.youbought .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
         DiscordLog(fname ..
-        " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
+            " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
         return
     end
 
