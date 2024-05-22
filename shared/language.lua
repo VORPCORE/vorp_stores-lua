@@ -288,7 +288,7 @@ TranslationStores.Langs = {
         cantcarryitem ="you cant carry anymore items"
 
     },
-	Czech = {
+    Czech = {
         SubPrompt = "Stiskněte",
         Sellitem = "Prodat položku",
         SubMenu = "Menu",
