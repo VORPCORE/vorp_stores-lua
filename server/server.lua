@@ -85,7 +85,7 @@ local function sellItems(_source, Character, value, ItemName, storeId)
     if value.weapon then
         for i = 1, value.quantity, 1 do
             Wait(500)
-            local userWeapons = exports.vorp_inventory:getUserWeapons(_source)
+            local userWeapons = exports.vorp_inventory:getUserInventoryWeapons(_source)
             for _, v in pairs(userWeapons) do
                 if v.name == ItemName then
                     exports.vorp_inventory:subWeapon(_source, v.id)
