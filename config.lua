@@ -23,11 +23,11 @@ Config.WebhookLanguage = {
 Config.UI = function(state)
     if state then
         --ExecuteCommand("hideneeds hidden")
-        ExecuteCommand("hideui")
+        --ExecuteCommand("hideui")
         TriggerEvent('vorpmetabolism:setHud', false)
     else
         -- ExecuteCommand("hideneeds visible")
-        ExecuteCommand("showui")
+       -- ExecuteCommand("showui")
         TriggerEvent('vorpmetabolism:setHud', true)
     end
 end
