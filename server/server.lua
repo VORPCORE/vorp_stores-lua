@@ -363,7 +363,7 @@ end)
 
 
 -- event drrop player
-AddEventHandler('playerDropped', function(source, reason)
+AddEventHandler('playerDropped', function(reason)
     local _source = source
     for k, v in pairs(storesInUse) do
         if v == _source then
