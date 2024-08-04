@@ -325,7 +325,7 @@ end)
 Core.Callback.Register("vorp_stores:callback:CloseStore", function(source, cb, storeIndex)
     local _source = source
 
-    if storesInUse[storeIndex] == _source then
+    if storesInUse[storeIndex]  then
         storesInUse[storeIndex] = nil
         return cb(true)
     end
@@ -363,7 +363,7 @@ end)
 
 
 -- event drrop player
-AddEventHandler('vorp:playerDropped', function(source, reason)
+AddEventHandler('playerDropped', function(source, reason)
     local _source = source
     for k, v in pairs(storesInUse) do
         if v == _source then
