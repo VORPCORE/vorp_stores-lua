@@ -49,7 +49,7 @@ local function AddBlip(Store)
     local x, y, z = table.unpack(value.Blip.Pos)
     local blip = VORPutils.Blips:SetBlip(value.Blip.Name, value.Blip.sprite, 0.2, x, y, z)
     BlipAddModifier(blip:Get(), joaat("BLIP_MODIFIER_MP_COLOR_32"))
-    value.BlipHandle = blip:Get()
+    value.Blip.BlipHandle = blip:Get()
     TableDelete[#TableDelete + 1] = { blip = blip:Get() }
 end
 
