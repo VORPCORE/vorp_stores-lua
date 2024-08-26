@@ -111,7 +111,7 @@ local function storeOpen(storeConfig, storeId)
     local distance = GetPlayerDistanceFromCoords(storeConfig.Blip.Pos)
 
     if storeConfig.Blip.Allowed then
-        if not Config.Stores[storeId].BlipHandle then
+        if not Config.Stores[storeId].Blip.BlipHandle then
             AddBlip(storeId)
         else
             BlipAddModifier(Config.Stores[storeId].BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_32"))
