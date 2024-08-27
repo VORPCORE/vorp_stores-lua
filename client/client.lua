@@ -114,7 +114,7 @@ local function storeOpen(storeConfig, storeId)
         if not Config.Stores[storeId].Blip.BlipHandle then
             AddBlip(storeId)
         else
-            BlipAddModifier(Config.Stores[storeId].BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_32"))
+            BlipAddModifier(Config.Stores[storeId].Blip.BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_32"))
         end
     end
 
@@ -189,8 +189,8 @@ Citizen.CreateThread(function()
         for storeId, storeConfig in pairs(Config.Stores) do
             if storeConfig.StoreHoursAllowed then
                 if IsStoreClosed(storeConfig) == "closed" then
-                    if storeConfig.BlipHandle then
-                        BlipAddModifier(storeConfig.BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_2"))
+                    if storeConfig.Blip.BlipHandle then
+                        BlipAddModifier(storeConfig.Blip.BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_2"))
                     end
 
                     if storeConfig.NPC then
