@@ -7,7 +7,7 @@ local T = TranslationStores.Langs[Lang]
 
 
 -- * STORE ITEM SELL/BUY LIMITS * --
-Citizen.CreateThread(function()
+CreateThread(function()
     local sellItems = Config.SellItems
     local buyItems = Config.BuyItems
 
@@ -83,18 +83,24 @@ local function sellItems(_source, Character, value, ItemName, storeId)
     local total2 = (math.floor(total * 100) / 100)
 
     if value.weapon then
+        local countWeap = 0
+        local userWeapons = exports.vorp_inventory:getUserInventoryWeapons(_source)
         for i = 1, value.quantity, 1 do
             Wait(500)
-            local userWeapons = exports.vorp_inventory:getUserInventoryWeapons(_source)
             for _, v in pairs(userWeapons) do
                 if v.name == ItemName then
                     exports.vorp_inventory:subWeapon(_source, v.id)
                     exports.vorp_inventory:deleteWeapon(_source, v.id)
                     canContinue = true
-                    break
+                    countWeap = countWeap + 1
+                    if countWeap == value.quantity then
+                        break
+                    end
                 end
             end
         end
+        total = value.price * countWeap
+        total2 = (math.floor(total * 100) / 100)
     else
         local count = exports.vorp_inventory:getItemCount(_source, nil, ItemName)
         if value.quantity <= count then
@@ -106,7 +112,7 @@ local function sellItems(_source, Character, value, ItemName, storeId)
     end
 
     if not canContinue then
-        return
+        return print("nothing found to sell")
     end
 
     if Config.Stores[storeId].DynamicStore then
@@ -117,8 +123,8 @@ local function sellItems(_source, Character, value, ItemName, storeId)
 
     if value.currency == "cash" then
         Character.addCurrency(0, total)
-        Core.NotifyRightTip(_source,
-            T.yousold .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
+        Core.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash,
+            3000)
         DiscordLog(fname ..
             " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
     end
@@ -325,7 +331,7 @@ end)
 Core.Callback.Register("vorp_stores:callback:CloseStore", function(source, cb, storeIndex)
     local _source = source
 
-    if storesInUse[storeIndex]  then
+    if storesInUse[storeIndex] then
         storesInUse[storeIndex] = nil
         return cb(true)
     end
