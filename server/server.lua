@@ -85,20 +85,23 @@ local function sellItems(_source, Character, value, ItemName, storeId)
     if value.weapon then
         local countWeap = 0
         local userWeapons = exports.vorp_inventory:getUserInventoryWeapons(_source)
-        for i = 1, value.quantity, 1 do
-            Wait(500)
-            for _, v in pairs(userWeapons) do
-                if v.name == ItemName then
-                    exports.vorp_inventory:subWeapon(_source, v.id)
-                    exports.vorp_inventory:deleteWeapon(_source, v.id)
-                    canContinue = true
-                    countWeap = countWeap + 1
-                    if countWeap == value.quantity then
-                        break
-                    end
+
+        for _, v in pairs(userWeapons) do
+            if v.name == ItemName then
+                exports.vorp_inventory:subWeapon(_source, v.id)
+                exports.vorp_inventory:deleteWeapon(_source, v.id)
+                canContinue = true
+                countWeap = countWeap + 1
+                if countWeap == value.quantity then
+                    break
                 end
             end
         end
+
+        if countWeap == 0 then
+            return Core.NotifyObjective(_source, T.noManyQty, 5000)
+        end
+
         total = value.price * countWeap
         total2 = (math.floor(total * 100) / 100)
     else
