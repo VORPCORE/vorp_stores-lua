@@ -27,7 +27,7 @@ Config.UI = function(state)
         TriggerEvent('vorpmetabolism:setHud', false)
     else
         -- ExecuteCommand("hideneeds visible")
-       -- ExecuteCommand("showui")
+        -- ExecuteCommand("showui")
         TriggerEvent('vorpmetabolism:setHud', true)
     end
 end
@@ -39,7 +39,7 @@ Config.Key = 0x760A9C6F --[G] open stores
 Config.Stores = {
     -- any name you want sell items and buy items must have same name
     Valentine = {
-
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {
@@ -94,7 +94,7 @@ Config.Stores = {
     },
 
     Rhodes = {
-
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {
@@ -144,6 +144,7 @@ Config.Stores = {
 
     },
     Strawberry = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {
@@ -195,6 +196,7 @@ Config.Stores = {
 
     },
     Blackwater = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {
@@ -243,6 +245,7 @@ Config.Stores = {
 
     },
     Armadillo = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {
@@ -292,6 +295,7 @@ Config.Stores = {
 
     },
     Tumbleweed = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {
@@ -339,6 +343,7 @@ Config.Stores = {
         DynamicStore = true,
     },
     StDenis = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {
@@ -388,6 +393,7 @@ Config.Stores = {
 
     },
     Vanhorn = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {
@@ -436,6 +442,7 @@ Config.Stores = {
 
     },
     BlackwaterFishing = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {
@@ -486,6 +493,7 @@ Config.Stores = {
         DynamicStore = true,
     },
     Wapiti = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
         useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
         possibleLocations = {
             OpenMenu = {

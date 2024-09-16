@@ -1,18 +1,20 @@
 ---@diagnostic disable: undefined-global
 ------------------------------------------------------------------------------------------------------
 -------------------------------------------- CLIENT --------------------------------------------------
-local OpenStores
-local PromptGroup = GetRandomIntInRange(0, 0xffffff)
+local OpenStores = 0
+local PromptGroup <const> = GetRandomIntInRange(0, 0xffffff)
 local isInMenu = false
 local MenuData = exports.vorp_menu:GetMenuData()
 local Core = exports.vorp_core:GetCore()
 local VORPutils = {}
 local TableDelete = {}
 local __StoreInUse = nil
-local imgPathMenu = "<img style='max-height:120px;max-width:120px;float: center;' src='nui://vorp_stores/images/%s.png'><br>"
-local imgPath = "<img style='max-height:64px;max-width:64px; float:%s; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/%s.png'>"
+local imgPathMenu =
+"<img style='max-height:120px;max-width:120px;float: center;' src='nui://vorp_stores/images/%s.png'><br>"
+local imgPath =
+"<img style='max-height:64px;max-width:64px; float:%s; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/%s.png'>"
 local font = '<span style="font-family: crock; src:nui://vorp_menu/html/fonts/crock.ttf) format("truetype")</span>'
-local T = TranslationStores.Langs[Lang]
+local T <const> = TranslationStores.Langs[Lang]
 
 -- * API * --
 TriggerEvent("getUtils", function(utils)
@@ -62,7 +64,8 @@ end
 
 local function SpawnNPC(Store)
     local value = Config.Stores[Store]
-    local ped   = VORPutils.Peds:Create(value.Npc.Model, nil, nil, nil, nil, 'world', false, true, nil, false, value.Npc.Pos)
+    local ped   = VORPutils.Peds:Create(value.Npc.Model, nil, nil, nil, nil, 'world', false, true, nil, false,
+        value.Npc.Pos)
     ped:CanBeDamaged(false)
     Wait(500)
     ped:Freeze(true)
@@ -93,7 +96,6 @@ local function showPrompt(label, action)
     end
 end
 
-
 local function CheckStoreInUse(storeId)
     Core.Callback.TriggerAsync("vorp_stores:callback:canOpenStore", function(canOpen)
         if canOpen then
@@ -106,6 +108,34 @@ local function CheckStoreInUse(storeId)
         end
     end, storeId)
 end
+
+-- use this event from server side to actvate a store or deactivate based on what you want , like only open for this client via a command etc
+RegisterNetEvent("vorp_stores:Server:ChangeStoreStatus", function(storeId, status)
+    if not Config.Stores[storeId] then
+        return print("Store not found in vorp stores configs")
+    end
+    Config.Stores[storeId].isDeactivated = status
+end)
+
+-- use this event client side to open a store from your scripts make sure locations match for security checks
+AddEventHandler("vorp_stores:Client:OpenShop", function(storeId)
+    local storeConfig = Config.Stores[storeId]
+    if not storeConfig then
+        return print("Store not found in vorp stores configs")
+    end
+
+    local distance = GetPlayerDistanceFromCoords(storeConfig.Blip.Pos)
+    if distance <= storeConfig.distanceOpenStore then
+        local canOpen = Core.Callback.TriggerAwait("vorp_stores:callback:canOpenStore", storeId)
+        if not canOpen then
+            return Core.NotifyObjective(T.StoreInUse, 5000)
+        end
+        OpenCategory(storeId)
+    else
+        print("this event was fired but player is not near the location to open store")
+    end
+end)
+
 
 local function storeOpen(storeConfig, storeId)
     local distance = GetPlayerDistanceFromCoords(storeConfig.Blip.Pos)
@@ -187,39 +217,41 @@ Citizen.CreateThread(function()
         end
 
         for storeId, storeConfig in pairs(Config.Stores) do
-            if storeConfig.StoreHoursAllowed then
-                if IsStoreClosed(storeConfig) == "closed" then
-                    if storeConfig.Blip.BlipHandle then
-                        BlipAddModifier(storeConfig.Blip.BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_2"))
-                    end
+            if not storeConfig.isDeactivated then
+                if storeConfig.StoreHoursAllowed then
+                    if IsStoreClosed(storeConfig) == "closed" then
+                        if storeConfig.Blip.BlipHandle then
+                            BlipAddModifier(storeConfig.Blip.BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_2"))
+                        end
 
-                    if storeConfig.NPC then
-                        FreezeEntityPosition(storeConfig.NPC, false)
-                        Wait(200)
-                        TaskWanderStandard(storeConfig.NPC, 10.0, 10)
-                        SetEntityAsNoLongerNeeded(storeConfig.NPC)
-                        local npc = storeConfig.NPC
-                        storeConfig.NPC = nil
-                        SetTimeout(25000, function()
-                            DeletePed(npc)
-                        end)
-                    end
+                        if storeConfig.NPC then
+                            FreezeEntityPosition(storeConfig.NPC, false)
+                            Wait(200)
+                            TaskWanderStandard(storeConfig.NPC, 10.0, 10)
+                            SetEntityAsNoLongerNeeded(storeConfig.NPC)
+                            local npc = storeConfig.NPC
+                            storeConfig.NPC = nil
+                            SetTimeout(25000, function()
+                                DeletePed(npc)
+                            end)
+                        end
 
-                    local distance = GetPlayerDistanceFromCoords(storeConfig.Blip.Pos)
+                        local distance = GetPlayerDistanceFromCoords(storeConfig.Blip.Pos)
 
-                    if (distance <= storeConfig.distanceOpenStore) then
-                        sleep = 0
-                        UiPromptSetEnabled(OpenStores, false)
+                        if (distance <= storeConfig.distanceOpenStore) then
+                            sleep = 0
+                            UiPromptSetEnabled(OpenStores, false)
+                        end
+                    else
+                        UiPromptSetEnabled(OpenStores, true)
+                        if storeOpen(storeConfig, storeId) then
+                            sleep = 0
+                        end
                     end
                 else
-                    UiPromptSetEnabled(OpenStores, true)
                     if storeOpen(storeConfig, storeId) then
                         sleep = 0
                     end
-                end
-            else
-                if storeOpen(storeConfig, storeId) then
-                    sleep = 0
                 end
             end
         end
@@ -357,7 +389,8 @@ function OpenSellMenu(storeId, category)
                         -- if not found in the stock allow to sell only what player holds
                         menuElements[#menuElements + 1] = {
 
-                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. count .. " " .. T.avaliable,
+                            label = imgPath:format("left", storeItem.itemName) ..
+                                storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. count .. " " .. T.avaliable,
                             action = "sell",
                             value = 0,
                             min = 0,
@@ -505,7 +538,8 @@ function OpenBuyMenu(storeId, category)
                         itemFound = true
                         menuElements[#menuElements + 1] = {
 
-                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
+                            label = imgPath:format("left", storeItem.itemName) ..
+                                storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
                             value = 0,
                             min = 0,
                             max = items.amount,
