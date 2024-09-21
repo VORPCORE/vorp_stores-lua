@@ -130,6 +130,7 @@ AddEventHandler("vorp_stores:Client:OpenShop", function(storeId)
         if not canOpen then
             return Core.NotifyObjective(T.StoreInUse, 5000)
         end
+        __StoreInUse = storeId
         OpenCategory(storeId)
     else
         print("this event was fired but player is not near the location to open store")
