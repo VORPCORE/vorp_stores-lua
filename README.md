@@ -7,7 +7,7 @@ VORP Stores in LUA (It is not a conversion from C#. Made completely from scratch
 - `ensure vorp_menu` on the top of `server.cfg`
 
 ## Installation
--`ensure vorp_stores` in your `server.cfg`
+- `ensure vorp_stores` in your `server.cfg`
 - Edit the config file
 - Edit the language file 
 - Start your server 
