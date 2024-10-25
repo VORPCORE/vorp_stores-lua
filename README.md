@@ -4,10 +4,10 @@ VORP Stores in LUA (It is not a conversion from C#. Made completely from scratch
 
 ## Dependency
 #### [vorp_menu](https://github.com/VORPCORE/vorp_menu)
-- `ensure vorp_menu` on the top of `server.cfg`
+- `ensure vorp_menu` on the top of `server.cfg` / `resources.cfg`
 
 ## Installation
-- `ensure vorp_stores` in your `server.cfg`
+- `ensure vorp_stores` in your `server.cfg` / `resources.cfg`
 - Edit the config file
 - Edit the language file 
 - Start your server 
