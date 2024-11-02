@@ -69,11 +69,11 @@ Config.Stores = {
 
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- Store type for buy and sell
         storeType = {
@@ -129,11 +129,11 @@ Config.Stores = {
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- * store type allow which type of store to show in the store
         storeType = {
@@ -183,11 +183,11 @@ Config.Stores = {
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- * store type allow which type of store to show in the store
         storeType = {
@@ -234,11 +234,11 @@ Config.Stores = {
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- * store type allow which type of store to show in the store
         storeType = {
@@ -286,11 +286,11 @@ Config.Stores = {
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- * store type allow which type of store to show in the store
         storeType = {
@@ -337,11 +337,11 @@ Config.Stores = {
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- * store type allow which type of store to show in the store
         storeType = {
@@ -383,16 +383,16 @@ Config.Stores = {
 
         storeName = "ST Denis",
         PromptName = "general store",
-        distanceOpenStore = 2.0,
+        distanceOpenStore = 3.0,
         AllowedJobs = {},
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- * store type allow which type of store to show in the store
         storeType = {
@@ -439,11 +439,11 @@ Config.Stores = {
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- * store type allow which type of store to show in the store
         storeType = {
@@ -493,11 +493,11 @@ Config.Stores = {
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- * store type allow which type of store to show in the store
         storeType = {
@@ -542,11 +542,11 @@ Config.Stores = {
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",        img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",          img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",           img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",      img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages",  img = "whisky" },
+            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
+            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
+            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
+            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
         },
         -- * store type allow which type of store to show in the store
         storeType = {
