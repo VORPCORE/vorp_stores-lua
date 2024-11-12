@@ -45,7 +45,18 @@ end
 
 local function SpawnNPC(Store)
     local value = Config.Stores[Store]
-    local ped = CreatePed(value.Npc.Model, value.Npc.Pos.x, value.Npc.Pos.y, value.Npc.Pos.z, value.Npc.Pos.w, false, false, false, false)
+    local npcModel <const> = value.Npc.Model
+
+    if not IsModelValid(npcModel) then
+        return print(("Invalid npc model for %s (%s)."):format(Store, value.Npc.Model))
+    end
+
+    if not HasModelLoaded(npcModel) then
+        RequestModel(npcModel, false)
+        repeat Wait(100) until HasModelLoaded(npcModel)
+    end
+
+    local ped = CreatePed(npcModel, value.Npc.Pos.x, value.Npc.Pos.y, value.Npc.Pos.z, value.Npc.Pos.w, false, false, false, false)
     repeat Wait(100) until DoesEntityExist(ped)
     SetRandomOutfitVariation(ped, true)
     PlaceEntityOnGroundProperly(ped)
