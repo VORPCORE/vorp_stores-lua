@@ -48,13 +48,12 @@ local function SpawnNPC(Store)
     local npcModel <const> = value.Npc.Model
 
     if not IsModelValid(npcModel) then
-        print(("Invalid npc model for %s (%s)."):format(Store, value.Npc.Model))
-        goto skip
+        return print(("Invalid npc model for %s (%s)."):format(Store, value.Npc.Model))
     end
 
     if not HasModelLoaded(npcModel) then
         RequestModel(npcModel, false)
-        while not HasModelLoaded(npcModel) do Wait(100) end
+        repeat Wait(100) until HasModelLoaded(npcModel)
     end
 
     local ped = CreatePed(npcModel, value.Npc.Pos.x, value.Npc.Pos.y, value.Npc.Pos.z, value.Npc.Pos.w, false, false, false, false)
@@ -64,8 +63,6 @@ local function SpawnNPC(Store)
     SetEntityCanBeDamaged(ped, false)
     SetBlockingOfNonTemporaryEvents(ped, true)
     value.Npc.NpcHandle = ped
-
-    ::skip::
 end
 
 local function setUpPrompt()
