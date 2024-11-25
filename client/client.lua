@@ -1,12 +1,16 @@
 local OpenStores = 0
 local PromptGroup <const> = GetRandomIntInRange(0, 0xffffff)
 local isInMenu = false
-local MenuData = exports.vorp_menu:GetMenuData()
-local Core = exports.vorp_core:GetCore()
+local MenuData <const> = exports.vorp_menu:GetMenuData()
+local Core <const> = exports.vorp_core:GetCore()
 local __StoreInUse = nil
-local imgPathMenu = "<img style='max-height:120px;max-width:120px;float: center;' src='nui://vorp_stores/images/%s.png'><br>"
-local imgPath = "<img style='max-height:64px;max-width:64px; float:%s; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/%s.png'>"
-local font = '<span style="font-family: crock; src:nui://vorp_menu/html/fonts/crock.ttf) format("truetype")</span>'
+local imgPathMenu <const> = "<img style='max-height:120px;max-width:120px;float: center;' src='nui://vorp_stores/images/%s.png'><br>"
+local imgPath <const> = "<img style='max-height:64px;max-width:64px; float:%s; margin-top: -5px;' src='nui://vorp_inventory/html/img/items/%s.png'>"
+local font <const> = '<span style="font-family: crock; src:nui://vorp_menu/html/fonts/crock.ttf) format("truetype")</span>'
+local subMenuStyle <const> = "<span style='font-size: 1.0vw;'>%s<br><br></span>"
+local labelStyle <const> = "<span style='opacity:0.6;'>%s</span>"
+local imgPath1 <const> = "<img style='margin-top: 10px;margin-bottom: 10px; margin-left: -10px;'src='nui://vorp_stores/images/%s.png'>" -- ! add image to medicalman
+local divider <const> = imgPath1:format("divider_line")
 local T <const> = TranslationStores.Langs[Lang]
 
 local function CheckJobs(store)
@@ -44,7 +48,7 @@ local function GetPlayerDistanceFromCoords(vector)
 end
 
 local function SpawnNPC(Store)
-    local value = Config.Stores[Store]
+    local value <const> = Config.Stores[Store]
     local npcModel <const> = value.Npc.Model
 
     if not IsModelValid(npcModel) then
@@ -56,10 +60,10 @@ local function SpawnNPC(Store)
         repeat Wait(100) until HasModelLoaded(npcModel)
     end
 
-    local ped = CreatePed(npcModel, value.Npc.Pos.x, value.Npc.Pos.y, value.Npc.Pos.z, value.Npc.Pos.w, false, false, false, false)
+    local ped <const> = CreatePed(npcModel, value.Npc.Pos.x, value.Npc.Pos.y, value.Npc.Pos.z, value.Npc.Pos.w, false, false, false, false)
     repeat Wait(100) until DoesEntityExist(ped)
     SetRandomOutfitVariation(ped, true)
-    PlaceEntityOnGroundProperly(ped, false)
+    PlaceEntityOnGroundProperly(ped)
     SetEntityCanBeDamaged(ped, false)
     SetBlockingOfNonTemporaryEvents(ped, true)
     value.Npc.NpcHandle = ped
@@ -78,7 +82,7 @@ local function setUpPrompt()
 end
 
 local function showPrompt(label, action)
-    local labelToDisplay = VarString(10, 'LITERAL_STRING', label)
+    local labelToDisplay <const> = VarString(10, 'LITERAL_STRING', label)
     UiPromptSetActiveGroupThisFrame(PromptGroup, labelToDisplay, 0, 0, 0, 0)
 
     if UiPromptHasStandardModeCompleted(OpenStores, 0) then
@@ -248,8 +252,6 @@ CreateThread(function()
     end
 end)
 
-
-
 -- * MENU  * --
 function OpenCategory(storeId)
     Config.UI(true)
@@ -257,19 +259,20 @@ function OpenCategory(storeId)
     isInMenu = true
     local elements = {}
 
-    for k, value in pairs(Config.Stores[storeId].category) do
+    for k, value in ipairs(Config.Stores[storeId].category) do
         elements[#elements + 1] = {
-            label = value.label,
+            label = value.label .. "<br>" .. labelStyle:format("choose category"),
             value = value.Type,
-            desc = imgPathMenu:format(value.img) .. " <br> " .. value.desc
+            desc = imgPathMenu:format(value.img) .. " <br> " .. value.desc .. "<br><br><br><br><br><br><br><br><br>" .. divider .. "press enter for options"
         }
     end
 
     MenuData.Open('default', GetCurrentResourceName(), 'OpenCategory' .. storeId, {
         title = Config.Stores[storeId].storeName,
-        subtext = T.SubMenu,
+        subtext = subMenuStyle:format(T.SubMenu),
         align = Config.Align,
-        elements = elements
+        elements = elements,
+        itemHeight = "4vh",
 
     }, function(data, menu)
         OpenSubMenu(storeId, data.current.value)
@@ -284,19 +287,20 @@ function OpenSubMenu(storeId, category)
     isInMenu = true
     local elements = {}
 
-    for _, value in pairs(Config.Stores[storeId].storeType) do
+    for _, value in ipairs(Config.Stores[storeId].storeType) do
         elements[#elements + 1] = {
-            label = value.label,
+            label = value.label .. "<br>" .. labelStyle:format("choose type"),
             value = value.Type,
-            desc = imgPathMenu:format(value.img) .. " <br> " .. value.desc
+            desc = imgPathMenu:format(value.img) .. " <br> " .. value.desc .. "<br><br><br><br><br><br><br><br><br><br><br><br>" .. divider .. "press enter for options"
         }
     end
 
     MenuData.Open('default', GetCurrentResourceName(), 'OpenSubMenu' .. storeId .. category, {
         title = Config.Stores[storeId].storeName,
-        subtext = T.SubMenu,
+        subtext = subMenuStyle:format(T.SubMenu),
         align = Config.Align,
         elements = elements,
+        itemHeight = "4vh",
         lastmenu = "OpenCategory"
 
     }, function(data, menu)
@@ -322,7 +326,6 @@ function OpenSellMenu(storeId, category)
     local menuElements = {}
     local storeConfig = Config.Stores[storeId]
     local SellTable = {}
-    local color = "Gold"
     local ctp = ""
 
     local result = Core.Callback.TriggerAwait('vorp_stores:callback:getShopStock', storeId)
@@ -341,7 +344,6 @@ function OpenSellMenu(storeId, category)
                 if storeItem.category == category then
                     if storeItem.currencyType == "cash" then
                         ctp = "$"
-                        color = "Red"
                     end
 
                     if shopStocks[storeId] then
@@ -355,16 +357,9 @@ function OpenSellMenu(storeId, category)
                                     min = 0,
                                     max = items.amount,
                                     type = "slider",
-                                    desc = font .. T.sellfor ..
-                                        '<span style="margin-left:90px;"><span style="font-size:25px;">' ..
-                                        ctp .. '</span>' ..
-                                        '<span style="font-size:30px;">' ..
-                                        string.format("%.2f", storeItem.sellprice) ..
-                                        "    </span><span style='color:" ..
-                                        color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" ..
-                                        storeItem.desc,
                                     info = storeItem,
                                     index = storeItem.itemName,
+                                    desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Price </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.sellprice) .. "</span><br>" .. divider .. "<br><br>"
 
                                 }
                             end
@@ -381,15 +376,9 @@ function OpenSellMenu(storeId, category)
                             min = 0,
                             max = count,
                             type = "slider",
-                            desc = font .. T.sellfor ..
-                                '<span style="margin-left:90px;"><span style="font-size:25px;">' ..
-                                ctp .. '</span>' ..
-                                '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.sellprice) ..
-                                "    </span><span style='color:" ..
-                                color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" ..
-                                storeItem.desc,
                             info = storeItem,
-                            index = storeItem.itemName
+                            index = storeItem.itemName,
+                            desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Price </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.sellprice) .. "</span><br>" .. divider .. "<br><br>"
                         }
                     end
                 end
@@ -406,92 +395,87 @@ function OpenSellMenu(storeId, category)
     menuElements[#menuElements + 1] = {
         label = T.totalToReceive .. " <br> " .. ctp .. 0,
         value = "sell",
-        desc  = T.pressEnterToSell,
-        info  = "finish"
+        info  = "finish",
+        desc  = T.pressEnterToSell .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. 0.00 .. "</span><br>" .. divider .. "<br><br>"
     }
 
-    MenuData.Open('default', GetCurrentResourceName(), 'OpenSellMenu' .. storeId .. category, {
-        title = storeConfig.storeName,
-        subtext = T.sellmenu,
-        align = Config.Align,
-        elements = menuElements,
-        lastmenu = "OpenSubMenu",
-        itemHeight = "4vh"
-    }, function(data, menu)
-        if (data.current == "backup") then
-            _G[data.trigger](storeId, category)
-        end
+    MenuData.Open('default', GetCurrentResourceName(), 'OpenSellMenu' .. storeId .. category,
+        {
+            title = storeConfig.storeName,
+            subtext = subMenuStyle:format(T.sellmenu),
+            align = Config.Align,
+            elements = menuElements,
+            lastmenu = "OpenSubMenu",
+            itemHeight = "4vh"
 
-        if data.current.action == "sell" then
-            local ItemName = data.current.info.itemName
-            local ItemLabel = data.current.info.itemLabel
-            local currencyType = data.current.info.currencyType
-            local sellPrice = data.current.info.sellprice * data.current.value
-
-            if not SellTable[ItemName] then
-                SellTable[ItemName] = {
-                    label = ItemLabel,
-                    currency = currencyType,
-                    price = data.current.info.sellprice,
-                    quantity = data.current.value,
-                    weapon = data.current.info.weapon,
-                    total = sellPrice
-                }
+        },
+        function(data, menu)
+            if (data.current == "backup") then
+                _G[data.trigger](storeId, category)
             end
 
-            if SellTable[ItemName] then
-                SellTable[ItemName].quantity = data.current.value
-                SellTable[ItemName].total = sellPrice
-            end
+            if data.current.action == "sell" then
+                local ItemName = data.current.info.itemName
+                local ItemLabel = data.current.info.itemLabel
+                local currencyType = data.current.info.currencyType
+                local sellPrice = data.current.info.sellprice * data.current.value
 
-            for key, value in pairs(menu.data.elements) do
-                if value.index == ItemName then
-                    menu.setElement(key, "desc", font .. T.sellfor ..
-                        '<span style="margin-left:90px;"><span style="font-size:25px;">' ..
-                        ctp ..
-                        '</span><span style="font-size:30px;">' ..
-                        string.format("%.2f", data.current.info.sellprice) ..
-                        "    </span><span style='color:" .. color .. ";'>   " .. currencyType ..
-                        "</span><br><br><span style='font-size:25px;'> " .. T.totalToReceive .. " =</span> " ..
-                        ctp .. "<span style='color: Green; font-size:25px;'>" .. sellPrice .. "</span><br><br>" ..
-                        data.current.info.desc ..
-                        "<br>" .. "<br><br><span style='color:" .. color .. ";'></span>")
-                    menu.refresh()
-                    break
+                if not SellTable[ItemName] then
+                    SellTable[ItemName] = {
+                        label = ItemLabel,
+                        currency = currencyType,
+                        price = data.current.info.sellprice,
+                        quantity = data.current.value,
+                        weapon = data.current.info.weapon,
+                        total = sellPrice
+                    }
                 end
-            end
 
-            for key, value in pairs(menu.data.elements) do
-                if value.info == "finish" then
-                    local total = 0
-                    for k, v in pairs(SellTable) do
-                        total = total + v.total
+                if SellTable[ItemName] then
+                    SellTable[ItemName].quantity = data.current.value
+                    SellTable[ItemName].total = sellPrice
+                end
+
+                for key, value in pairs(menu.data.elements) do
+                    if value.index == ItemName then
+                        menu.setElement(key, "desc", data.current.info.desc .. "<br><br> Price $" .. data.current.sellPrice .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellPrice) .. "</span><br>" .. divider .. "<br><br>")
+                        menu.refresh()
+                        break
                     end
-                    menu.setElement(key, "label", T.totalToReceive .. " <br> " .. ctp .. total)
-                    menu.refresh()
-                    break
+                end
+
+                for key, value in pairs(menu.data.elements) do
+                    if value.info == "finish" then
+                        local total = 0
+                        for k, v in pairs(SellTable) do
+                            total = total + v.total
+                        end
+                        menu.setElement(key, "label", T.totalToReceive .. " <br> " .. ctp .. total)
+                        menu.setElement(key, "desc", T.pressHereToSell .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", total) .. "</span><br>" .. divider .. "<br><br>")
+                        menu.refresh()
+                        break
+                    end
                 end
             end
-        end
 
-        if data.current.value == "sell" then
-            for key, value in pairs(SellTable) do
-                if value.quantity <= 0 then
-                    SellTable[key] = nil
+            if data.current.value == "sell" then
+                for key, value in pairs(SellTable) do
+                    if value.quantity <= 0 then
+                        SellTable[key] = nil
+                    end
                 end
+
+                if not next(SellTable) then
+                    return Core.NotifyObjective(T.notSelectedItem, 5000)
+                end
+
+                TriggerServerEvent("vorp_stores:Client:sellItems", SellTable, storeId)
+                closeAll()
+                SellTable = {}
             end
+        end, function(data, menu)
 
-            if not next(SellTable) then
-                return Core.NotifyObjective(T.notSelectedItem, 5000)
-            end
-
-            TriggerServerEvent("vorp_stores:Client:sellItems", SellTable, storeId)
-            closeAll()
-            SellTable = {}
-        end
-    end, function(data, menu)
-
-    end)
+        end)
 end
 
 function OpenBuyMenu(storeId, category)
@@ -523,20 +507,16 @@ function OpenBuyMenu(storeId, category)
                         itemFound = true
                         menuElements[#menuElements + 1] = {
 
-                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
+                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. labelStyle:format(items.amount .. " " .. T.avaliable),
                             value = 0,
                             min = 0,
                             max = items.amount,
                             action = "buy",
                             type = "slider",
-                            desc = font .. T.buyfor ..
-                                '<span style="margin-left:90px;"><span style="font-size:25px;">' ..
-                                ctp .. '</span>' ..
-                                '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) ..
-                                "    </span><span style='color:" ..
-                                color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" .. storeItem.desc,
+                            --desc = font .. "".. '<span style="margin-left:90px;"><span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) .. "    </span><span style='color:" .. color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" .. storeItem.desc .. divider,
                             info = storeItem,
-                            index = storeItem.itemName
+                            index = storeItem.itemName,
+                            desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Price </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
 
                         }
                     end
@@ -546,20 +526,16 @@ function OpenBuyMenu(storeId, category)
             if not itemFound then
                 menuElements[#menuElements + 1] = {
 
-                    label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. T.chooseAmount,
+                    label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. labelStyle:format(T.chooseAmount),
                     value = 0,
                     min = 0,
                     max = 100,
                     type = "slider",
                     action = "buy",
-                    desc = font ..
-                        T.buyfor ..
-                        '<span style="margin-left:90px;"><span style="font-size:25px;">' .. ctp .. '</span>' ..
-                        '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) ..
-                        "    </span><span style='color:" ..
-                        color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" .. storeItem.desc,
+                    --  desc = font .. T.buyfor .. '<span style="margin-left:90px;"><span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) .. "    </span><span style='color:" .. color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" .. storeItem.desc .. divider,
                     info = storeItem,
-                    index = storeItem.itemName
+                    index = storeItem.itemName,
+                    desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Price </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
 
                 }
             end
@@ -572,15 +548,16 @@ function OpenBuyMenu(storeId, category)
     end
 
     menuElements[#menuElements + 1] = {
-        label = T.totalToPay .. " <br> " .. ctp .. 0,
+        label = T.totalToPay .. " <br> " .. labelStyle:format(ctp .. 0),
         value = "finish",
-        desc = T.pressHereToFinish,
-        info = "finish"
+        -- desc = T.pressHereToFinish .. "<br><br><br><br" .. divider .. "press enter to pay",
+        info = "finish",
+        desc = T.pressHereToFinish .. "<br><br>Current money  $" .. LocalPlayer.state.Character.Money .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. 0.00 .. "</span><br>" .. divider .. "<br><br>"
     }
 
     MenuData.Open('default', GetCurrentResourceName(), 'OpenBuyMenu' .. storeId .. category, {
         title = storeConfig.storeName,
-        subtext = T.buyMenu,
+        subtext = subMenuStyle:format(T.buyMenu),
         align = Config.Align,
         elements = menuElements,
         lastmenu = "OpenSubMenu",
@@ -615,22 +592,13 @@ function OpenBuyMenu(storeId, category)
 
             for key, value in pairs(menu.data.elements) do
                 if value.index == ItemName then
-                    menu.setElement(key, "desc", font .. T.buyfor ..
-                        '<span style="margin-left:90px;"><span style="font-size:25px;">' ..
-                        ctp ..
-                        '</span><span style="font-size:30px;">' ..
-                        string.format("%.2f", data.current.info.buyprice) ..
-                        "    </span><span style='color:" .. color .. ";'>   " .. currencyType ..
-                        "</span><br><br><span style='font-size:25px;'> " .. T.totalToPay .. " =</span> " ..
-                        ctp ..
-                        "<span style='color: Green; font-size:25px;'>" ..
-                        string.format("%.2f", buyPrice) .. "</span><br><br>" ..
-                        data.current.info.desc ..
-                        "<br>" .. "<br><br><span style='color:" .. color .. ";'></span>")
+                    menu.setElement(key, "desc", data.current.info.desc .. "<br><br> price $" .. data.current.info.buyprice .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", buyPrice) .. "</span><br>" .. divider .. "<br><br>")
                     menu.refresh()
                     break
                 end
             end
+
+
 
             for key, value in pairs(menu.data.elements) do
                 if value.info == "finish" then
@@ -638,8 +606,11 @@ function OpenBuyMenu(storeId, category)
                     for k, v in pairs(BuyTable) do
                         total = total + v.total * v.quantity
                     end
+                    local money = LocalPlayer.state.Character.Money
+                    local noMoney = money < total and "<br><br> you dont have enough money $" .. money or "<br><br> Current money $" .. money
 
-                    menu.setElement(key, "label", T.totalToPay .. " <br> " .. ctp .. total)
+                    menu.setElement(key, "label", T.totalToPay .. " <br> " .. labelStyle:format(ctp .. total))
+                    menu.setElement(key, "desc", T.pressHereToFinish .. noMoney .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", total) .. "</span><br>" .. divider .. "<br><br>")
                     menu.refresh()
                     break
                 end
@@ -656,6 +627,14 @@ function OpenBuyMenu(storeId, category)
             if not next(BuyTable) then
                 return Core.NotifyObjective(T.notSelectedItem, 5000)
             end
+
+            local total = 0
+            for k, v in pairs(BuyTable) do
+                total = total + v.total * v.quantity
+            end
+
+            local hasMoney = LocalPlayer.state.Character.Money < total
+            if not hasMoney then return Core.NotifyObjective("you dont have enough money to buy these items", 5000) end
 
             TriggerServerEvent("vorp_stores:Client:buyItems", BuyTable, storeId) -- sell it
             BuyTable = {}
@@ -686,11 +665,11 @@ end)
 AddEventHandler('onResourceStop', function(resourceName)
     if GetCurrentResourceName() ~= resourceName then return end
 
-    if isInMenu == true then
-        ClearPedTasksImmediately(PlayerPedId())
-        UiPromptDelete(OpenStores)
-        MenuData.CloseAll()
-    end
+
+    ClearPedTasksImmediately(PlayerPedId())
+    UiPromptDelete(OpenStores)
+    MenuData.CloseAll()
+
     for key, value in pairs(Config.Stores) do
         if value.Npc.Allowed and value.Npc.NpcHandle then
             DeleteEntity(value.Npc.NpcHandle)
