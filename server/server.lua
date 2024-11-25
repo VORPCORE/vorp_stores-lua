@@ -1,6 +1,3 @@
----@diagnostic disable: undefined-global
---------------------------------------------------------------------------------------------------------------
---------------------------------------------- SERVER SIDE ----------------------------------------------------
 local Core = exports.vorp_core:GetCore()
 local storeLimits = {}
 local T = TranslationStores.Langs[Lang]
@@ -40,9 +37,8 @@ end)
 
 local function DiscordLog(message)
     if Config.UseWebhook == true then
-        Core.AddWebhook(Config.WebhookLanguage.WebhookTitle, Config.WebhookLanguage.WebhookUrl, message,
-            Config.WebhookLanguage.WebhookColor, Config.WebhookLanguage.WebhookName, Config.WebhookLanguage.WebhookLogo,
-            Config.WebhookLanguage.WebhookLogo2, Config.WebhookLanguage.WebhookAvatar)
+        local WebhookUrl = "" -- add webhook link here
+        Core.AddWebhook(Config.WebhookLanguage.WebhookTitle, WebhookUrl, message, Config.WebhookLanguage.WebhookColor, Config.WebhookLanguage.WebhookName, Config.WebhookLanguage.WebhookLogo, Config.WebhookLanguage.WebhookLogo2, Config.WebhookLanguage.WebhookAvatar)
     end
 end
 
@@ -126,18 +122,14 @@ local function sellItems(_source, Character, value, ItemName, storeId)
 
     if value.currency == "cash" then
         Character.addCurrency(0, total)
-        Core.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash,
-            3000)
-        DiscordLog(fname ..
-            " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
+        Core.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
     end
 
     if value.currency == "gold" then
         Character.addCurrency(1, total)
-        Core.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold,
-            3000)
-        DiscordLog(fname ..
-            " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
+        Core.NotifyRightTip(_source, T.yousold .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hassold .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
     end
 end
 
@@ -172,10 +164,8 @@ local function buyItems(_source, Character, value, ItemName, storeId)
 
         Character.removeCurrency(0, total)
         Character.money = Character.money - total
-        Core.NotifyRightTip(_source,
-            T.youbought .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
-        DiscordLog(fname ..
-            " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
+        Core.NotifyRightTip(_source, T.youbought .. value.quantity .. " " .. value.label .. T.frcash .. total2 .. T.ofcash, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.frcash .. total2 .. T.ofcash)
         return
     end
 
@@ -191,10 +181,8 @@ local function buyItems(_source, Character, value, ItemName, storeId)
             exports.vorp_inventory:addItem(_source, ItemName, value.quantity)
         end
         Character.removeCurrency(1, total)
-        Core.NotifyRightTip(_source,
-            T.youbought .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold, 3000)
-        DiscordLog(fname ..
-            " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
+        Core.NotifyRightTip(_source, T.youbought .. value.quantity .. " " .. value.label .. T.fr .. total2 .. T.ofgold, 3000)
+        DiscordLog(fname .. " " .. lname .. T.hasbought .. " " .. value.quantity .. value.label .. T.fr .. total2 .. T.ofgold)
 
         if Config.Stores[storeId].DynamicStore then
             if not checkStoreLimits(storeId, ItemName, value.quantity, "buy") then
@@ -211,9 +199,7 @@ RegisterServerEvent('vorp_stores:Client:sellItems', function(dataItems, storeId)
     local _source = source
     local User = Core.getUser(_source)
 
-    if not User then
-        return
-    end
+    if not User then return end
 
     local Character = User.getUsedCharacter
 
@@ -230,9 +216,7 @@ RegisterServerEvent('vorp_stores:Client:buyItems', function(dataItems, storeId)
     local _source = source
     local User = Core.getUser(_source)
 
-    if not User then
-        return
-    end
+    if not User then return end
 
     local Character = User.getUsedCharacter
 
@@ -332,8 +316,6 @@ Core.Callback.Register("vorp_stores:callback:canOpenStore", function(source, cb,
 end)
 
 Core.Callback.Register("vorp_stores:callback:CloseStore", function(source, cb, storeIndex)
-    local _source = source
-
     if storesInUse[storeIndex] then
         storesInUse[storeIndex] = nil
         return cb(true)

@@ -10,7 +10,7 @@ Config.DevMode = false -- if true you can use /reload to reload the script
 -- Webhook Section, description is in translation
 Config.UseWebhook = false -- Use webhook
 Config.WebhookLanguage = {
-    WebhookUrl = "",
+    -- webhook link is in the server.lua
     WebhookTitle = "",
     WebhookColor = "",
     WebhookName = "",

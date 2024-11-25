@@ -59,7 +59,7 @@ local function SpawnNPC(Store)
     local ped = CreatePed(npcModel, value.Npc.Pos.x, value.Npc.Pos.y, value.Npc.Pos.z, value.Npc.Pos.w, false, false, false, false)
     repeat Wait(100) until DoesEntityExist(ped)
     SetRandomOutfitVariation(ped, true)
-    PlaceEntityOnGroundProperly(ped)
+    PlaceEntityOnGroundProperly(ped, false)
     SetEntityCanBeDamaged(ped, false)
     SetBlockingOfNonTemporaryEvents(ped, true)
     value.Npc.NpcHandle = ped
@@ -68,7 +68,7 @@ end
 local function setUpPrompt()
     OpenStores = UiPromptRegisterBegin()
     UiPromptSetControlAction(OpenStores, Config.Key)
-    local label = CreateVarString(10, 'LITERAL_STRING', T.SubPrompt)
+    local label = VarString(10, 'LITERAL_STRING', T.SubPrompt)
     UiPromptSetText(OpenStores, label)
     UiPromptSetEnabled(OpenStores, true)
     UiPromptSetVisible(OpenStores, true)
@@ -78,7 +78,7 @@ local function setUpPrompt()
 end
 
 local function showPrompt(label, action)
-    local labelToDisplay = CreateVarString(10, 'LITERAL_STRING', label)
+    local labelToDisplay = VarString(10, 'LITERAL_STRING', label)
     UiPromptSetActiveGroupThisFrame(PromptGroup, labelToDisplay, 0, 0, 0, 0)
 
     if UiPromptHasStandardModeCompleted(OpenStores, 0) then
@@ -349,8 +349,7 @@ function OpenSellMenu(storeId, category)
                             if items.itemName == storeItem.itemName and items.type == "sell" then
                                 itemFound = true
                                 menuElements[#menuElements + 1] = {
-                                    label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel ..
-                                        " " .. T.forSale .. " <br> " .. items.amount .. " " .. T.avaliable,
+                                    label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. items.amount .. " " .. T.avaliable,
                                     action = "sell",
                                     value = 0,
                                     min = 0,
@@ -376,8 +375,7 @@ function OpenSellMenu(storeId, category)
                         -- if not found in the stock allow to sell only what player holds
                         menuElements[#menuElements + 1] = {
 
-                            label = imgPath:format("left", storeItem.itemName) ..
-                                storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. count .. " " .. T.avaliable,
+                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. count .. " " .. T.avaliable,
                             action = "sell",
                             value = 0,
                             min = 0,
@@ -525,8 +523,7 @@ function OpenBuyMenu(storeId, category)
                         itemFound = true
                         menuElements[#menuElements + 1] = {
 
-                            label = imgPath:format("left", storeItem.itemName) ..
-                                storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
+                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. items.amount .. " " .. T.avaliable,
                             value = 0,
                             min = 0,
                             max = items.amount,
@@ -549,8 +546,7 @@ function OpenBuyMenu(storeId, category)
             if not itemFound then
                 menuElements[#menuElements + 1] = {
 
-                    label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. T
-                        .chooseAmount,
+                    label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " <br> " .. T.chooseAmount,
                     value = 0,
                     min = 0,
                     max = 100,
