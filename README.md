@@ -3,16 +3,16 @@
 vorp stores in Lua (It is not a conversion from C#. Made completely from scratch)
 
 ## Dependency
-#### [vorp_menu](https://github.com/VORPCORE/vorp_menu)
+[vorp_menu](https://github.com/VORPCORE/vorp_menu)
 - `ensure vorp_menu` on the top of `server.cfg` / `resources.cfg`
 
-## Installation
+### installation
 - `ensure vorp_stores` in your `server.cfg` / `resources.cfg`
 - Edit the config file
 - Edit the language file 
 
 
-## Features
+### features
 - Unique stores
 - Job lock
 - Job Grade lock
@@ -25,7 +25,9 @@ vorp stores in Lua (It is not a conversion from C#. Made completely from scratch
 - Sell items with `Gold or Cash`
 - Buy items with `Gold or Cash`
 - Items with Category + Description
+### preview
+![Screenshot 2024-11-25 171007](https://github.com/user-attachments/assets/e8a9ed3c-f046-44bf-a558-0086ed46b0e1)
+![Screenshot 2024-11-25 171141](https://github.com/user-attachments/assets/15211e27-0aa8-410e-80cd-7c09b082db98)
 
-
-## Support 
+### support 
 - [VORP Core Discord](https://discord.gg/DHGVAbCj7N)
