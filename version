@@ -1,3 +1,15 @@
+<2.2>
+- these changes were done in th past month!
+- redesigned the menu
+- reduce data size from client to server when refreshing store prices using msgpack
+- moved webhook links for security
+- load npc models before spwning them (was cause some npcs not to load)
+- removed vorp_utils dependency
+- new feature to allow open stores using events (vorp_stores:Client:OpenShop,storeId)
+- new feature to allow changing activeness of stores through server side (vorp_stores:Server:ChangeStoreStatus,storeId,status)
+- fixed payment not including in the amount bought for weapons
+- fixed playerDropped wasnt removing player from being in store
+
 <2.1>
 - movable stores for example black markets so they are not always at the same place will randomly pick a location every restart
 - you dont need to set a location to both sell and buy configs , you can just set one or the other or both
