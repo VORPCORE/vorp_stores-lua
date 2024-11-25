@@ -349,7 +349,8 @@ end)
 
 RegisterServerEvent('vorp_stores:GetRefreshedPrices', function()
     local _source = source
-    TriggerClientEvent('vorp_stores:RefreshStorePrices', _source, Config.SellItems, Config.BuyItems, Config.Stores)
+    local msgpack = msgpack.pack(Config.SellItems, Config.BuyItems, Config.Stores)
+    TriggerClientEvent('vorp_stores:RefreshStorePrices', _source, msgpack)
 end)
 
 

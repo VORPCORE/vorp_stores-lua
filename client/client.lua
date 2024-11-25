@@ -668,7 +668,8 @@ end
 
 -- *  EVENTS * --
 
-RegisterNetEvent("vorp_stores:RefreshStorePrices", function(SellItems, BuyItems, Stores)
+RegisterNetEvent("vorp_stores:RefreshStorePrices", function(packed)
+    local SellItems, BuyItems, Stores = msgpack.unpack(packed)
     Config.SellItems = SellItems
     Config.BuyItems = BuyItems
     Config.Stores = Stores
