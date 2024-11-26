@@ -633,8 +633,8 @@ function OpenBuyMenu(storeId, category)
                 total = total + v.total * v.quantity
             end
 
-            local hasMoney = LocalPlayer.state.Character.Money < total
-            if not hasMoney then return Core.NotifyObjective("you dont have enough money to buy these items", 5000) end
+            local noMoney = LocalPlayer.state.Character.Money < total
+            if noMoney then return Core.NotifyObjective("you dont have enough money to buy these items", 5000) end
 
             TriggerServerEvent("vorp_stores:Client:buyItems", BuyTable, storeId) -- sell it
             BuyTable = {}
