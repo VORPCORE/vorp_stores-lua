@@ -438,7 +438,7 @@ function OpenSellMenu(storeId, category)
 
                 for key, value in pairs(menu.data.elements) do
                     if value.index == ItemName then
-                        menu.setElement(key, "desc", data.current.info.desc .. "<br><br> Price $" .. sellPrice .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellPrice) .. "</span><br>" .. divider .. "<br><br>")
+                        menu.setElement(key, "desc", data.current.info.desc .. "<br><br> Price $" .. string.format("%.2f", sellPrice) .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellPrice) .. "</span><br>" .. divider .. "<br><br>")
                         menu.refresh()
                         break
                     end
@@ -451,7 +451,7 @@ function OpenSellMenu(storeId, category)
                             total = total + v.total
                         end
                         menu.setElement(key, "label", T.totalToReceive .. " <br> " .. ctp .. total)
-                        menu.setElement(key, "desc", T.pressHereToSell .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", total) .. "</span><br>" .. divider .. "<br><br>")
+                        menu.setElement(key, "desc", T.pressEnterToSell .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", total) .. "</span><br>" .. divider .. "<br><br>")
                         menu.refresh()
                         break
                     end
