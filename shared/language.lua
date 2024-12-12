@@ -10,7 +10,7 @@ TranslationStores.Langs = {
         buymenu = "buy menu",
         sellfor = "SELL FOR",
         buyfor = "BUY FOR",
-        youdontsell = "you dont have the item to sell!",
+        youdontsell = "you don't have the item to sell!",
         chooseoption = " Choose an option",
         amount = "AMOUNT",
         confirm = "Confirm",
@@ -22,8 +22,8 @@ TranslationStores.Langs = {
         ofcash = "~q~ cash",
         ofgold = " ~q~ gold",
         youbought = "You bought ",
-        youdontgold = "you dont have enough gold",
-        youdontcash = "you dont have enough cash",
+        youdontgold = "you don't have enough gold",
+        youdontcash = "you don't have enough cash",
         cantcarry = " you cant carry this item",
         closed = "~e~CLOSED ~o~",
         am = ":00~q~am to ~o~",
@@ -34,7 +34,7 @@ TranslationStores.Langs = {
         hasbought = "has bought", -- for webhook
         noManyQty = "you don't have that many to sell",
         itemNotExist = "item does not exist",
-        notAllowItem = "you dont have the items that are allowed to be sold at this store",
+        notAllowItem = "you don't have the items that are allowed to be sold at this store",
         chooseAmount = "choose amount",
         avaliable = "Available",
         notSelectedItem = "You have not selected any items to buy",
@@ -46,7 +46,8 @@ TranslationStores.Langs = {
         pressHereToFinish = "press here when finish",
         buyMenu = "buy menu",
         StoreInUse = "Store is in use by another player",
-        cantcarryitem ="you cant carry anymore items"
+        cantcarryitem ="you cant carry anymore items",
+        noMoney = "you don't have enough money to buy these items"
     },
     Portugues_PT = {
         SubPrompt = "Carregue",
@@ -93,7 +94,8 @@ TranslationStores.Langs = {
         pressHereToFinish = "pressione aqui quando terminar",
         buyMenu = "menu de compra",
         StoreInUse = "Store is in use by another player",
-        cantcarryitem ="you cant carry anymore items"
+        cantcarryitem ="you cant carry anymore items",
+        noMoney = "you don't have enough money to buy these items"
 
     },
     Portugues_BR = {
@@ -141,7 +143,8 @@ TranslationStores.Langs = {
         pressHereToFinish = "pressione aqui quando finalizar",
         buyMenu = "menu de compra",
         StoreInUse = "Store is in use by another player",
-        cantcarryitem ="you cant carry anymore items"
+        cantcarryitem ="you cant carry anymore items",
+        noMoney = "you don't have enough money to buy these items"
 
     },
     Francais = {
@@ -189,7 +192,8 @@ TranslationStores.Langs = {
         pressHereToFinish = "appuyez ici lorsque vous avez terminé",
         buyMenu = "menu d'achat",
         StoreInUse = "Store is in use by another player",
-        cantcarryitem ="you cant carry anymore items"
+        cantcarryitem ="you cant carry anymore items",
+        noMoney = "you don't have enough money to buy these items"
 
     },
     German = {
@@ -237,7 +241,8 @@ TranslationStores.Langs = {
         pressHereToFinish = "Drücke hier, um abzuschließen",
         buyMenu = "Kaufmenü",
         StoreInUse = "Store is in use by another player",
-        cantcarryitem ="you cant carry anymore items"
+        cantcarryitem ="you cant carry anymore items",
+        noMoney = "you don't have enough money to buy these items"
 
     },
     Spanish = {
@@ -285,7 +290,8 @@ TranslationStores.Langs = {
         pressHereToFinish = "presiona aquí cuando hayas terminado",
         buyMenu = "menú de compra",
         StoreInUse = "Store is in use by another player",
-        cantcarryitem ="you cant carry anymore items"
+        cantcarryitem ="you cant carry anymore items",
+        noMoney = "you don't have enough money to buy these items"
 
     },
     Czech = {
@@ -333,6 +339,8 @@ TranslationStores.Langs = {
         pressHereToFinish = "stiskněte zde po dokončení",
         buyMenu = "nákupní menu",
         StoreInUse = "Obchod používá jiný hráč",
-        cantcarryitem = "nemůžete nést více položek"
+        cantcarryitem = "nemůžete nést více položek",
+        noMoney = "you don't have enough money to buy these items"
+
     },
 }
