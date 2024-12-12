@@ -47,8 +47,10 @@ TranslationStores.Langs = {
         buyMenu = "buy menu",
         StoreInUse = "Store is in use by another player",
         cantcarryitem ="you cant carry anymore items",
-        noMoney = "you don't have enough money to buy these items"
-    },
+        noMoney = "you don't have enough money to buy these items",
+        Total = "Total",
+        Price = "price $",
+        CurrentMoney = "Current money $",    },
     Portugues_PT = {
         SubPrompt = "Carregue",
         Sellitem = "Vender Item",
@@ -95,8 +97,10 @@ TranslationStores.Langs = {
         buyMenu = "menu de compra",
         StoreInUse = "Store is in use by another player",
         cantcarryitem ="you cant carry anymore items",
-        noMoney = "you don't have enough money to buy these items"
-
+        noMoney = "you don't have enough money to buy these items",
+        Total = "Total",
+        Price = "price $",
+        CurrentMoney = "Current money $",
     },
     Portugues_BR = {
         SubPrompt = "Pressione",
@@ -144,8 +148,10 @@ TranslationStores.Langs = {
         buyMenu = "menu de compra",
         StoreInUse = "Store is in use by another player",
         cantcarryitem ="you cant carry anymore items",
-        noMoney = "you don't have enough money to buy these items"
-
+        noMoney = "you don't have enough money to buy these items",
+        Total = "Total",
+        Price = "price $",
+        CurrentMoney = "Current money $",
     },
     Francais = {
         SubPrompt = "Appuyez",
@@ -193,8 +199,10 @@ TranslationStores.Langs = {
         buyMenu = "menu d'achat",
         StoreInUse = "Store is in use by another player",
         cantcarryitem ="you cant carry anymore items",
-        noMoney = "you don't have enough money to buy these items"
-
+        noMoney = "you don't have enough money to buy these items",
+        Total = "Total",
+        Price = "price $",
+        CurrentMoney = "Current money $",
     },
     German = {
         SubPrompt = "Drücke",
@@ -242,8 +250,10 @@ TranslationStores.Langs = {
         buyMenu = "Kaufmenü",
         StoreInUse = "Store is in use by another player",
         cantcarryitem ="you cant carry anymore items",
-        noMoney = "you don't have enough money to buy these items"
-
+        noMoney = "you don't have enough money to buy these items",
+        Total = "Total",
+        Price = "price $",
+        CurrentMoney = "Current money $",
     },
     Spanish = {
         SubPrompt = "Presiona",
@@ -291,8 +301,10 @@ TranslationStores.Langs = {
         buyMenu = "menú de compra",
         StoreInUse = "Store is in use by another player",
         cantcarryitem ="you cant carry anymore items",
-        noMoney = "you don't have enough money to buy these items"
-
+        noMoney = "you don't have enough money to buy these items",
+        Total = "Total",
+        Price = "price $",
+        CurrentMoney = "Current money $",
     },
     Czech = {
         SubPrompt = "Stiskněte",
@@ -340,7 +352,10 @@ TranslationStores.Langs = {
         buyMenu = "nákupní menu",
         StoreInUse = "Obchod používá jiný hráč",
         cantcarryitem = "nemůžete nést více položek",
-        noMoney = "you don't have enough money to buy these items"
+        noMoney = "you don't have enough money to buy these items",
+        Total = "Total",
+        Price = "price $",
+        CurrentMoney = "Current money $",
 
     },
 }
