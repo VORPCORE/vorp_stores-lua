@@ -592,7 +592,7 @@ function OpenBuyMenu(storeId, category)
 
             for key, value in pairs(menu.data.elements) do
                 if value.index == ItemName then
-                    menu.setElement(key, "desc", data.current.info.desc .. "<br><br>" .. T.Price .. " " .. data.current.info.buyprice .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", buyPrice) .. "</span><br>" .. divider .. "<br><br>")
+                    menu.setElement(key, "desc", data.current.info.desc .. "<br><br>" .. T.Price .. "$" .. data.current.info.buyprice .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", buyPrice) .. "</span><br>" .. divider .. "<br><br>")
                     menu.refresh()
                     break
                 end
