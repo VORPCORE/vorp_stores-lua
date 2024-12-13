@@ -359,7 +359,7 @@ function OpenSellMenu(storeId, category)
                                     type = "slider",
                                     info = storeItem,
                                     index = storeItem.itemName,
-                                    desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Price </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.sellprice) .. "</span><br>" .. divider .. "<br><br>"
+                                    desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.sellprice) .. "</span><br>" .. divider .. "<br><br>"
 
                                 }
                             end
@@ -378,7 +378,7 @@ function OpenSellMenu(storeId, category)
                             type = "slider",
                             info = storeItem,
                             index = storeItem.itemName,
-                            desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Price </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.sellprice) .. "</span><br>" .. divider .. "<br><br>"
+                            desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.sellprice) .. "</span><br>" .. divider .. "<br><br>"
                         }
                     end
                 end
@@ -396,7 +396,7 @@ function OpenSellMenu(storeId, category)
         label = T.totalToReceive .. " <br> " .. ctp .. 0,
         value = "sell",
         info  = "finish",
-        desc  = T.pressEnterToSell .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. 0.00 .. "</span><br>" .. divider .. "<br><br>"
+        desc  = T.pressEnterToSell .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. 0.00 .. "</span><br>" .. divider .. "<br><br>"
     }
 
     MenuData.Open('default', GetCurrentResourceName(), 'OpenSellMenu' .. storeId .. category,
@@ -438,7 +438,7 @@ function OpenSellMenu(storeId, category)
 
                 for key, value in pairs(menu.data.elements) do
                     if value.index == ItemName then
-                        menu.setElement(key, "desc", data.current.info.desc .. "<br><br> Price $" .. string.format("%.2f", sellPrice) .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellPrice) .. "</span><br>" .. divider .. "<br><br>")
+                        menu.setElement(key, "desc", data.current.info.desc .. "<br><br> " .. T.Price .. "$" .. string.format("%.2f", sellPrice) .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellPrice) .. "</span><br>" .. divider .. "<br><br>")
                         menu.refresh()
                         break
                     end
@@ -451,7 +451,7 @@ function OpenSellMenu(storeId, category)
                             total = total + v.total
                         end
                         menu.setElement(key, "label", T.totalToReceive .. " <br> " .. ctp .. total)
-                        menu.setElement(key, "desc", T.pressEnterToSell .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", total) .. "</span><br>" .. divider .. "<br><br>")
+                        menu.setElement(key, "desc", T.pressEnterToSell .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", total) .. "</span><br>" .. divider .. "<br><br>")
                         menu.refresh()
                         break
                     end
@@ -516,7 +516,7 @@ function OpenBuyMenu(storeId, category)
                             --desc = font .. "".. '<span style="margin-left:90px;"><span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) .. "    </span><span style='color:" .. color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" .. storeItem.desc .. divider,
                             info = storeItem,
                             index = storeItem.itemName,
-                            desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Price </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
+                            desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
 
                         }
                     end
@@ -535,7 +535,7 @@ function OpenBuyMenu(storeId, category)
                     --  desc = font .. T.buyfor .. '<span style="margin-left:90px;"><span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) .. "    </span><span style='color:" .. color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" .. storeItem.desc .. divider,
                     info = storeItem,
                     index = storeItem.itemName,
-                    desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Price </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
+                    desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
 
                 }
             end
@@ -552,7 +552,7 @@ function OpenBuyMenu(storeId, category)
         value = "finish",
         -- desc = T.pressHereToFinish .. "<br><br><br><br" .. divider .. "press enter to pay",
         info = "finish",
-        desc = T.pressHereToFinish .. "<br><br>Current money  $" .. LocalPlayer.state.Character.Money .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. 0.00 .. "</span><br>" .. divider .. "<br><br>"
+        desc = T.pressHereToFinish .. "<br><br>" .. T.CurrentMoney .. LocalPlayer.state.Character.Money .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. 0.00 .. "</span><br>" .. divider .. "<br><br>"
     }
 
     MenuData.Open('default', GetCurrentResourceName(), 'OpenBuyMenu' .. storeId .. category, {
@@ -592,7 +592,7 @@ function OpenBuyMenu(storeId, category)
 
             for key, value in pairs(menu.data.elements) do
                 if value.index == ItemName then
-                    menu.setElement(key, "desc", data.current.info.desc .. "<br><br> price $" .. data.current.info.buyprice .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", buyPrice) .. "</span><br>" .. divider .. "<br><br>")
+                    menu.setElement(key, "desc", data.current.info.desc .. "<br><br>" .. T.Price .. "$" .. data.current.info.buyprice .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", buyPrice) .. "</span><br>" .. divider .. "<br><br>")
                     menu.refresh()
                     break
                 end
@@ -607,10 +607,10 @@ function OpenBuyMenu(storeId, category)
                         total = total + v.total * v.quantity
                     end
                     local money = LocalPlayer.state.Character.Money
-                    local noMoney = money < total and "<br><br> you dont have enough money $" .. money or "<br><br> Current money $" .. money
+                    local noMoney = money < total and "<br><br>" .. T.noMoney .. " " .. money or "<br><br>" .. T.CurrentMoney .. " " .. money
 
                     menu.setElement(key, "label", T.totalToPay .. " <br> " .. labelStyle:format(ctp .. total))
-                    menu.setElement(key, "desc", T.pressHereToFinish .. noMoney .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>Total </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", total) .. "</span><br>" .. divider .. "<br><br>")
+                    menu.setElement(key, "desc", T.pressHereToFinish .. noMoney .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. "</span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", total) .. "</span><br>" .. divider .. "<br><br>")
                     menu.refresh()
                     break
                 end
@@ -634,7 +634,7 @@ function OpenBuyMenu(storeId, category)
             end
 
             local noMoney = LocalPlayer.state.Character.Money < total
-            if noMoney then return Core.NotifyObjective("you dont have enough money to buy these items", 5000) end
+            if noMoney then return Core.NotifyObjective(T.noMoney, 5000) end
 
             TriggerServerEvent("vorp_stores:Client:buyItems", BuyTable, storeId) -- sell it
             BuyTable = {}
