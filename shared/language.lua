@@ -99,7 +99,7 @@ TranslationStores.Langs = {
         cantcarryitem ="you cant carry anymore items",
         noMoney = "you don't have enough money to buy these items",
         Total = "Total",
-        Price = "price $",
+        Price = "price ",
         CurrentMoney = "Current money $",
     },
     Portugues_BR = {
@@ -150,7 +150,7 @@ TranslationStores.Langs = {
         cantcarryitem ="you cant carry anymore items",
         noMoney = "you don't have enough money to buy these items",
         Total = "Total",
-        Price = "price $",
+        Price = "price ",
         CurrentMoney = "Current money $",
     },
     Francais = {
@@ -201,7 +201,7 @@ TranslationStores.Langs = {
         cantcarryitem ="you cant carry anymore items",
         noMoney = "you don't have enough money to buy these items",
         Total = "Total",
-        Price = "price $",
+        Price = "price ",
         CurrentMoney = "Current money $",
     },
     German = {
@@ -252,7 +252,7 @@ TranslationStores.Langs = {
         cantcarryitem ="you cant carry anymore items",
         noMoney = "you don't have enough money to buy these items",
         Total = "Total",
-        Price = "price $",
+        Price = "price ",
         CurrentMoney = "Current money $",
     },
     Spanish = {
@@ -303,7 +303,7 @@ TranslationStores.Langs = {
         cantcarryitem ="you cant carry anymore items",
         noMoney = "you don't have enough money to buy these items",
         Total = "Total",
-        Price = "price $",
+        Price = "price ",
         CurrentMoney = "Current money $",
     },
     Czech = {
@@ -354,7 +354,7 @@ TranslationStores.Langs = {
         cantcarryitem = "nemůžete nést více položek",
         noMoney = "you don't have enough money to buy these items",
         Total = "Total",
-        Price = "price $",
+        Price = "price ",
         CurrentMoney = "Current money $",
 
     },
