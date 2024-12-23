@@ -13,7 +13,7 @@ Config.BuyItems = {
             currencyType = "cash",
             buyprice = 40,
             randomprice = math.random(30, 45),
-            desc = "sell bandage",
+            desc = "Buy bandage",
             category = "meds",
             itemLimit = 0,
         },
@@ -24,7 +24,7 @@ Config.BuyItems = {
             currencyType = "cash",
             buyprice = 40,
             randomprice = math.random(30, 50),
-            desc = "sell pick axe",
+            desc = "Buy Knife",
             category = "weapons",
             weapon = true, -- add this if you want to sell weapons in the store
             itemLimit = 0, -- delete if you dont want a limit to be able to sell or leave
