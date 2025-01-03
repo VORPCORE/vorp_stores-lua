@@ -365,7 +365,7 @@ function OpenSellMenu(storeId, category)
                                     max = items.amount,
                                     type = "slider",
                                     info = storeItem,
-                                    percentage = value.percentage,
+                                    item = value,
                                     index = storeItem.itemName,
                                     desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellprice) .. "</span><br>" .. divider .. "<br><br>"
 
@@ -390,7 +390,7 @@ function OpenSellMenu(storeId, category)
                             max = value.count,
                             type = "slider",
                             info = storeItem,
-                            percentage = value.percentage,
+                            item = value,
                             index = storeItem.itemName,
                             desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellprice) .. "</span><br>" .. divider .. "<br><br>"
                         }
@@ -435,7 +435,7 @@ function OpenSellMenu(storeId, category)
                 local sellPrice = data.current.info.sellprice * data.current.value
                 if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage then
                     -- adjust price based on percentage, theres a problem here because decay is counting so price might be less if the percentage has been changed
-                    sellPrice = data.current.info.sellprice * data.current.value * ((100 - data.current.percentage) / 100)
+                    sellPrice = data.current.info.sellprice * data.current.value * ((100 - data.current.item.percentage) / 100)
                 end
 
                 if not SellTable[ItemName] then
@@ -445,7 +445,8 @@ function OpenSellMenu(storeId, category)
                         price = data.current.info.sellprice,
                         quantity = data.current.value,
                         weapon = data.current.info.weapon,
-                        total = sellPrice
+                        total = sellPrice,
+                        item = data.current.item
                     }
                 end
 

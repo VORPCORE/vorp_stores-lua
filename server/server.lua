@@ -101,35 +101,16 @@ local function sellItems(_source, Character, value, ItemName, storeId)
         total = value.price * countWeap
         total2 = (math.floor(total * 100) / 100)
     else
-        local inventory = exports.vorp_inventory:getUserInventoryItems(_source)
-        if not inventory then return end
-
-        for key, v in pairs(inventory) do
-            if ItemName == v.name then
-                if v.count >= value.quantity then
-                    if Config.AllowSellItemsWithDecay then
-                        if v.isDegradable then
-                            if v.percentage > Config.DecayPercentage then
-                                exports.vorp_inventory:subItemById(_source, v.id, nil, value.quantity)
-                                if Config.SellItemBasedOnPercentage then
-                                    total = value.price * value.quantity * ((100 - v.percentage) / 100)
-                                    total2 = math.floor(total * 100) / 100
-                                end
-                                canContinue = true
-                                break
-                            end
-                        else
-                            exports.vorp_inventory:subItemById(_source, v.id, nil, value.quantity)
-                            canContinue = true
-                            break
-                        end
-                    else
-                        if not v.isDegradable then -- cannot sell any items with degradation only normal items
-                            exports.vorp_inventory:subItemById(_source, v.id, nil, value.quantity)
-                            canContinue = true
-                            break
-                        end
+        local userItem = exports.vorp_inventory:getItemById(_source, value.item.id)
+        if userItem then
+            if ItemName == userItem.name then
+                if userItem.count >= value.quantity then
+                    exports.vorp_inventory:subItemById(_source, value.item.id, nil, value.quantity)
+                    if Config.SellItemBasedOnPercentage then
+                        total = value.price * value.quantity * ((100 - value.item.percentage) / 100) -- use percentage that we got when we requested items so the price is the same
+                        total2 = math.floor(total * 100) / 100
                     end
+                    canContinue = true
                 end
             end
         end
