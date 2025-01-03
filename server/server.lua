@@ -101,17 +101,42 @@ local function sellItems(_source, Character, value, ItemName, storeId)
         total = value.price * countWeap
         total2 = (math.floor(total * 100) / 100)
     else
-        local count = exports.vorp_inventory:getItemCount(_source, nil, ItemName)
-        if value.quantity <= count then
-            exports.vorp_inventory:subItem(_source, ItemName, value.quantity)
-            canContinue = true
-        else
-            return Core.NotifyObjective(_source, T.noManyQty, 5000)
+        local inventory = exports.vorp_inventory:getUserInventoryItems(_source)
+        if not inventory then return end
+
+        for key, v in pairs(inventory) do
+            if ItemName == v.name then
+                if v.count >= value.quantity then
+                    if Config.AllowSellItemsWithDecay then
+                        if v.isDegradable then
+                            if v.percentage > Config.DecayPercentage then
+                                exports.vorp_inventory:subItemById(_source, v.id, nil, value.quantity)
+                                if Config.SellItemBasedOnPercentage then
+                                    total = value.price * value.quantity * ((100 - v.percentage) / 100)
+                                    total2 = math.floor(total * 100) / 100
+                                end
+                                canContinue = true
+                                break
+                            end
+                        else
+                            exports.vorp_inventory:subItemById(_source, v.id, nil, value.quantity)
+                            canContinue = true
+                            break
+                        end
+                    else
+                        if not v.isDegradable then -- cannot sell any items with degradation only normal items
+                            exports.vorp_inventory:subItemById(_source, v.id, nil, value.quantity)
+                            canContinue = true
+                            break
+                        end
+                    end
+                end
+            end
         end
     end
 
     if not canContinue then
-        return print("nothing found to sell")
+        return Core.NotifyObjective(_source, T.noManyQty, 5000)
     end
 
     if Config.Stores[storeId].DynamicStore then
@@ -119,6 +144,7 @@ local function sellItems(_source, Character, value, ItemName, storeId)
             return Core.NotifyRightTip(_source, T.limitBuy, 3000)
         end
     end
+
 
     if value.currency == "cash" then
         Character.addCurrency(0, total)
@@ -149,7 +175,6 @@ local function buyItems(_source, Character, value, ItemName, storeId)
 
         if value.weapon then
             for i = 1, value.quantity, 1 do
-                Wait(100)
                 exports.vorp_inventory:createWeapon(_source, ItemName)
             end
         else
@@ -176,7 +201,9 @@ local function buyItems(_source, Character, value, ItemName, storeId)
         end
 
         if value.weapon then
-            exports.vorp_inventory:createWeapon(_source, ItemName)
+            for i = 1, value.quantity, 1 do
+                exports.vorp_inventory:createWeapon(_source, ItemName)
+            end
         else
             exports.vorp_inventory:addItem(_source, ItemName, value.quantity)
         end
@@ -226,12 +253,6 @@ RegisterServerEvent('vorp_stores:Client:buyItems', function(dataItems, storeId)
         if not value.weapon then
             local quantity = value.quantity
             local canCarry = exports.vorp_inventory:canCarryItem(_source, ItemName, quantity) --cancarry item limit
-            local itemCheck = exports.vorp_inventory:getItemDB(ItemName)                      --check items exist in DB
-
-            if not itemCheck then
-                return Core.NotifyRightTip(_source, T.itemNotExist, 3000)
-            end
-
             if not canCarry then
                 return Core.NotifyRightTip(_source, T.cantcarryitem, 3000)
             end
@@ -260,10 +281,29 @@ Core.Callback.Register('vorp_stores:callback:getShopStock', function(source, cb,
     local userInv = exports.vorp_inventory:getUserInventoryItems(source)
     local userWeapons = exports.vorp_inventory:getUserInventoryWeapons(source)
     for _, value in pairs(userInv) do
-        for _, v in pairs(items) do
+        for _, v in ipairs(items) do
             if value.name == v.itemName then
-                ItemsFound = true
-                PlayerItems[value.name] = value.count
+                -- if config says no decay allowed then only get items with no decay
+                if Config.AllowSellItemsWithDecay then
+                    if v.isDegradable then
+                        -- item is degradable
+                        if v.percentage > Config.DecayPercentage then
+                            -- percentage is met, remember decay is still counting while in menu
+                            ItemsFound = true
+                            PlayerItems[value.name] = value
+                        end
+                    else
+                        -- items that arent degradable
+                        ItemsFound = true
+                        PlayerItems[value.name] = value
+                    end
+                else
+                    if not v.isDegradable then
+                        -- only items with no decay are allowed
+                        ItemsFound = true
+                        PlayerItems[value.name] = value
+                    end
+                end
             end
         end
     end
@@ -274,9 +314,9 @@ Core.Callback.Register('vorp_stores:callback:getShopStock', function(source, cb,
                 local count = 1
                 ItemsFound = true
                 if PlayerItems[value.name] == nil then
-                    PlayerItems[value.name] = count
+                    PlayerItems[value.name].count = count
                 else
-                    PlayerItems[value.name] = PlayerItems[value.name] + count
+                    PlayerItems[value.name].count = PlayerItems[value.name].count + count
                 end
             end
         end

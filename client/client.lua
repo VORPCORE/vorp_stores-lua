@@ -339,7 +339,7 @@ function OpenSellMenu(storeId, category)
 
     for _, storeItem in pairs(Config.SellItems[storeId]) do
         local itemFound = false
-        for itemName, count in pairs(playerItems) do
+        for itemName, value in pairs(playerItems) do
             if itemName == storeItem.itemName then
                 if storeItem.category == category then
                     if storeItem.currencyType == "cash" then
@@ -349,6 +349,13 @@ function OpenSellMenu(storeId, category)
                     if shopStocks[storeId] then
                         for _, items in pairs(shopStocks[storeId]) do
                             if items.itemName == storeItem.itemName and items.type == "sell" then
+                                local sellprice = storeItem.sellprice
+
+                                if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage then
+                                    -- adjust price based on percentage, theres a problem here because decay is counting so price might be less if the percentage has been changed
+                                    sellprice = storeItem.sellprice * 0 * ((100 - value.percentage) / 100)
+                                end
+
                                 itemFound = true
                                 menuElements[#menuElements + 1] = {
                                     label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. items.amount .. " " .. T.avaliable,
@@ -358,8 +365,9 @@ function OpenSellMenu(storeId, category)
                                     max = items.amount,
                                     type = "slider",
                                     info = storeItem,
+                                    percentage = value.percentage,
                                     index = storeItem.itemName,
-                                    desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.sellprice) .. "</span><br>" .. divider .. "<br><br>"
+                                    desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellprice) .. "</span><br>" .. divider .. "<br><br>"
 
                                 }
                             end
@@ -367,18 +375,24 @@ function OpenSellMenu(storeId, category)
                     end
 
                     if not itemFound then
+                        local sellprice = storeItem.sellprice
+                        if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage then
+                            -- adjust price based on percentage, theres a problem here because decay is counting so price might be less if the percentage has been changed
+                            sellprice = storeItem.sellprice * 0 * ((100 - value.percentage) / 100)
+                        end
                         -- if not found in the stock allow to sell only what player holds
                         menuElements[#menuElements + 1] = {
 
-                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. count .. " " .. T.avaliable,
+                            label = imgPath:format("left", storeItem.itemName) .. storeItem.itemLabel .. " " .. T.forSale .. " <br> " .. value.count .. " " .. T.avaliable,
                             action = "sell",
                             value = 0,
                             min = 0,
-                            max = count,
+                            max = value.count,
                             type = "slider",
                             info = storeItem,
+                            percentage = value.percentage,
                             index = storeItem.itemName,
-                            desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.sellprice) .. "</span><br>" .. divider .. "<br><br>"
+                            desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellprice) .. "</span><br>" .. divider .. "<br><br>"
                         }
                     end
                 end
@@ -411,7 +425,7 @@ function OpenSellMenu(storeId, category)
         },
         function(data, menu)
             if (data.current == "backup") then
-                _G[data.trigger](storeId, category)
+                return _G[data.trigger](storeId, category)
             end
 
             if data.current.action == "sell" then
@@ -419,6 +433,10 @@ function OpenSellMenu(storeId, category)
                 local ItemLabel = data.current.info.itemLabel
                 local currencyType = data.current.info.currencyType
                 local sellPrice = data.current.info.sellprice * data.current.value
+                if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage then
+                    -- adjust price based on percentage, theres a problem here because decay is counting so price might be less if the percentage has been changed
+                    sellPrice = data.current.info.sellprice * data.current.value * ((100 - data.current.percentage) / 100)
+                end
 
                 if not SellTable[ItemName] then
                     SellTable[ItemName] = {
@@ -492,13 +510,12 @@ function OpenBuyMenu(storeId, category)
     end
     local shopStocks = result.shopStock
     local ctp = ""
-    local color = "Gold"
+
     for _, storeItem in pairs(Config.BuyItems[storeId]) do
         local itemFound = false
         if storeItem.category == category then
             if storeItem.currencyType == "cash" then
                 ctp = "$"
-                color = "Red"
             end
 
             if shopStocks[storeId] then
@@ -513,7 +530,6 @@ function OpenBuyMenu(storeId, category)
                             max = items.amount,
                             action = "buy",
                             type = "slider",
-                            --desc = font .. "".. '<span style="margin-left:90px;"><span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) .. "    </span><span style='color:" .. color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" .. storeItem.desc .. divider,
                             info = storeItem,
                             index = storeItem.itemName,
                             desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
@@ -532,7 +548,6 @@ function OpenBuyMenu(storeId, category)
                     max = 100,
                     type = "slider",
                     action = "buy",
-                    --  desc = font .. T.buyfor .. '<span style="margin-left:90px;"><span style="font-size:25px;">' .. ctp .. '</span>' .. '<span style="font-size:30px;">' .. string.format("%.2f", storeItem.buyprice) .. "    </span><span style='color:" .. color .. ";'>   " .. storeItem.currencyType .. "</span><br><br>" .. storeItem.desc .. divider,
                     info = storeItem,
                     index = storeItem.itemName,
                     desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
@@ -550,7 +565,6 @@ function OpenBuyMenu(storeId, category)
     menuElements[#menuElements + 1] = {
         label = T.totalToPay .. " <br> " .. labelStyle:format(ctp .. 0),
         value = "finish",
-        -- desc = T.pressHereToFinish .. "<br><br><br><br" .. divider .. "press enter to pay",
         info = "finish",
         desc = T.pressHereToFinish .. "<br><br>" .. T.CurrentMoney .. LocalPlayer.state.Character.Money .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. 0.00 .. "</span><br>" .. divider .. "<br><br>"
     }

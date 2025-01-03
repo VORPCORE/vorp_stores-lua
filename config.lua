@@ -5,10 +5,21 @@ Lang = "English"
 -- menu position
 -- "center" / "top-left" / "top-right"
 Config.Align = "top-left"
-Config.DevMode = false -- if true you can use /reload to reload the script
+
+Config.DevMode = false                 -- if true you can use /reload to reload the script
+
+Config.AllowSellItemsWithDecay = false -- if true you can sell items with decay, if false it will not detect items with decay only without
+
+-- will only look for items with this percentage or above
+Config.DecayPercentage = 10 -- if above is true then only items with 10 or above can be sold
+
+-- items sold to store based on decay percentage if enabled above
+Config.SellItemBasedOnPercentage = false -- if is true then it will sell items based on the percentage you set below like item to sell has 80% decay and price is 40$ player get only 38.25$
+
 
 -- Webhook Section, description is in translation
 Config.UseWebhook = false -- Use webhook
+
 Config.WebhookLanguage = {
     -- webhook link is in the server.lua
     WebhookTitle = "",
