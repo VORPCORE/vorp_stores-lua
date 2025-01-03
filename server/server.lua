@@ -1,12 +1,12 @@
-local Core = exports.vorp_core:GetCore()
+local Core <const> = exports.vorp_core:GetCore()
 local storeLimits = {}
-local T = TranslationStores.Langs[Lang]
+local T <const> = TranslationStores.Langs[Lang]
 
 
 -- * STORE ITEM SELL/BUY LIMITS * --
 CreateThread(function()
-    local sellItems = Config.SellItems
-    local buyItems = Config.BuyItems
+    local sellItems <const> = Config.SellItems
+    local buyItems <const> = Config.BuyItems
 
     for index, v in pairs(sellItems) do
         for _, value in pairs(v) do
@@ -106,8 +106,8 @@ local function sellItems(_source, Character, value, ItemName, storeId)
             if ItemName == userItem.name then
                 if userItem.count >= value.quantity then
                     exports.vorp_inventory:subItemById(_source, value.item.id, nil, value.quantity)
-                    if Config.SellItemBasedOnPercentage then
-                        total = value.price * value.quantity * ((100 - value.item.percentage) / 100) -- use percentage that we got when we requested items so the price is the same
+                    if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage and userItem.isDegradable then
+                        total = value.price * value.quantity * (userItem.percentage / 100) -- use percentage that we got when we requested items so the price is the same
                         total2 = math.floor(total * 100) / 100
                     end
                     canContinue = true
@@ -266,9 +266,10 @@ Core.Callback.Register('vorp_stores:callback:getShopStock', function(source, cb,
             if value.name == v.itemName then
                 -- if config says no decay allowed then only get items with no decay
                 if Config.AllowSellItemsWithDecay then
-                    if v.isDegradable then
+                    if value.isDegradable then
                         -- item is degradable
-                        if v.percentage > Config.DecayPercentage then
+
+                        if value.percentage > Config.DecayPercentage then
                             -- percentage is met, remember decay is still counting while in menu
                             ItemsFound = true
                             PlayerItems[value.name] = value
@@ -279,7 +280,7 @@ Core.Callback.Register('vorp_stores:callback:getShopStock', function(source, cb,
                         PlayerItems[value.name] = value
                     end
                 else
-                    if not v.isDegradable then
+                    if not value.isDegradable then
                         -- only items with no decay are allowed
                         ItemsFound = true
                         PlayerItems[value.name] = value

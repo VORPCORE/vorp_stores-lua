@@ -350,8 +350,7 @@ function OpenSellMenu(storeId, category)
                         for _, items in pairs(shopStocks[storeId]) do
                             if items.itemName == storeItem.itemName and items.type == "sell" then
                                 local sellprice = storeItem.sellprice
-
-                                if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage then
+                                if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage and value.isDegradable then
                                     -- adjust price based on percentage, theres a problem here because decay is counting so price might be less if the percentage has been changed
                                     sellprice = storeItem.sellprice * 0 * ((100 - value.percentage) / 100)
                                 end
@@ -362,12 +361,12 @@ function OpenSellMenu(storeId, category)
                                     action = "sell",
                                     value = 0,
                                     min = 0,
-                                    max = items.amount,
+                                    max = value.count,
                                     type = "slider",
                                     info = storeItem,
                                     item = value,
                                     index = storeItem.itemName,
-                                    desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellprice) .. "</span><br>" .. divider .. "<br><br>"
+                                    desc = storeItem.desc .. "<br><br>you have x" .. value.count .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellprice) .. "</span><br>" .. divider .. "<br><br>"
 
                                 }
                             end
@@ -376,7 +375,7 @@ function OpenSellMenu(storeId, category)
 
                     if not itemFound then
                         local sellprice = storeItem.sellprice
-                        if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage then
+                        if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage and value.isDegradable then
                             -- adjust price based on percentage, theres a problem here because decay is counting so price might be less if the percentage has been changed
                             sellprice = storeItem.sellprice * 0 * ((100 - value.percentage) / 100)
                         end
@@ -392,7 +391,7 @@ function OpenSellMenu(storeId, category)
                             info = storeItem,
                             item = value,
                             index = storeItem.itemName,
-                            desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellprice) .. "</span><br>" .. divider .. "<br><br>"
+                            desc = storeItem.desc .. "<br><br>you have x" .. value.count .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. "  </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellprice) .. "</span><br>" .. divider .. "<br><br>"
                         }
                     end
                 end
@@ -433,9 +432,9 @@ function OpenSellMenu(storeId, category)
                 local ItemLabel = data.current.info.itemLabel
                 local currencyType = data.current.info.currencyType
                 local sellPrice = data.current.info.sellprice * data.current.value
-                if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage then
-                    -- adjust price based on percentage, theres a problem here because decay is counting so price might be less if the percentage has been changed
-                    sellPrice = data.current.info.sellprice * data.current.value * ((100 - data.current.item.percentage) / 100)
+
+                if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage and data.current.item.isDegradable then
+                    sellPrice = data.current.info.sellprice * data.current.value * (data.current.item.percentage / 100)
                 end
 
                 if not SellTable[ItemName] then
@@ -457,7 +456,7 @@ function OpenSellMenu(storeId, category)
 
                 for key, value in pairs(menu.data.elements) do
                     if value.index == ItemName then
-                        menu.setElement(key, "desc", data.current.info.desc .. "<br><br> " .. T.Price .. "$" .. string.format("%.2f", sellPrice) .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellPrice) .. "</span><br>" .. divider .. "<br><br>")
+                        menu.setElement(key, "desc", data.current.info.desc .. "<br><br>you have x" .. data.current.item.count .. "<br><br> " .. T.Price .. "$" .. string.format("%.2f", sellPrice) .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Total .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", sellPrice) .. "</span><br>" .. divider .. "<br><br>")
                         menu.refresh()
                         break
                     end
