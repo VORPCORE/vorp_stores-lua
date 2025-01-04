@@ -296,6 +296,7 @@ Core.Callback.Register('vorp_stores:callback:getShopStock', function(source, cb,
                 local count = 1
                 ItemsFound = true
                 if PlayerItems[value.name] == nil then
+                    PlayerItems[value.name] = {}
                     PlayerItems[value.name].count = count
                 else
                     PlayerItems[value.name].count = PlayerItems[value.name].count + count
