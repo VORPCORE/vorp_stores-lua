@@ -105,7 +105,7 @@ local function sellItems(_source, Character, value, ItemName, storeId)
         if userItem then
             if ItemName == userItem.name then
                 if userItem.count >= value.quantity then
-                    exports.vorp_inventory:subItemById(_source, value.item.id, nil, value.quantity)
+                    exports.vorp_inventory:subItemById(_source, value.item.id, nil, nil, value.quantity)
                     if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage and userItem.isDegradable then
                         total = value.price * value.quantity * (userItem.percentage / 100) -- use percentage that we got when we requested items so the price is the same
                         total2 = math.floor(total * 100) / 100
