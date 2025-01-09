@@ -6,7 +6,7 @@ Lang = "English"
 -- "center" / "top-left" / "top-right"
 Config.Align = "top-left"
 
-Config.DevMode = false                 -- if true you can use /reload to reload the script
+Config.DevMode = true                 -- if true you can use /reload to reload the script
 
 Config.AllowSellItemsWithDecay = false -- if true you can sell items with decay, if false it will not detect items with decay only without
 
@@ -504,11 +504,10 @@ Config.Stores = {
         JobGrade = 0,
         -- * store categories allow which category to show in the store
         category = {
-            { label = "Food",    Type = "food",    desc = "Delicious food",       img = "consumable_bread_roll" },
-            { label = "Tools",   Type = "tools",   desc = "Useful tools",         img = "butcher_table_production" },
-            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "butcher_table_production" },
-            { label = "Meds",    Type = "meds",    desc = "Medical supplies",     img = "syringe" },
-            { label = "Drinks",  Type = "drinks",  desc = "Refreshing beverages", img = "whisky" },
+            { label = "Bait",  Type = "bait",  desc = "Delicious food", img = "consumable_bread_roll" },
+            { label = "Tools", Type = "tools", desc = "Useful tools",   img = "butcher_table_production" },
+            { label = "Fish",  Type = "fish",  desc = "sell fish",      img = "butcher_table_production" },
+
         },
         -- * store type allow which type of store to show in the store
         storeType = {
