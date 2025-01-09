@@ -6,7 +6,7 @@ Lang = "English"
 -- "center" / "top-left" / "top-right"
 Config.Align = "top-left"
 
-Config.DevMode = true                 -- if true you can use /reload to reload the script
+Config.DevMode = false                 -- if true you can use /reload to reload the script
 
 Config.AllowSellItemsWithDecay = false -- if true you can sell items with decay, if false it will not detect items with decay only without
 
