@@ -66,6 +66,7 @@ local function SpawnNPC(Store)
     PlaceEntityOnGroundProperly(ped)
     SetEntityCanBeDamaged(ped, false)
     SetBlockingOfNonTemporaryEvents(ped, true)
+    FreezeEntityPosition(ped, true)
     value.Npc.NpcHandle = ped
 end
 
