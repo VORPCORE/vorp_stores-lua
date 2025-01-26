@@ -543,7 +543,7 @@ Config.Stores = {
             Pos = vector4(449.7435, 2216.437, 245.30, -73.78),
             distanceRemoveNpc = 20.0,
             Allowed = true,
-            Model = "cs_hercule",
+            Model = "cs_eagleflies",
         },
         storeName = "Wapiti Shop",
         PromptName = "Native store",
