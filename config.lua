@@ -536,14 +536,14 @@ Config.Stores = {
         Blip = {
             Allowed = true,
             Name = "Wapiti Store",
-            sprite = 3442726182,
+            sprite = 1475879922,
             Pos = vector3(449.7435, 2216.437, 245.30),
         },
         Npc = {
             Pos = vector4(449.7435, 2216.437, 245.30, -73.78),
             distanceRemoveNpc = 20.0,
             Allowed = true,
-            Model = "U_M_M_NbxGeneralStoreOwner_01",
+            Model = "cs_hercule",
         },
         storeName = "Wapiti Shop",
         PromptName = "Native store",
