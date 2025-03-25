@@ -180,13 +180,25 @@ local function storeOpen(storeConfig, storeId)
     return inDistance
 end
 
-local function IsStoreClosed(storeConfig)
+
+local function IsStoreClosed(value)
     local hour = GetClockHours()
-    if hour >= storeConfig.StoreClose or hour < storeConfig.StoreOpen then
-        return "closed"
+
+    if value.StoreClose < value.StoreOpen then
+        -- night shift
+        if hour >= value.StoreOpen or hour < value.StoreClose then
+            return false
+        end
+        return true
+    else
+        -- day shift
+        if hour >= value.StoreOpen and hour < value.StoreClose then
+            return false
+        end
+        return true
     end
-    return "opened"
 end
+
 
 local function closeAll()
     MenuData.CloseAll()
@@ -216,7 +228,7 @@ CreateThread(function()
         for storeId, storeConfig in pairs(Config.Stores) do
             if not storeConfig.isDeactivated then
                 if storeConfig.StoreHoursAllowed then
-                    if IsStoreClosed(storeConfig) == "closed" then
+                    if IsStoreClosed(storeConfig) then
                         if storeConfig.Blip.BlipHandle then
                             BlipAddModifier(storeConfig.Blip.BlipHandle, joaat("BLIP_MODIFIER_MP_COLOR_2"))
                         end
