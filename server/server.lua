@@ -242,7 +242,8 @@ RegisterServerEvent('vorp_stores:Client:buyItems', function(dataItems, storeId)
         end
 
         if value.weapon then
-            local canCarryWep = exports.vorp_inventory:canCarryWeapons(_source, 1, nil, ItemName) --can carry weapons
+            local quantity = value.quantity
+            local canCarryWep = exports.vorp_inventory:canCarryWeapons(_source, quantity, nil, ItemName) --can carry weapons
 
             if not canCarryWep then
                 return Core.NotifyRightTip(_source, T.cantcarryweapon, 5000)
