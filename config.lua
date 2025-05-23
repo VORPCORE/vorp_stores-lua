@@ -568,5 +568,241 @@ Config.Stores = {
         StoreOpen = 7,
         StoreClose = 21,
         DynamicStore = true,
-    }
+    },
+    Valentinegunstore = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
+        possibleLocations = {
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
+        },
+        Blip = {
+            Allowed = true,
+            Name = "Valentine Gun Store",
+            sprite = 1475879922,
+            Pos = vector3(-280.4646, 779.0331, 119.2540),
+        },
+        Npc = {
+            Pos = vector4(-280.4646, 779.0331, 119.2540, 2.82),
+            distanceRemoveNpc = 20.0,
+            Allowed = true,
+            Model = "S_M_M_UNIBUTCHERS_01",
+        },
+        storeName = "Valentine Gun Store",
+        PromptName = "Gun store",
+        distanceOpenStore = 3.0,
+        AllowedJobs = {},
+        JobGrade = 0,
+        -- * store categories allow which category to show in the store
+        category = {
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "weapon" },
+            { label = "ammo",  Type = "ammo",  desc = "Buy Ammo", img = "ammorifleexpress" },
+        },
+        -- * store type allow which type of store to show in the store
+        storeType = {
+            { label = "Buy",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" },
+        },
+        StoreHoursAllowed = true,
+        RandomPrices = true,
+        StoreOpen = 7,
+        StoreClose = 21,
+        DynamicStore = true,
+    },
+    SaintDgunstore = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
+        possibleLocations = {
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
+        },
+        Blip = {
+            Allowed = true,
+            Name = "SaintD Gun Store",
+            sprite = 1475879922,
+            Pos = vector3(2716.73,-1285.27,49.63),
+        },
+        Npc = {
+            Pos = vector4(2717.75, -1286.62, 49.64, 44.58),
+            distanceRemoveNpc = 20.0,
+            Allowed = true,
+            Model = "S_M_M_UNIBUTCHERS_01",
+        },
+        storeName = "SaintD Gun Store",
+        PromptName = "Gun store",
+        distanceOpenStore = 3.0,
+        AllowedJobs = {},
+        JobGrade = 0,
+        -- * store categories allow which category to show in the store
+        category = {
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "weapon" },
+            { label = "ammo",  Type = "ammo",  desc = "Buy Ammo", img = "ammorifleexpress" },
+        },
+        -- * store type allow which type of store to show in the store
+        storeType = {
+            { label = "Buy",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" },
+        },
+        StoreHoursAllowed = true,
+        RandomPrices = true,
+        StoreOpen = 7,
+        StoreClose = 21,
+        DynamicStore = true,
+    },
+    Rhodesgunstore = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
+        possibleLocations = {
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
+        },
+        Blip = {
+            Allowed = true,
+            Name = "Rhodes Gun Store",
+            sprite = 1475879922,
+            Pos = vector3(1323.04, -1321.56, 77.889),
+        },
+        Npc = {
+            Pos = vector4(1322.95, -1323.21, 77.89, 350.17),
+            distanceRemoveNpc = 20.0,
+            Allowed = true,
+            Model = "S_M_M_UNIBUTCHERS_01",
+        },
+        storeName = "Rhodes Gun Store",
+        PromptName = "Gun store",
+        distanceOpenStore = 3.0,
+        AllowedJobs = {},
+        JobGrade = 0,
+        -- * store categories allow which category to show in the store
+        category = {
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "weapon" },
+            { label = "ammo",  Type = "ammo",  desc = "Buy Ammo", img = "ammorifleexpress" },
+        },
+        -- * store type allow which type of store to show in the store
+        storeType = {
+            { label = "Buy",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" },
+        },
+        StoreHoursAllowed = true,
+        RandomPrices = true,
+        StoreOpen = 7,
+        StoreClose = 21,
+        DynamicStore = true,
+    },
+    Annesburggunstore = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
+        possibleLocations = {
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
+        },
+        Blip = {
+            Allowed = true,
+            Name = "Annesburg Gun Store",
+            sprite = 1475879922,
+            Pos = vector3(2948.16, 1318.79, 44.82),
+        },
+        Npc = {
+            Pos = vector4(2948.16, 1318.79, 44.82, 91.34),
+            distanceRemoveNpc = 20.0,
+            Allowed = true,
+            Model = "S_M_M_UNIBUTCHERS_01",
+        },
+        storeName = "Annesburg Gun Store",
+        PromptName = "Gun store",
+        distanceOpenStore = 3.0,
+        AllowedJobs = {},
+        JobGrade = 0,
+        -- * store categories allow which category to show in the store
+        category = {
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "weapon" },
+            { label = "ammo",  Type = "ammo",  desc = "Buy Ammo", img = "ammorifleexpress" },
+        },
+        -- * store type allow which type of store to show in the store
+        storeType = {
+            { label = "Buy",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" },
+        },
+        StoreHoursAllowed = true,
+        RandomPrices = true,
+        StoreOpen = 7,
+        StoreClose = 21,
+        DynamicStore = true,
+    },
+    Tumbleweedgunstore = {
+        isDeactivated = false,     -- use this to activate stores or deactivate
+        useRandomLocation = false, -- if true it will pick a random location from the list bellow, good thing for a store that can move and not always in the same place and npc
+        possibleLocations = {
+            OpenMenu = {
+                -- vector3(-324.628, 803.9818, 116.88), -- valentine
+                -- add more it will pick a random location from the list
+            },
+            Npcs = {
+                -- vector4(-324.628, 803.9818, 116.88, -81.17), --valentine
+                -- add more it will pick a random location from the list
+            }
+
+        },
+        Blip = {
+            Allowed = true,
+            Name = "tumbleweed Gun Store",
+            sprite = 1475879922,
+            Pos = vector3(-5506.42, -2964.27, -0.64),
+        },
+        Npc = {
+            Pos = vector4(-5505.97, -2963.91, -0.64, 103.15),
+            distanceRemoveNpc = 20.0,
+            Allowed = true,
+            Model = "S_M_M_UNIBUTCHERS_01",
+        },
+        storeName = "tumbleweed Gun Store",
+        PromptName = "Gun store",
+        distanceOpenStore = 3.0,
+        AllowedJobs = {},
+        JobGrade = 0,
+        -- * store categories allow which category to show in the store
+        category = {
+            { label = "Weapons", Type = "weapons", desc = "Buy weapons",          img = "weapon" },
+            { label = "ammo",  Type = "ammo",  desc = "Buy Ammo", img = "ammorifleexpress" },
+        },
+        -- * store type allow which type of store to show in the store
+        storeType = {
+            { label = "Buy",  Type = "buy",  desc = "Buy from store", img = "consumable_bread_roll" },
+            { label = "Sell", Type = "sell", desc = "Sell to store",  img = "butcher_table_production" },
+        },
+        StoreHoursAllowed = true,
+        RandomPrices = true,
+        StoreOpen = 7,
+        StoreClose = 21,
+        DynamicStore = true,
+    },
+    
 }
