@@ -1,3 +1,5 @@
+<2.4>
+- fixes a bug where you select to buy multiple weapons but would only check if you can carry one
 <2.3>
 - added support for decay items 
 - items sold to the store that have decay will be payed based on the decay it has 
