@@ -313,7 +313,7 @@ Core.Callback.Register('vorp_stores:callback:getShopStock', function(source, cb,
     end
 
     local data = {
-        shopStocks = storeLimits,
+        shopStocks = storeLimits[args],
         ItemsFound = PlayerItems
     }
     return cb(data)
@@ -321,7 +321,7 @@ end)
 
 Core.Callback.Register('vorp_stores:callback:ShopStock', function(source, cb, args)
     local data = {
-        shopStock = storeLimits
+        shopStock = storeLimits[args]
     }
     return cb(data)
 end)

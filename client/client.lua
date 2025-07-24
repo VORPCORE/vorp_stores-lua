@@ -359,8 +359,8 @@ function OpenSellMenu(storeId, category)
                         ctp = "$"
                     end
 
-                    if shopStocks[storeId] then
-                        for _, items in pairs(shopStocks[storeId]) do
+                    if shopStocks then
+                        for _, items in pairs(shopStocks) do
                             if items.itemName == storeItem.itemName and items.type == "sell" then
                                 local sellprice = storeItem.sellprice
                                 if Config.AllowSellItemsWithDecay and Config.SellItemBasedOnPercentage and value.isDegradable then
@@ -531,8 +531,8 @@ function OpenBuyMenu(storeId, category)
                 ctp = "$"
             end
 
-            if shopStocks[storeId] then
-                for k, items in pairs(shopStocks[storeId]) do
+            if shopStocks then
+                for _, items in pairs(shopStocks) do
                     if items.itemName == storeItem.itemName and items.type == "buy" then
                         itemFound = true
                         menuElements[#menuElements + 1] = {
@@ -544,7 +544,6 @@ function OpenBuyMenu(storeId, category)
                             action = "buy",
                             type = "slider",
                             info = storeItem,
-                            index = storeItem.itemName,
                             desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
 
                         }
@@ -562,7 +561,6 @@ function OpenBuyMenu(storeId, category)
                     type = "slider",
                     action = "buy",
                     info = storeItem,
-                    index = storeItem.itemName,
                     desc = storeItem.desc .. "<br><br><br><br><br>" .. divider .. "<br>" .. font .. "<span style='font-family:crock; float:left; font-size: 22px;'>" .. T.Price .. " </span>" .. font .. "<span style='font-family:crock;float:right; font-size: 22px;'>$" .. string.format("%.2f", storeItem.buyprice) .. "</span><br>" .. divider .. "<br><br>"
 
                 }
@@ -592,7 +590,7 @@ function OpenBuyMenu(storeId, category)
 
     }, function(data, menu)
         if (data.current == "backup") then
-            _G[data.trigger](storeId, category)
+           return _G[data.trigger](storeId, category)
         end
 
         if data.current.action == "buy" then
